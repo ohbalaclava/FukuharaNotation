@@ -114,7 +114,8 @@ const styles = StyleSheet.create({
       marginHorizontal: 6,
       image: {
         width: 40,
-        height: 40
+        height: 40,
+        opacity: 0.75
       }
     },
     accidental: {
@@ -122,7 +123,8 @@ const styles = StyleSheet.create({
       top: 10,
       left: 38,
       width: 20,
-      height: 20
+      height: 20,
+      opacity: 0.75
     },
     cursor: {
       flex: 'none',
