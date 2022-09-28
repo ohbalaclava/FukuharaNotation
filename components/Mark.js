@@ -10,7 +10,7 @@ Accidental.propTypes = {
     glyph: PropTypes.shape({
       black: PropTypes.string.isRequired
     }).isRequired
-  }).isRequired
+  })
 }
 
 function Accidental ({ accidental }) {
