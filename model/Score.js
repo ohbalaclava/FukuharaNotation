@@ -12,7 +12,7 @@ function createScore (lines) {
     lines.push([])
     currentLine = 0
     lineCursor = 0
-    lines[0].id = '0'
+    lines[0].id = nanoid()
   } else {
     currentLine = lines.length - 1
     lineCursor = lines[currentLine].length
@@ -89,7 +89,6 @@ function createScore (lines) {
       joinChanged = false
     }
     lineCursor++
-    codifyLine(currentLine)
   }
 
   const addOtherUnit = (unit) => {
@@ -97,7 +96,6 @@ function createScore (lines) {
     closeLastJoin()
     joinChanged = true
     lineCursor++
-    codifyLine(currentLine)
   }
 
   const addAccidental = (accidental) => {
@@ -131,12 +129,10 @@ function createScore (lines) {
         lines.splice(currentLine, 1)
         currentLine--
         lineCursor = lines[currentLine].length
-        codifyLine(currentLine)
       }
     } else {
       lines[currentLine].splice(lineCursor - 1, 1)
       lineCursor--
-      codifyLine(currentLine)
     }
   }
 
@@ -144,10 +140,9 @@ function createScore (lines) {
     closeLastJoin()
     const newLine = lines[currentLine].splice(lineCursor)
     lines.splice(currentLine + 1, 0, newLine)
-    codifyLine(currentLine)
     currentLine++
     lineCursor = 0
-    codifyLine(currentLine)
+    lines[currentLine].id = nanoid()
   }
 
   const getLines = () => lines
@@ -158,11 +153,7 @@ function createScore (lines) {
     return createScore(lines)
   }
 
-  const codifyLine = (index) => {
-    lines[index].id = lines[index].reduce((codeFragment, currentMark) => `${codeFragment}${currentMark.id}`, index)
-  }
-
-  return { addNote, addOtherUnit, addAccidental, addOtherDecoration, clone, codifyLine, deleteMark, getLines, getLineCount, goto, newLine, setJoin }
+  return { addNote, addOtherUnit, addAccidental, addOtherDecoration, clone, deleteMark, getLines, getLineCount, goto, newLine, setJoin }
 }
 
 export function createEmptyScore () {
