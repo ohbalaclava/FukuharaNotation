@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
         height: 30
       },
       borderRadius: 50,
-      borderWidth: 1,
-      borderColor: 'crimson',
+      borderWidth: 3,
+      borderColor: 'black',
       backgroundColor: buttonColour
     }
   },
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         height: 30
       },
       borderRadius: 5,
-      borderWidth: 1,
+      borderWidth: 3,
       backgroundColor: buttonColour
     }
   },
