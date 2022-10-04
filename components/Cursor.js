@@ -1,26 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import { Image, TouchableOpacity } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { Image, View } from 'react-native-web'
+import PropTypes from 'prop-types'
 
 import styles from '../styles/ScreenStyles'
+import { DimensionsContext } from '../data/Dimensions'
 
 const Glyph = require('../assets/cursor.png')
 
-const Cursor = () => {
+Cursor.propTypes = {
+  line: PropTypes.number.isRequired,
+  mark: PropTypes.number.isRequired
+}
+
+export default function Cursor ({ line, mark }) {
   const [showCursor, setShowCursor] = useState(true)
+  const { dimensions } = useContext(DimensionsContext)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setShowCursor((showText) => !showText)
+      setShowCursor((showCursor) => !showCursor)
     }, 400)
     return () => clearInterval(interval)
   }, [])
 
-  const buttonStyle = styles.score.cursor
+  const cursorDimensionsStyle = dimensions.getCursorStyle(line, mark)
+
   return (
-    <TouchableOpacity style={[buttonStyle]}>
-      <Image style={[buttonStyle.image, { display: showCursor ? 'none' : 'flex' }]} source={Glyph} />
-    </TouchableOpacity>
+    <View style={[styles.score.cursor, cursorDimensionsStyle]}>
+      <Image
+        style={[
+          styles.score.cursor.image,
+          cursorDimensionsStyle.image,
+          { visibility: showCursor ? 'visible' : 'hidden' }
+        ]}
+        source={Glyph}
+      />
+    </View>
   )
 }
-
-export default Cursor

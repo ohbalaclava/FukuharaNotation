@@ -1,25 +1,34 @@
-import { StyleSheet, StatusBar } from 'react-native'
+import { StyleSheet } from 'react-native-web'
+
+import paper from '../assets/paper/watercolour_paper.jpg'
+import flippedPaper from '../assets/paper/flipped_watercolour_paper.jpg'
+import * as Dimensions from '../data/Dimensions'
+
+const markOpacity = 0.66
+const buttonColour = 'rgb(50, 50, 50)'
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0
+    flex: 1
   },
   main: {
     view: {
-      flexFlow: 'row nowrap'
+      flexFlow: 'row nowrap',
+      backgroundImage: `url(${paper})`,
+      backgroundRepeat: 'repeat'
     }
   },
   input: {
     view: {
       flex: 'initial',
-      borderEndWidth: 1,
-      borderColor: 'grey'
+      margin: 20,
+      padding: 10
     },
-    paper: {
+    bamboo: {
       flex: 1,
-      flexFlow: 'row nowrap',
-      justifyContent: 'center'
+      borderWidth: 1,
+      borderColor: 'grey',
+      borderRadius: 5
     }
   },
   notes: {
@@ -35,14 +44,13 @@ const styles = StyleSheet.create({
         height: 30
       },
       borderRadius: 50,
-      borderWidth: 2,
+      borderWidth: 1,
       borderColor: 'crimson',
-      backgroundColor: 'rgb(50, 50, 50)'
+      backgroundColor: buttonColour
     }
   },
   accidentals: {
     view: {
-      flex: 1,
       justifyContent: 'center',
       alignItems: 'center'
     },
@@ -56,7 +64,7 @@ const styles = StyleSheet.create({
       },
       borderRadius: 5,
       borderWidth: 1,
-      backgroundColor: 'rgb(50, 50, 50)'
+      backgroundColor: buttonColour
     }
   },
   operations: {
@@ -94,29 +102,28 @@ const styles = StyleSheet.create({
     }
   },
   score: {
-    view: {
-      flex: 2
-    },
-    paper: {
+    flex: 1,
+    border: '0px dashed black',
+    borderRightWidth: 1,
+    lines: {
       flex: 1,
-      flexFlow: 'row-reverse nowrap',
-      alignItems: 'flex-start',
-      padding: 50
+      flexFlow: 'row nowrap',
+      content: {
+        padding: Dimensions.scoreContentPadding,
+        backgroundImage: `url(${flippedPaper})`,
+        backgroundRepeat: 'repeat',
+      }
     },
     line: {
       flex: 'none',
-      marginTop: 20,
-      marginRight: 20
+      paddingRight: Dimensions.scoreLinePaddingRight,
+      marginRight: Dimensions.scoreLineMarginRight
     },
     mark: {
-      padding: 2,
-      marginVertical: 4,
-      marginHorizontal: 6,
       image: {
-        width: 40,
-        height: 40,
-        opacity: 0.75
-      }
+        opacity: markOpacity
+      },
+      zIndex: 0
     },
     accidental: {
       position: 'absolute',
@@ -124,28 +131,16 @@ const styles = StyleSheet.create({
       left: 38,
       width: 20,
       height: 20,
-      opacity: 0.75
+      opacity: markOpacity,
+      zIndex: 1
     },
     cursor: {
       flex: 'none',
-      padding: 2,
-      marginVertical: 4,
-      marginHorizontal: 2,
-      width: 46,
-      height: 46,
       image: {
-        width: 40,
-        height: 40,
-        opacity: 0.25
+        opacity: 0.5
       },
-      borderRadius: 5,
-      borderWidth: 1,
-      borderColor: 'grey',
-      borderStyle: 'dotted'
+      zIndex: 1
     }
-  },
-  title: {
-    fontSize: 32
   }
 })
 

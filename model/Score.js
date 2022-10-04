@@ -1,21 +1,22 @@
-import { createContext } from 'react'
 import { nanoid } from 'nanoid'
 
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
+import Config from '../data/Config'
 
-function createScore (lines) {
+function createScore ({ lines, currentLine, lineCursor }) {
   let join = Join.None
   let joinChanged = false
-  let currentLine, lineCursor
+  let postEditHook
 
   if (lines.length === 0) {
     lines.push([])
     currentLine = 0
     lineCursor = 0
     lines[0].id = nanoid()
-  } else {
-    currentLine = lines.length - 1
-    lineCursor = lines[currentLine].length
+  }
+
+  const postEdit = () => {
+    postEditHook && postEditHook()
   }
 
   const repairJoins = () => {
@@ -84,18 +85,30 @@ function createScore (lines) {
     if (lines[currentLine][lineCursor].join !== Join.None) {
       lines[currentLine][lineCursor].joinPosition = (joinChanged) ? JoinPosition.Start : JoinPosition.Middle
     }
+
     if (joinChanged) {
       closeLastJoin()
       joinChanged = false
     }
-    lineCursor++
+
+    if (++lineCursor === Config.maxLineLength) {
+      newLine()
+    } else {
+      postEdit()
+    }
   }
 
   const addOtherUnit = (unit) => {
     lines[currentLine].splice(lineCursor, 0, createUnitMark(unit))
+
     closeLastJoin()
     joinChanged = true
-    lineCursor++
+
+    if (++lineCursor === Config.maxLineLength) {
+      newLine()
+    } else {
+      postEdit()
+    }
   }
 
   const addAccidental = (accidental) => {
@@ -107,6 +120,7 @@ function createScore (lines) {
       } else {
         lines[currentLine][markIndex].data.accidental = accidental
       }
+      postEdit()
     }
   }
 
@@ -119,6 +133,7 @@ function createScore (lines) {
       } else {
         existingDecoration[decoration.name] = decoration
       }
+      postEdit()
     }
   }
 
@@ -129,10 +144,12 @@ function createScore (lines) {
         lines.splice(currentLine, 1)
         currentLine--
         lineCursor = lines[currentLine].length
+        postEdit()
       }
     } else {
       lines[currentLine].splice(lineCursor - 1, 1)
       lineCursor--
+      postEdit()
     }
   }
 
@@ -143,21 +160,43 @@ function createScore (lines) {
     currentLine++
     lineCursor = 0
     lines[currentLine].id = nanoid()
+    postEdit()
   }
 
   const getLines = () => lines
 
   const getLineCount = () => lines.length
 
+  const getCurrentLineIndex = () => currentLine
+
+  const getCurrentMarkIndex = () => lineCursor
+
   const clone = () => {
-    return createScore(lines)
+    return createScore({ lines, currentLine, lineCursor })
   }
 
-  return { addNote, addOtherUnit, addAccidental, addOtherDecoration, clone, deleteMark, getLines, getLineCount, goto, newLine, setJoin }
+  const onEdit = (func) => {
+    postEditHook = func
+  }
+
+  return {
+    addNote,
+    addOtherUnit,
+    addAccidental,
+    addOtherDecoration,
+    clone,
+    deleteMark,
+    getCurrentLineIndex,
+    getCurrentMarkIndex,
+    getLines,
+    getLineCount,
+    goto,
+    newLine,
+    setJoin,
+    onEdit
+  }
 }
 
 export function createEmptyScore () {
-  return createScore([])
+  return createScore({ lines: [], currentLine: 0, lineCursor: 0 })
 }
-
-export const ScoreContext = createContext()

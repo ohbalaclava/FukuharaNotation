@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, View } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import ImageButton from '../components/ImageButton'
@@ -8,7 +8,7 @@ import styles from '../styles/ScreenStyles'
 
 NoteSelectView.propTypes = {
   addNote: PropTypes.func.isRequired,
-  setDirty: PropTypes.func.isRequired
+  refresh: PropTypes.func.isRequired
 }
 
 export default function NoteSelectView (props) {
@@ -16,7 +16,7 @@ export default function NoteSelectView (props) {
     return (
       <ImageButton
         image={item.glyph.white}
-        onPress={() => { props.addNote(item); props.setDirty() }}
+        onPress={() => { props.addNote(item); props.refresh() }}
         buttonStyleName='noteButton'
         styleGroup='notes'
       />

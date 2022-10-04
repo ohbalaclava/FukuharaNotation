@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, View } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import ImageButton from '../components/ImageButton'
@@ -8,7 +8,7 @@ import styles from '../styles/ScreenStyles'
 
 AccidentalSelectView.propTypes = {
   addAccidental: PropTypes.func.isRequired,
-  setDirty: PropTypes.func.isRequired
+  refresh: PropTypes.func.isRequired
 }
 
 export default function AccidentalSelectView (props) {
@@ -16,7 +16,7 @@ export default function AccidentalSelectView (props) {
     return (
       <ImageButton
         image={item.glyph.white}
-        onPress={() => { props.addAccidental(item); props.setDirty() }}
+        onPress={() => { props.addAccidental(item); props.refresh() }}
         buttonStyleName='accidentalButton'
         styleGroup='accidentals'
       />
