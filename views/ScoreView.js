@@ -3,7 +3,6 @@ import { View, FlatList } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import styles from '../styles/ScreenStyles'
-import Cursor from '../components/Cursor'
 import Line from '../components/Line'
 import { DimensionsContext } from '../data/Dimensions'
 
@@ -19,9 +18,17 @@ ScoreView.propTypes = {
   refresh: PropTypes.func.isRequired
 }
 
-function renderLine ({ line, index, goto, refresh }) {
+function renderLine ({ line, index, goto, refresh, cursorIndex }) {
   return (
-    <Line line={line} onPressMark={(markIndex) => { goto(index, markIndex); refresh() }}/>
+    <Line
+      line={line}
+      onPressMark={
+        (markIndex) => {
+          goto(index, markIndex)
+          refresh()
+        }
+      }
+      cursorIndex={cursorIndex}/>
   )
 }
 
@@ -43,7 +50,8 @@ export default function ScoreView ({ score, refresh }) {
             line: item,
             index,
             goto: score.goto,
-            refresh
+            refresh,
+            cursorIndex: (index === score.getCurrentLineIndex()) ? score.getCurrentMarkIndex() : -1
           })
         }}
         keyExtractor={(item) => item.id}
@@ -58,9 +66,7 @@ export default function ScoreView ({ score, refresh }) {
         onScroll={(event) => {
           dimensions.setScoreScrollOffset(event.nativeEvent.contentOffset.x)
         }}
-        pagingEnabled
       />
-      <Cursor line={score.getCurrentLineIndex()} mark={score.getCurrentMarkIndex()}/>
     </View>
   )
 }

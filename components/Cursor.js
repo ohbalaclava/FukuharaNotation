@@ -8,11 +8,10 @@ import { DimensionsContext } from '../data/Dimensions'
 const Glyph = require('../assets/cursor.png')
 
 Cursor.propTypes = {
-  line: PropTypes.number.isRequired,
   mark: PropTypes.number.isRequired
 }
 
-export default function Cursor ({ line, mark }) {
+export default function Cursor ({ mark }) {
   const [showCursor, setShowCursor] = useState(true)
   const { dimensions } = useContext(DimensionsContext)
 
@@ -23,7 +22,7 @@ export default function Cursor ({ line, mark }) {
     return () => clearInterval(interval)
   }, [])
 
-  const cursorDimensionsStyle = dimensions.getCursorStyle(line, mark)
+  const cursorDimensionsStyle = dimensions.getCursorStyle(mark)
 
   return (
     <View style={[styles.score.cursor, cursorDimensionsStyle]}>

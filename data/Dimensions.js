@@ -15,7 +15,6 @@ export default function Dimensions (window) {
   let markHeight
   let lineEndButtonHeight
   let cursor
-  let cursorRightOffset
   let scoreScrollOffset = 0
 
   setWindowDimensions(window)
@@ -62,7 +61,6 @@ export default function Dimensions (window) {
       paddingRight: noteMark.padding,
       marginHorizontal: noteMark.marginHorizontal
     }
-    cursorRightOffset = scoreContentPadding + scoreLineMarginRight + scoreLinePaddingRight - scoreScrollOffset
   }
 
   function setWindowDimensions (windowDimensions) {
@@ -88,11 +86,10 @@ export default function Dimensions (window) {
     return noteMark
   }
 
-  function getCursorStyle (line, mark) {
+  function getCursorStyle (mark) {
     return {
       ...cursor,
-      top: mark * markHeight + scoreContentPadding + lineEndButtonHeight,
-      right: lineFullWidth * line + cursorRightOffset
+      top: mark * markHeight + lineEndButtonHeight
     }
   }
 
