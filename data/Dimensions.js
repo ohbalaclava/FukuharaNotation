@@ -3,8 +3,7 @@ import Config from './Config'
 import { createContext } from 'react'
 
 export const scoreContentPadding = 20
-export const scoreLineMarginRight = 25
-export const scoreLinePaddingRight = 0
+export const scoreLineMarginRight = 5
 
 export default function Dimensions (window) {
   let contentHeight
@@ -15,6 +14,7 @@ export default function Dimensions (window) {
   let markHeight
   let lineEndButtonHeight
   let cursor
+  let linePaddingRight
 
   setWindowDimensions(window)
 
@@ -24,7 +24,7 @@ export default function Dimensions (window) {
 
   function updateNoteMarkDimensions () {
     const padding = 2
-    const totalMarkLength = contentHeight / Config.maxLineLength
+    const totalMarkLength = contentHeight / (Config.maxLineLength + 1)
     const marginVertical = totalMarkLength / 10
     const marginHorizontal = totalMarkLength * 0.15
     const markImageLength = totalMarkLength - 2 * (padding + marginVertical)
@@ -43,8 +43,9 @@ export default function Dimensions (window) {
   }
 
   function updateLineDimensions () {
-    lineSeparation = scoreLineMarginRight + scoreLinePaddingRight
     lineWidth = 2 * (noteMark.marginHorizontal + noteMark.padding) + noteMark.image.width
+    linePaddingRight = lineWidth
+    lineSeparation = scoreLineMarginRight + linePaddingRight
     lineFullWidth = lineWidth + lineSeparation
     lineEndButtonHeight = noteMark.image.height / 2
   }
@@ -72,14 +73,6 @@ export default function Dimensions (window) {
     updateCursorDimensions()
   }
 
-  function getWindowStyle () {
-    return window
-  }
-
-  function getNoteMarkStyle () {
-    return noteMark
-  }
-
   function getCursorStyle (mark) {
     return {
       ...cursor,
@@ -87,35 +80,16 @@ export default function Dimensions (window) {
     }
   }
 
-  function getLineWidth () {
-    return lineWidth
-  }
-
-  function getLineFullWidth () {
-    return lineFullWidth
-  }
-
-  function getLineSeparation () {
-    return lineSeparation
-  }
-
-  function getMarkHeight () {
-    return markHeight
-  }
-
-  function getLineEndButtonHeight () {
-    return lineEndButtonHeight
-  }
-
   return {
     getCursorStyle,
-    getLineWidth,
-    getLineFullWidth,
-    getLineSeparation,
-    getMarkHeight,
-    getLineEndButtonHeight,
-    getNoteMarkStyle,
-    getWindowStyle,
+    getLineWidth: () => lineWidth,
+    getLineFullWidth: () => lineFullWidth,
+    getLinePaddingRight: () => linePaddingRight,
+    getLineSeparation: () => lineSeparation,
+    getMarkHeight: () => markHeight,
+    getLineEndButtonHeight: () => lineEndButtonHeight,
+    getNoteMarkStyle: () => noteMark,
+    getWindowStyle: () => window,
     setWindowDimensions
   }
 }

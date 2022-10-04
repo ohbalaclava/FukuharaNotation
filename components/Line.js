@@ -45,7 +45,7 @@ export default function Line ({ line, onPressMark, cursorIndex }) {
         <View/>
       </Pressable>
       <FlatList
-        style={styles.score.line}
+        style={[styles.score.line, { paddingRight: dimensions.getLinePaddingRight() }]}
         numColumns='1'
         data={line}
         renderItem={({ item, index }) => <Mark mark={item} onPress={() => onPressMark(index + 1)}/> }

@@ -111,12 +111,11 @@ const styles = StyleSheet.create({
       content: {
         padding: Dimensions.scoreContentPadding,
         backgroundImage: `url(${flippedPaper})`,
-        backgroundRepeat: 'repeat',
+        backgroundRepeat: 'repeat'
       }
     },
     line: {
       flex: 'none',
-      paddingRight: Dimensions.scoreLinePaddingRight,
       marginRight: Dimensions.scoreLineMarginRight
     },
     mark: {
