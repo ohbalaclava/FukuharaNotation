@@ -163,37 +163,21 @@ function createScore ({ lines, currentLine, lineCursor }) {
     postEdit()
   }
 
-  const getLines = () => lines
-
-  const getLineCount = () => lines.length
-
-  const getCurrentLineIndex = () => currentLine
-
-  const getCurrentMarkIndex = () => lineCursor
-
-  const clone = () => {
-    return createScore({ lines, currentLine, lineCursor })
-  }
-
-  const onEdit = (func) => {
-    postEditHook = func
-  }
-
   return {
     addNote,
     addOtherUnit,
     addAccidental,
     addOtherDecoration,
-    clone,
+    clone: () => createScore({ lines, currentLine, lineCursor }),
     deleteMark,
-    getCurrentLineIndex,
-    getCurrentMarkIndex,
-    getLines,
-    getLineCount,
+    getCurrentLineIndex: () => currentLine,
+    getCurrentMarkIndex: () => lineCursor,
+    getLines: () => lines,
+    getLineCount: () => lines.length,
     goto,
     newLine,
     setJoin,
-    onEdit
+    onEdit: (func) => { postEditHook = func }
   }
 }
 
