@@ -63,9 +63,6 @@ export default function ScoreView ({ score, refresh }) {
             })
           })
         }}
-        onScroll={(event) => {
-          dimensions.setScoreScrollOffset(event.nativeEvent.contentOffset.x)
-        }}
       />
     </View>
   )

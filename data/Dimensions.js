@@ -15,7 +15,6 @@ export default function Dimensions (window) {
   let markHeight
   let lineEndButtonHeight
   let cursor
-  let scoreScrollOffset = 0
 
   setWindowDimensions(window)
 
@@ -73,11 +72,6 @@ export default function Dimensions (window) {
     updateCursorDimensions()
   }
 
-  function setScoreScrollOffset (offset) {
-    scoreScrollOffset = offset
-    updateCursorDimensions()
-  }
-
   function getWindowStyle () {
     return window
   }
@@ -122,7 +116,6 @@ export default function Dimensions (window) {
     getLineEndButtonHeight,
     getNoteMarkStyle,
     getWindowStyle,
-    setScoreScrollOffset,
     setWindowDimensions
   }
 }
