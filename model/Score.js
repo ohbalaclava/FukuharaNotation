@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid'
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
 import Config from '../data/Config'
 
-function createScore ({ lines, currentLine, lineCursor }) {
+function createScore ({ id, title, lines, currentLine, lineCursor }) {
   let join = Join.None
   let joinChanged = false
   let postEditHook
@@ -168,8 +168,10 @@ function createScore ({ lines, currentLine, lineCursor }) {
     addOtherUnit,
     addAccidental,
     addOtherDecoration,
-    clone: () => createScore({ lines, currentLine, lineCursor }),
+    clone: () => createScore({ id, title, lines, currentLine, lineCursor }),
     deleteMark,
+    getID: () => id,
+    getTitle: () => title,
     getCurrentLineIndex: () => currentLine,
     getCurrentMarkIndex: () => lineCursor,
     getLines: () => lines,
@@ -177,10 +179,11 @@ function createScore ({ lines, currentLine, lineCursor }) {
     goto,
     newLine,
     setJoin,
+    setTitle: (newTitle) => { title = newTitle },
     onEdit: (func) => { postEditHook = func }
   }
 }
 
 export function createEmptyScore () {
-  return createScore({ lines: [], currentLine: 0, lineCursor: 0 })
+  return createScore({ id: nanoid(), title: '', lines: [], currentLine: 0, lineCursor: 0 })
 }
