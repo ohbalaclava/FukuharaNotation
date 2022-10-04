@@ -10,7 +10,7 @@ import Cursor from './Cursor'
 Line.propTypes = {
   line: PropTypes.array.isRequired,
   onPressMark: PropTypes.func.isRequired,
-  cursorIndex: PropTypes.func.isRequired
+  cursorIndex: PropTypes.number.isRequired
 }
 
 const paddingButtonStyles = StyleSheet.create({
