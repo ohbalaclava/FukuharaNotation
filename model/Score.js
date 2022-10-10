@@ -64,20 +64,19 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     lineCursor = (index === undefined) ? lines[currentLine].length : index
   }
 
-  function createUnitMark (unit) {
+  function createSimpleMark (fullMark) {
     return {
       id: nanoid(),
-      data: unit,
-      join: Join.None
+      type: fullMark.type,
+      name: fullMark.name
     }
   }
 
   function createNoteMark (note) {
-    return {
-      id: nanoid(),
-      data: { ...note },
-      join
-    }
+    const mark = createSimpleMark(note)
+    mark.join = join
+
+    return mark
   }
 
   function addNote (note) {
@@ -99,7 +98,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
   }
 
   function addOtherUnit (unit) {
-    lines[currentLine].splice(lineCursor, 0, createUnitMark(unit))
+    lines[currentLine].splice(lineCursor, 0, createSimpleMark(unit))
 
     closeLastJoin()
     joinChanged = true
@@ -113,12 +112,12 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
 
   function addAccidental (accidental) {
     const markIndex = lineCursor - 1
-    if (markIndex >= 0 && lines[currentLine][markIndex].data.type === MarkType.Note) {
-      const existingAccidental = lines[currentLine][markIndex].data.accidental
+    if (markIndex >= 0 && lines[currentLine][markIndex].type === MarkType.Note) {
+      const existingAccidental = lines[currentLine][markIndex].accidental
       if (existingAccidental && existingAccidental.name === accidental.name) {
-        delete lines[currentLine][markIndex].data.accidental
+        delete lines[currentLine][markIndex].accidental
       } else {
-        lines[currentLine][markIndex].data.accidental = accidental
+        lines[currentLine][markIndex].accidental = createSimpleMark(accidental)
       }
       postEdit()
     }
@@ -126,12 +125,12 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
 
   function addOtherDecoration (decoration) {
     const markIndex = lineCursor - 1
-    if (markIndex >= 0 && lines[currentLine][markIndex].data.type === MarkType.Note) {
-      const existingDecoration = lines[currentLine][markIndex].data.decoration
+    if (markIndex >= 0 && lines[currentLine][markIndex].type === MarkType.Note) {
+      const existingDecoration = lines[currentLine][markIndex].decoration
       if (existingDecoration && existingDecoration[decoration.name]) {
         delete existingDecoration[decoration.name]
       } else {
-        existingDecoration[decoration.name] = decoration
+        existingDecoration[decoration.name] = createSimpleMark(decoration)
       }
       postEdit()
     }

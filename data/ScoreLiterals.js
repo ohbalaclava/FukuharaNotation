@@ -1,18 +1,20 @@
 import { createEnum } from '../tools/Enum'
 
-export const MarkType = createEnum('Note', 'Accidental', 'OtherUnit', 'OtherDecoration', 'Join')
+export const MarkType = createEnum('Note', 'Accidental', 'Unit', 'Decoration', 'Join')
 export const Join = createEnum('None', 'Arc', 'Line', 'DoubleLine')
 export const Accidental = createEnum('Meri', 'None', 'Kari')
-export const OtherUnit = createEnum('Dash', 'DoubleDash', 'TripleDash', 'QuadrupleDash', 'Tail', 'Wiggle', 'Dot', 'Tick')
-export const OtherDecoration = createEnum('LeanTo', 'Dot')
+export const Unit = createEnum('Dash', 'DoubleDash', 'TripleDash', 'QuadrupleDash', 'Tail', 'Wiggle', 'Dot', 'Tick')
+export const Decoration = createEnum('LeanTo', 'Dot')
 export const JoinPosition = createEnum('Start', 'Middle', 'End')
+export const On = createEnum('Ryo', 'Kan', 'Daikan')
 
 export const ScoreMarks = {
   notes: {
     ryo: [
       {
         type: MarkType.Note,
-        name: 'rt',
+        octave: On.Ryo,
+        name: 'tsutsune',
         glyph: {
           white: require('../assets/numerals/white/dot-nana.png'),
           black: require('../assets/numerals/black/dot-nana.png')
@@ -20,7 +22,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'r1',
+        octave: On.Ryo,
+        name: '一',
         glyph: {
           white: require('../assets/numerals/white/ichi.png'),
           black: require('../assets/numerals/black/ichi.png')
@@ -28,7 +31,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'r2',
+        octave: On.Ryo,
+        name: '二',
         glyph: {
           white: require('../assets/numerals/white/ni.png'),
           black: require('../assets/numerals/black/ni.png')
@@ -36,7 +40,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'r3',
+        octave: On.Ryo,
+        name: '三',
         glyph: {
           white: require('../assets/numerals/white/san.png'),
           black: require('../assets/numerals/black/san.png')
@@ -44,7 +49,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'r4',
+        octave: On.Ryo,
+        name: '四',
         glyph: {
           white: require('../assets/numerals/white/shi.png'),
           black: require('../assets/numerals/black/shi.png')
@@ -52,7 +58,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'r5',
+        octave: On.Ryo,
+        name: '五',
         glyph: {
           white: require('../assets/numerals/white/go.png'),
           black: require('../assets/numerals/black/go.png')
@@ -60,7 +67,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'r6',
+        octave: On.Ryo,
+        name: '六',
         glyph: {
           white: require('../assets/numerals/white/roku.png'),
           black: require('../assets/numerals/black/roku.png')
@@ -68,7 +76,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'r7',
+        octave: On.Ryo,
+        name: '七',
         glyph: {
           white: require('../assets/numerals/white/nana.png'),
           black: require('../assets/numerals/black/nana.png')
@@ -76,7 +85,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'r0',
+        octave: On.Ryo,
+        name: '0',
         glyph: {
           white: require('../assets/numerals/white/zero.png'),
           black: require('../assets/numerals/black/zero.png')
@@ -86,7 +96,8 @@ export const ScoreMarks = {
     kan: [
       {
         type: MarkType.Note,
-        name: 'k1',
+        octave: On.Kan,
+        name: '1',
         glyph: {
           white: require('../assets/numerals/white/one.png'),
           black: require('../assets/numerals/black/one.png')
@@ -94,7 +105,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'k2',
+        octave: On.Kan,
+        name: '2',
         glyph: {
           white: require('../assets/numerals/white/two.png'),
           black: require('../assets/numerals/black/two.png')
@@ -102,7 +114,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'k3',
+        octave: On.Kan,
+        name: '3',
         glyph: {
           white: require('../assets/numerals/white/three.png'),
           black: require('../assets/numerals/black/three.png')
@@ -110,7 +123,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'k4',
+        octave: On.Kan,
+        name: '4',
         glyph: {
           white: require('../assets/numerals/white/four.png'),
           black: require('../assets/numerals/black/four.png')
@@ -118,7 +132,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'k5',
+        octave: On.Kan,
+        name: '5',
         glyph: {
           white: require('../assets/numerals/white/five.png'),
           black: require('../assets/numerals/black/five.png')
@@ -126,7 +141,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'k6',
+        octave: On.Kan,
+        name: '6',
         glyph: {
           white: require('../assets/numerals/white/six.png'),
           black: require('../assets/numerals/black/six.png')
@@ -134,7 +150,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'k7',
+        octave: On.Kan,
+        name: '7',
         glyph: {
           white: require('../assets/numerals/white/seven.png'),
           black: require('../assets/numerals/black/seven.png')
@@ -142,7 +159,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'k0',
+        octave: On.Kan,
+        name: '0dot',
         glyph: {
           white: require('../assets/numerals/white/zero-dot.png'),
           black: require('../assets/numerals/black/zero-dot.png')
@@ -152,7 +170,8 @@ export const ScoreMarks = {
     daikan: [
       {
         type: MarkType.Note,
-        name: 'd1',
+        octave: On.Daikan,
+        name: '8',
         glyph: {
           white: require('../assets/numerals/white/eight.png'),
           black: require('../assets/numerals/black/eight.png')
@@ -160,7 +179,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'd2',
+        octave: On.Daikan,
+        name: '2dot',
         glyph: {
           white: require('../assets/numerals/white/two-dot.png'),
           black: require('../assets/numerals/black/two-dot.png')
@@ -168,7 +188,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'd3',
+        octave: On.Daikan,
+        name: '3dot',
         glyph: {
           white: require('../assets/numerals/white/three-dot.png'),
           black: require('../assets/numerals/black/three-dot.png')
@@ -176,7 +197,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'd4',
+        octave: On.Daikan,
+        name: '4dot',
         glyph: {
           white: require('../assets/numerals/white/four-dot.png'),
           black: require('../assets/numerals/black/four-dot.png')
@@ -184,7 +206,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'd5',
+        octave: On.Daikan,
+        name: '5dot',
         glyph: {
           white: require('../assets/numerals/white/five-dot.png'),
           black: require('../assets/numerals/black/five-dot.png')
@@ -192,7 +215,8 @@ export const ScoreMarks = {
       },
       {
         type: MarkType.Note,
-        name: 'd6',
+        octave: On.Daikan,
+        name: '6dot',
         glyph: {
           white: require('../assets/numerals/white/six-dot.png'),
           black: require('../assets/numerals/black/six-dot.png')
@@ -218,84 +242,84 @@ export const ScoreMarks = {
       }
     }
   ],
-  otherDecorarions: [
+  decorations: [
     {
-      type: MarkType.OtherDecoration,
-      name: OtherDecoration.LeanTo,
+      type: MarkType.Decoration,
+      name: Decoration.LeanTo,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     },
     {
-      type: MarkType.OtherDecoration,
-      name: OtherDecoration.Dot,
+      type: MarkType.Decoration,
+      name: Decoration.Dot,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     }
   ],
-  otherUnits: [
+  units: [
     {
-      type: MarkType.OtherUnit,
-      name: OtherUnit.Dash,
+      type: MarkType.Unit,
+      name: Unit.Dash,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     },
     {
-      type: MarkType.OtherUnit,
-      name: OtherUnit.DoubleDash,
+      type: MarkType.Unit,
+      name: Unit.DoubleDash,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     },
     {
-      type: MarkType.OtherUnit,
-      name: OtherUnit.TripleDash,
+      type: MarkType.Unit,
+      name: Unit.TripleDash,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     },
     {
-      type: MarkType.OtherUnit,
-      name: OtherUnit.QuadrupleDash,
+      type: MarkType.Unit,
+      name: Unit.QuadrupleDash,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     },
     {
-      type: MarkType.OtherUnit,
-      name: OtherUnit.Dot,
+      type: MarkType.Unit,
+      name: Unit.Dot,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     },
     {
-      type: MarkType.OtherUnit,
-      name: OtherUnit.Tick,
+      type: MarkType.Unit,
+      name: Unit.Tick,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     },
     {
-      type: MarkType.OtherUnit,
-      name: OtherUnit.Wiggle,
+      type: MarkType.Unit,
+      name: Unit.Wiggle,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
       }
     },
     {
-      type: MarkType.OtherUnit,
-      name: OtherUnit.Tail,
+      type: MarkType.Unit,
+      name: Unit.Tail,
       glyph: {
         white: require('../assets/stand-in.png'),
         black: require('../assets/stand-in.png')
@@ -328,4 +352,28 @@ export const ScoreMarks = {
       }
     }
   ]
+}
+
+const glyphs = new Map();
+
+(function () {
+  const glyphBuilder = (item) => {
+    glyphs.set(item.name, item.glyph)
+  }
+
+  ScoreMarks.notes.ryo.forEach(glyphBuilder)
+  ScoreMarks.notes.kan.forEach(glyphBuilder)
+  ScoreMarks.notes.daikan.forEach(glyphBuilder)
+  ScoreMarks.accidentals.forEach(glyphBuilder)
+  ScoreMarks.decorations.forEach(glyphBuilder)
+  ScoreMarks.units.forEach(glyphBuilder)
+  ScoreMarks.joins.forEach(glyphBuilder)
+})()
+
+export function getBlackGlyph (markName) {
+  return glyphs.get(markName).black
+}
+
+export function getWhiteGlyph (markName) {
+  return glyphs.get(markName).white
 }
