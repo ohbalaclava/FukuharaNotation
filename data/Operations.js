@@ -9,7 +9,7 @@ export const Operations = {
     glyph: require('../assets/operations/turn_up.png')
   },
   download: {
-    style: 'saveButton',
+    style: 'downloadButton',
     glyph: require('../assets/stand-in.png')
   }
 }
