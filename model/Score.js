@@ -164,7 +164,9 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
   }
 
   function serialise () {
-    return JSON.stringify(lines)
+    return JSON.stringify({
+      id, title, lines, currentLine, lineCursor
+    })
   }
 
   return {
