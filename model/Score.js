@@ -15,11 +15,11 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     lines[0].id = nanoid()
   }
 
-  const postEdit = () => {
+  function postEdit () {
     postEditHook && postEditHook()
   }
 
-  const repairJoins = () => {
+  function repairJoins () {
     let inJoin = false
     for (const mark of lines[currentLine]) {
       if (mark.join !== Join.None) {
@@ -47,24 +47,24 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  const closeLastJoin = () => {
+  function closeLastJoin () {
     if (lineCursor > 0 && lines[currentLine][lineCursor - 1].join !== Join.None) {
       lines[currentLine][lineCursor - 1].joinPosition = JoinPosition.End
       repairJoins()
     }
   }
 
-  const setJoin = (joinType) => {
+  function setJoin (joinType) {
     join = joinType
     joinChanged = true
   }
 
-  const goto = (line, index) => {
+  function goto (line, index) {
     currentLine = (line === undefined) ? lines.length - 1 : line
     lineCursor = (index === undefined) ? lines[currentLine].length : index
   }
 
-  const createUnitMark = (unit) => {
+  function createUnitMark (unit) {
     return {
       id: nanoid(),
       data: unit,
@@ -72,7 +72,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  const createNoteMark = (note) => {
+  function createNoteMark (note) {
     return {
       id: nanoid(),
       data: { ...note },
@@ -80,7 +80,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  const addNote = (note) => {
+  function addNote (note) {
     lines[currentLine].splice(lineCursor, 0, createNoteMark(note))
     if (lines[currentLine][lineCursor].join !== Join.None) {
       lines[currentLine][lineCursor].joinPosition = (joinChanged) ? JoinPosition.Start : JoinPosition.Middle
@@ -98,7 +98,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  const addOtherUnit = (unit) => {
+  function addOtherUnit (unit) {
     lines[currentLine].splice(lineCursor, 0, createUnitMark(unit))
 
     closeLastJoin()
@@ -111,7 +111,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  const addAccidental = (accidental) => {
+  function addAccidental (accidental) {
     const markIndex = lineCursor - 1
     if (markIndex >= 0 && lines[currentLine][markIndex].data.type === MarkType.Note) {
       const existingAccidental = lines[currentLine][markIndex].data.accidental
@@ -124,7 +124,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  const addOtherDecoration = (decoration) => {
+  function addOtherDecoration (decoration) {
     const markIndex = lineCursor - 1
     if (markIndex >= 0 && lines[currentLine][markIndex].data.type === MarkType.Note) {
       const existingDecoration = lines[currentLine][markIndex].data.decoration
@@ -137,7 +137,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  const deleteMark = () => {
+  function deleteMark () {
     if (lineCursor === 0) {
       if (currentLine !== 0) {
         lines[currentLine - 1].push(...lines[currentLine])
@@ -153,7 +153,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  const newLine = () => {
+  function newLine () {
     closeLastJoin()
     const newLine = lines[currentLine].splice(lineCursor)
     lines.splice(currentLine + 1, 0, newLine)
