@@ -69,9 +69,19 @@ const styles = StyleSheet.create({
   },
   operations: {
     view: {
-      flexFlow: 'row nowrap',
+      flexFlow: 'column nowrap',
       justifyContent: 'space-evenly',
-      alignItems: 'stretch'
+      alignItems: 'stretch',
+      row1: {
+        flexFlow: 'row nowrap',
+        justifyContent: 'space-evenly',
+        alignItems: 'stretch'
+      },
+      row2: {
+        flexFlow: 'row nowrap',
+        justifyContent: 'space-evenly',
+        alignItems: 'stretch'
+      }
     },
     deleteButton: {
       padding: 10,
@@ -99,6 +109,29 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       borderWidth: 1,
       backgroundColor: 'rgba(245, 245, 245, 0.9)'
+    },
+    saveButton: {
+      padding: 10,
+      marginVertical: 6,
+      marginHorizontal: 6,
+      image: {
+        width: 40,
+        height: 40
+      },
+      borderRadius: 5,
+      borderWidth: 1,
+      backgroundColor: 'rgba(245, 245, 245, 0.9)'
+    }
+  },
+  titleDialog: {
+    view: {
+
+    },
+    label: {
+    },
+    input: {
+    },
+    button: {
     }
   },
   score: {

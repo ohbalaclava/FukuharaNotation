@@ -163,6 +163,10 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     postEdit()
   }
 
+  function serialise () {
+    return JSON.stringify(lines)
+  }
+
   return {
     addNote,
     addOtherUnit,
@@ -178,6 +182,7 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     getLineCount: () => lines.length,
     goto,
     newLine,
+    serialise,
     setJoin,
     setTitle: (newTitle) => { title = newTitle },
     onEdit: (func) => { postEditHook = func }

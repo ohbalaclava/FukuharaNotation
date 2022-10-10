@@ -7,5 +7,9 @@ export const Operations = {
   newline: {
     style: 'newlineButton',
     glyph: require('../assets/operations/turn_up.png')
+  },
+  download: {
+    style: 'saveButton',
+    glyph: require('../assets/stand-in.png')
   }
 }
