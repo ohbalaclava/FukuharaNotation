@@ -7,6 +7,7 @@ import Background from '../components/Background'
 import NoteSelectView from '../views/NoteSelectView'
 import AccidentalSelectView from './AccidentalSelectView.js'
 import OperationsView from './OperationsView.js'
+import { createScore } from '../model/Score'
 
 InputView.propTypes = {
   score: PropTypes.object.isRequired,
@@ -38,12 +39,40 @@ export default function InputView ({ score, refresh }) {
     }
   }
 
+  function setError (name, message) {
+
+  }
+
+  function upload () {
+    const uploadInput = document.createElement('input')
+    uploadInput.type = 'file'
+    uploadInput.multiple = false
+    uploadInput.accept = '.json,application/json,.shinobue'
+
+    uploadInput.addEventListener('change', () => {
+      const fileObj = uploadInput.files[0]
+      const reader = new FileReader()
+
+      reader.addEventListener('load', () => {
+        refresh(createScore(JSON.parse(reader.result)))
+      })
+
+      reader.addEventListener('error', () => {
+        setError(reader.error.name, reader.error.message)
+      })
+
+      reader.readAsText(fileObj)
+    })
+
+    uploadInput.click()
+  }
+
   return (
     <View style={styles.input.view}>
       <Background border={border} source={require('../assets/bamboo.png')}/>
       <NoteSelectView addNote={score.addNote} refresh={refresh}/>
       <AccidentalSelectView addAccidental={score.addAccidental} refresh={refresh}/>
-      <OperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh} download={download}/>
+      <OperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh} download={download} upload={upload}/>
 
       <Modal onRequestClose={() => setTitleDialogVisible(false)} visible={titleDialogVisible} transparent animationType="fade">
         <View style={styles.titleDialog.view}>

@@ -3,17 +3,31 @@ import { nanoid } from 'nanoid'
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
 import Config from '../data/Config'
 
-function createScore ({ id, title, lines, currentLine, lineCursor }) {
+export function createScore ({ id, title, lines, currentLine, lineCursor }) {
   let join = Join.None
   let joinChanged = false
   let postEditHook
 
-  if (lines.length === 0) {
-    lines.push([])
-    currentLine = 0
-    lineCursor = 0
-    lines[0].id = nanoid()
-  }
+  // constructor
+  (function () {
+    id = id || nanoid()
+    currentLine = currentLine || 0
+    lineCursor = lineCursor || 0
+
+    if (lines.length === 0) {
+      lines.push([])
+      currentLine = 0
+      lineCursor = 0
+      lines[0].id = nanoid()
+    } else {
+      lines.forEach(line => {
+        line.id = line.id || nanoid()
+        line.forEach(mark => {
+          mark.id = mark.id || nanoid()
+        })
+      })
+    }
+  })()
 
   function postEdit () {
     postEditHook && postEditHook()
@@ -165,6 +179,10 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
   function serialise () {
     return JSON.stringify({
       id, title, lines, currentLine, lineCursor
+    }, (key, value) => {
+      if (key !== 'id' || this.lines) { // strip ids but not the score id
+        return value
+      }
     })
   }
 
@@ -185,11 +203,11 @@ function createScore ({ id, title, lines, currentLine, lineCursor }) {
     newLine,
     serialise,
     setJoin,
-    setTitle: (newTitle) => { title = newTitle },
-    onEdit: (func) => { postEditHook = func }
+    setTitle: newTitle => { title = newTitle },
+    onEdit: func => { postEditHook = func }
   }
 }
 
 export function createEmptyScore () {
-  return createScore({ id: nanoid(), title: '', lines: [], currentLine: 0, lineCursor: 0 })
+  return createScore({ title: '', lines: [], currentLine: 0, lineCursor: 0 })
 }

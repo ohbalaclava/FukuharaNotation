@@ -11,5 +11,9 @@ export const Operations = {
   download: {
     style: 'downloadButton',
     glyph: require('../assets/stand-in.png')
+  },
+  upload: {
+    style: 'uploadButton',
+    glyph: require('../assets/stand-in.png')
   }
 }

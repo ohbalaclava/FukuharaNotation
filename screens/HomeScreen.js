@@ -10,7 +10,7 @@ import { DimensionsContext } from '../data/Dimensions'
 export default function HomeScreen () {
   const [score, setScore] = useState(() => createEmptyScore())
   const { dimensions } = useContext(DimensionsContext)
-  const refresh = () => setScore(score.clone())
+  const refresh = (newScore) => setScore(newScore || score.clone())
 
   return (
     <SafeAreaView style={styles.container}>

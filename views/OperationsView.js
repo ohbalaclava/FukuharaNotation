@@ -10,10 +10,11 @@ OperationsView.propTypes = {
   deleteMark: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired,
   newline: PropTypes.func.isRequired,
-  download: PropTypes.func.isRequired
+  download: PropTypes.func.isRequired,
+  upload: PropTypes.func.isRequired
 }
 
-export default function OperationsView ({ deleteMark, newline, download, refresh }) {
+export default function OperationsView ({ deleteMark, newline, download, upload, refresh }) {
   return (
     <View style={ styles.operations.view }>
       <View style={ styles.operations.view.row1 }>
@@ -35,6 +36,12 @@ export default function OperationsView ({ deleteMark, newline, download, refresh
           image={Operations.download.glyph}
           onPress={() => { download() }}
           buttonStyleName={Operations.download.style}
+          styleGroup='operations'
+        />
+        <ImageButton
+          image={Operations.upload.glyph}
+          onPress={() => { upload() }}
+          buttonStyleName={Operations.upload.style}
           styleGroup='operations'
         />
       </View>
