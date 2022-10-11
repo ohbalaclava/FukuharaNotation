@@ -23,7 +23,9 @@ export default function InputView ({ score, refresh }) {
     width: 1
   }
 
-  function setError (name, message) { }
+  function setError (name, message) {
+    // TODO
+  }
 
   function download () {
     const title = score.getTitle()
