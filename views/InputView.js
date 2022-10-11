@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, Modal, Text, TextInput, View } from 'react-native-web'
+import React from 'react'
+import { View } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import styles from '../styles/ScreenStyles'
@@ -8,6 +8,8 @@ import NoteSelectView from '../views/NoteSelectView'
 import AccidentalSelectView from './AccidentalSelectView.js'
 import OperationsView from './OperationsView.js'
 import { createScore } from '../model/Score'
+import ScoreTitle from '../components/ScoreTitle'
+import { downloadJson, uploadJson } from '../tools/Persistence'
 
 InputView.propTypes = {
   score: PropTypes.object.isRequired,
@@ -15,73 +17,39 @@ InputView.propTypes = {
 }
 
 export default function InputView ({ score, refresh }) {
-  const [titleDialogVisible, setTitleDialogVisible] = useState(false)
-
   const border = {
     colour: 'grey',
     radius: 5,
     width: 1
   }
 
+  function setError (name, message) { }
+
   function download () {
-    if (score.getTitle().length === 0) {
-      setTitleDialogVisible(true)
-    } else {
-      const scoreJson = score.serialise()
-      const blob = new Blob([scoreJson])
-      const downloadUrl = URL.createObjectURL(blob)
+    const title = score.getTitle()
+    const filename = `${(title && title.length > 0) ? title : 'untitled'}.shinobue.json`
 
-      const downloadLink = document.createElement('a')
-      downloadLink.href = downloadUrl
-      downloadLink.download = `${score.getTitle()}.shinobue.json`
-      downloadLink.click()
-      URL.revokeObjectURL(downloadUrl)
-    }
-  }
-
-  function setError (name, message) {
-
+    downloadJson({ filename, json: score.serialise() })
   }
 
   function upload () {
-    const uploadInput = document.createElement('input')
-    uploadInput.type = 'file'
-    uploadInput.multiple = false
-    uploadInput.accept = '.json,application/json,.shinobue'
-
-    uploadInput.addEventListener('change', () => {
-      const fileObj = uploadInput.files[0]
-      const reader = new FileReader()
-
-      reader.addEventListener('load', () => {
-        refresh(createScore(JSON.parse(reader.result)))
-      })
-
-      reader.addEventListener('error', () => {
-        setError(reader.error.name, reader.error.message)
-      })
-
-      reader.readAsText(fileObj)
+    uploadJson({
+      onload: (json) => {
+        refresh(createScore(json))
+      },
+      onerror: (name, message) => {
+        setError(name, message)
+      }
     })
-
-    uploadInput.click()
   }
 
   return (
     <View style={styles.input.view}>
       <Background border={border} source={require('../assets/bamboo.png')}/>
+      <ScoreTitle title={score.getTitle()} onOK={(title) => { score.setTitle(title) }}/>
       <NoteSelectView addNote={score.addNote} refresh={refresh}/>
       <AccidentalSelectView addAccidental={score.addAccidental} refresh={refresh}/>
       <OperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh} download={download} upload={upload}/>
-
-      <Modal onRequestClose={() => setTitleDialogVisible(false)} visible={titleDialogVisible} transparent animationType="fade">
-        <View style={styles.titleDialog.view}>
-          <Text style={styles.titleDialog.label}>Title:</Text>
-          <TextInput onChange={(event) => score.setTitle(event.target.value)} style={styles.titleDialog.input}/>
-          <Button onPress={() => { setTitleDialogVisible(false); download() }} title={'Download'} style={styles.titleDialog.button}/>
-          <Button onPress={() => setTitleDialogVisible(false)} title={'Cancel'} style={styles.titleDialog.button}/>
-        </View>
-      </Modal>
     </View>
   )
 }

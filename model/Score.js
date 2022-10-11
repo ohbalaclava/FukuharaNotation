@@ -209,5 +209,5 @@ export function createScore ({ id, title, lines, currentLine, lineCursor }) {
 }
 
 export function createEmptyScore () {
-  return createScore({ title: '', lines: [], currentLine: 0, lineCursor: 0 })
+  return createScore({ title: 'Untitled', lines: [], currentLine: 0, lineCursor: 0 })
 }

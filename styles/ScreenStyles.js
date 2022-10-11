@@ -135,14 +135,50 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(245, 245, 245, 0.9)'
     }
   },
+  title: {
+    flex: 1,
+    padding: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'grey',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    textAlign: 'center',
+    fontFamily: 'serif',
+    fontSize: 18
+  },
   titleDialog: {
     view: {
+      flex: 1,
+      flexFlow: 'column nowrap',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    textComponents: {
+      flexFlow: 'column nowrap',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    buttonComponents: {
+      flexFlow: 'row nowrap',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 20,
+      marginVertical: 20
     },
     label: {
+      flex: 1,
+      padding: 20,
+      textAlign: 'center',
+      fontFamily: 'serif',
+      fontSize: 18,
+      fontWeight: 'bold'
     },
     input: {
-    },
-    button: {
+      flex: 1,
+      padding: 20,
+      fontFamily: 'serif',
+      fontSize: 18,
+      textAlign: 'center'
     }
   },
   score: {
