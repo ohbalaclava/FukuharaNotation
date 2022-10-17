@@ -5,15 +5,15 @@ export const Operations = {
     glyph: require('../assets/operations/backspace.png')
   },
   newline: {
-    style: 'newlineButton',
+    style: 'generalButton',
     glyph: require('../assets/operations/turn_up.png')
   },
   download: {
-    style: 'downloadButton',
+    style: 'generalButton',
     glyph: require('../assets/stand-in.png')
   },
   upload: {
-    style: 'uploadButton',
+    style: 'generalButton',
     glyph: require('../assets/stand-in.png')
   }
 }

@@ -49,8 +49,7 @@ export default function InputView ({ score, refresh }) {
     <View style={styles.input.view}>
       <Background border={border} source={require('../assets/bamboo.png')}/>
       <ScoreTitle title={score.getTitle()} onOK={(title) => { score.setTitle(title) }}/>
-      <NoteSelectView addNote={score.addNote} refresh={refresh}/>
-      <AccidentalSelectView addAccidental={score.addAccidental} refresh={refresh}/>
+      <NoteSelectView addNote={score.addNote} addAccidental={score.addAccidental} refresh={refresh}/>
       <OperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh} download={download} upload={upload}/>
     </View>
   )

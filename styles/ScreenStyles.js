@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
   input: {
     view: {
       flex: 'initial',
-      margin: 20,
-      padding: 10
+      flexFlow: 'column nowrap',
+      margin: Dimensions.inputPanelMargin
     },
     bamboo: {
       flex: 1,
@@ -33,26 +33,30 @@ const styles = StyleSheet.create({
   },
   notes: {
     view: {
-      flexFlow: 'row nowrap'
+      flex: 'initial',
+      flexFlow: 'row nowrap',
+      justifyContent: 'space-around'
+    },
+    buttons: {
+      flex: 1,
+      flexFlow: 'column nowrap',
+      justifyContent: 'flex-start'
     },
     noteButton: {
-      padding: 10,
-      marginVertical: 6,
-      marginHorizontal: 6,
-      image: {
-        width: 30,
-        height: 30
-      },
-      borderRadius: 50,
-      borderWidth: 3,
+      flex: 'initial',
       borderColor: 'black',
       backgroundColor: buttonColour
     }
   },
   accidentals: {
     view: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      flexFlow: 'column nowrap',
       justifyContent: 'center',
-      alignItems: 'center'
+      backgroundColor: 'rgba(255, 0, 0, 0.2)',
+      margin: 5
     },
     accidentalButton: {
       padding: 10,
@@ -69,82 +73,45 @@ const styles = StyleSheet.create({
   },
   operations: {
     view: {
+      flex: 2,
       flexFlow: 'column nowrap',
       justifyContent: 'space-evenly',
-      alignItems: 'stretch',
       row1: {
+        flex: 1,
         flexFlow: 'row nowrap',
-        justifyContent: 'space-evenly',
-        alignItems: 'stretch'
+        justifyContent: 'center',
+        alignItems: 'center'
       },
       row2: {
+        flex: 1,
         flexFlow: 'row nowrap',
-        justifyContent: 'space-evenly',
-        alignItems: 'stretch'
+        justifyContent: 'center',
+        alignItems: 'center'
       }
     },
     deleteButton: {
-      padding: 10,
-      marginVertical: 6,
-      marginHorizontal: 6,
       image: {
         position: 'relative',
         top: '50%',
         transform: 'translateY(-50%)',
-        width: 60,
-        height: 20
       },
-      borderRadius: 5,
-      borderWidth: 1,
       backgroundColor: 'rgba(245, 245, 245, 0.9)'
     },
-    newlineButton: {
-      padding: 10,
-      marginVertical: 6,
-      marginHorizontal: 6,
-      image: {
-        width: 40,
-        height: 40
-      },
-      borderRadius: 5,
-      borderWidth: 1,
-      backgroundColor: 'rgba(245, 245, 245, 0.9)'
-    },
-    downloadButton: {
-      padding: 10,
-      marginVertical: 6,
-      marginHorizontal: 6,
-      image: {
-        width: 40,
-        height: 40
-      },
-      borderRadius: 5,
-      borderWidth: 1,
-      backgroundColor: 'rgba(245, 245, 245, 0.9)'
-    },
-    uploadButton: {
-      padding: 10,
-      marginVertical: 6,
-      marginHorizontal: 6,
-      image: {
-        width: 40,
-        height: 40
-      },
-      borderRadius: 5,
-      borderWidth: 1,
+    generalButton: {
       backgroundColor: 'rgba(245, 245, 245, 0.9)'
     }
   },
   title: {
     flex: 1,
-    padding: 5,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: 'grey',
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
     textAlign: 'center',
     fontFamily: 'serif',
-    fontSize: 18
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderColor: 'grey'
   },
   titleDialog: {
     view: {

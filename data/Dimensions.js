@@ -1,12 +1,18 @@
-import { assert } from '../tools/Assertions'
 import Config from './Config'
 import { createContext } from 'react'
 
 export const scoreContentPadding = 20
 export const scoreLineMarginRight = 5
+export const inputPanelMargin = 20
+
+const wideButtonAspectRatio = 1.5
+const inputPanelAspectRatio = 0.28
 
 export default function Dimensions (window) {
-  let contentHeight
+  let inputPanelHeight
+  let noteButtonPanelHeight
+  let operationsPanelHeight
+  let scoreContentHeight
   let noteMark
   let lineWidth
   let lineFullWidth
@@ -15,19 +21,27 @@ export default function Dimensions (window) {
   let lineEndButtonHeight
   let cursor
   let linePaddingRight
+  let noteButton
+  let accidentalButton
+  let accidentalButtonPanel
+  let squareOperationButton
+  let wideOperationButton
+  let titlePanelHeight
+  let title
 
   setWindowDimensions(window)
 
   function updateScoreContentHeight () {
-    contentHeight = window.height - scoreContentPadding * 2
+    scoreContentHeight = window.height - scoreContentPadding * 2
   }
 
   function updateNoteMarkDimensions () {
+    markHeight = scoreContentHeight / (Config.maxLineLength + 1)
+
     const padding = 2
-    const totalMarkLength = contentHeight / (Config.maxLineLength + 1)
-    const marginVertical = totalMarkLength / 10
-    const marginHorizontal = totalMarkLength * 0.15
-    const markImageLength = totalMarkLength - 2 * (padding + marginVertical)
+    const marginVertical = markHeight / 10
+    const marginHorizontal = markHeight * 0.15
+    const markImageLength = markHeight - 2 * (padding + marginVertical)
 
     noteMark = {
       image: {
@@ -38,8 +52,6 @@ export default function Dimensions (window) {
       marginVertical,
       marginHorizontal
     }
-
-    markHeight = 2 * (marginVertical + padding) + markImageLength
   }
 
   function updateLineDimensions () {
@@ -63,10 +75,113 @@ export default function Dimensions (window) {
     }
   }
 
-  function setWindowDimensions (windowDimensions) {
-    assert(window, 'Dimensions: window must be a { width, height }')
+  function updateInputPanelHeights () {
+    inputPanelHeight = window.height - inputPanelMargin * 2
+    titlePanelHeight = inputPanelHeight / 24
+    noteButtonPanelHeight = inputPanelHeight * 0.77
+    operationsPanelHeight = inputPanelHeight - noteButtonPanelHeight - titlePanelHeight
+  }
 
+  function updateTitleDimensions () {
+    const padding = titlePanelHeight / 5
+    title = {
+      minHeight: titlePanelHeight,
+      fontSize: titlePanelHeight - 2 * padding,
+      padding
+    }
+  }
+
+  function updateNoteButtonDimensions () {
+    const totalNoteButtonHeight = noteButtonPanelHeight / 9
+    const borderWidth = 3
+    const marginVertical = totalNoteButtonHeight / 10
+    const marginHorizontal = totalNoteButtonHeight * 0.15
+    const noteButtonDiameter = totalNoteButtonHeight - 2 * marginVertical
+    const padding = noteButtonDiameter / 5
+    const buttonImageLength = noteButtonDiameter - 2 * (padding + borderWidth)
+
+    noteButton = {
+      image: {
+        width: buttonImageLength,
+        height: buttonImageLength
+      },
+      borderRadius: 50,
+      borderWidth,
+      width: noteButtonDiameter,
+      height: noteButtonDiameter,
+      minWidth: noteButtonDiameter,
+      padding,
+      marginVertical,
+      marginHorizontal
+    }
+  }
+
+  function updateAccidentalButtonDimensions () {
+    const totalAccidentalButtonHeight = noteButtonPanelHeight / 9
+    const borderWidth = 3
+    const margin = totalAccidentalButtonHeight / 10
+    const accidentalButtonLength = totalAccidentalButtonHeight - 2 * margin
+    const padding = accidentalButtonLength / 5
+    const buttonImageLength = accidentalButtonLength - 2 * (padding + borderWidth)
+
+    accidentalButton = {
+      image: {
+        width: buttonImageLength,
+        height: buttonImageLength
+      },
+      borderRadius: 5,
+      borderWidth,
+      width: accidentalButtonLength,
+      height: accidentalButtonLength,
+      padding,
+      marginVertical: margin,
+      marginHorizontal: margin
+    }
+
+    accidentalButtonPanel = {
+      margin
+    }
+  }
+
+  function updateOperationButtonDimensions () {
+    const totalOperationButtonHeight = operationsPanelHeight / 2
+    const borderWidth = 1
+    const margin = totalOperationButtonHeight / 10
+    const operationButtonHeight = totalOperationButtonHeight - 2 * margin
+    const padding = operationButtonHeight / 5
+    const buttonImageHeight = operationButtonHeight - 2 * (padding + borderWidth)
+
+    squareOperationButton = {
+      image: {
+        width: buttonImageHeight,
+        height: buttonImageHeight
+      },
+      borderRadius: 5,
+      borderWidth,
+      width: operationButtonHeight,
+      height: operationButtonHeight,
+      padding,
+      marginVertical: margin,
+      marginHorizontal: margin
+    }
+
+    wideOperationButton = {
+      ...squareOperationButton,
+      width: operationButtonHeight * wideButtonAspectRatio,
+      image: {
+        width: buttonImageHeight * wideButtonAspectRatio,
+        height: buttonImageHeight
+      }
+    }
+  }
+
+  function setWindowDimensions (windowDimensions) {
     window = windowDimensions
+    updateInputPanelHeights()
+    updateTitleDimensions()
+    updateNoteButtonDimensions()
+    updateAccidentalButtonDimensions()
+    updateOperationButtonDimensions()
     updateScoreContentHeight()
     updateNoteMarkDimensions()
     updateLineDimensions()
@@ -86,9 +201,16 @@ export default function Dimensions (window) {
     getLineFullWidth: () => lineFullWidth,
     getLinePaddingRight: () => linePaddingRight,
     getLineSeparation: () => lineSeparation,
-    getMarkHeight: () => markHeight,
     getLineEndButtonHeight: () => lineEndButtonHeight,
+    getTitleStyle: () => title,
+    getNoteButtonViewHeight: () => noteButtonPanelHeight,
     getNoteMarkStyle: () => noteMark,
+    getNoteButtonStyle: () => noteButton,
+    getAccidentalButtonViewStyle: () => accidentalButtonPanel,
+    getAccidentalButtonStyle: () => accidentalButton,
+    getOperationButtonViewHeight: () => operationsPanelHeight,
+    getSquareOperationButtonStyle: () => squareOperationButton,
+    getWideOperationButtonStyle: () => wideOperationButton,
     getWindowStyle: () => window,
     setWindowDimensions
   }

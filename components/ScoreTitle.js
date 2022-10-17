@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Modal, Text, TextInput, View } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import styles from '../styles/ScreenStyles'
+import { DimensionsContext } from '../data/Dimensions'
 
 ScoreTitle.propTypes = {
   title: PropTypes.string,
@@ -13,10 +14,11 @@ ScoreTitle.propTypes = {
 export default function ScoreTitle ({ title, onOK, onCancel }) {
   const [titleDialogVisible, setTitleDialogVisible] = useState(false)
   const [_title, setTitle] = useState(() => title)
+  const { dimensions } = useContext(DimensionsContext)
 
   return (
     <View>
-      <Text style={styles.title} onPress={() => setTitleDialogVisible(true)}>
+      <Text style={[styles.title, dimensions.getTitleStyle()]} onPress={() => setTitleDialogVisible(true)}>
         {_title}
       </Text>
 
