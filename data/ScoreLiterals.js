@@ -265,8 +265,8 @@ export const ScoreMarks = {
       type: MarkType.Unit,
       name: Unit.Dash,
       glyph: {
-        white: require('../assets/stand-in.png'),
-        black: require('../assets/stand-in.png')
+        white: require('../assets/marks/white/dash.png'),
+        black: require('../assets/marks/black/dash.png')
       }
     },
     {

@@ -111,7 +111,7 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  function addOtherUnit (unit) {
+  function addUnit (unit) {
     lines[currentLine].splice(lineCursor, 0, createSimpleMark(unit))
 
     closeLastJoin()
@@ -137,7 +137,7 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
     }
   }
 
-  function addOtherDecoration (decoration) {
+  function addDecoration (decoration) {
     const markIndex = lineCursor - 1
     if (markIndex >= 0 && lines[currentLine][markIndex].type === MarkType.Note) {
       const existingDecoration = lines[currentLine][markIndex].decoration
@@ -188,9 +188,9 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
 
   return {
     addNote,
-    addOtherUnit,
+    addUnit,
     addAccidental,
-    addOtherDecoration,
+    addDecoration,
     clone: () => createScore({ docId, title, lines, currentLine, lineCursor }),
     deleteMark,
     getID: () => docId,

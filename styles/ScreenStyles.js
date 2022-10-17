@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: 'grey',
       borderRadius: 5
+    },
+    marks: {
+      flex: 'initial',
+      flexFlow: 'row nowrap'
     }
   },
   notes: {
@@ -59,6 +63,16 @@ const styles = StyleSheet.create({
       margin: 5
     },
     accidentalButton: {
+      backgroundColor: buttonColour
+    }
+  },
+  units: {
+    view: {
+      flex: 'initial',
+      flexFlow: 'column nowrap',
+      justifyContent: 'space-around'
+    },
+    unitButton: {
       padding: 10,
       marginVertical: 6,
       marginHorizontal: 6,
@@ -67,7 +81,7 @@ const styles = StyleSheet.create({
         height: 30
       },
       borderRadius: 5,
-      borderWidth: 3,
+      borderWidth: 1,
       backgroundColor: buttonColour
     }
   },
@@ -89,15 +103,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
       }
     },
-    deleteButton: {
-      image: {
-        position: 'relative',
-        top: '50%',
-        transform: 'translateY(-50%)',
-      },
-      backgroundColor: 'rgba(245, 245, 245, 0.9)'
-    },
-    generalButton: {
+    operationButton: {
       backgroundColor: 'rgba(245, 245, 245, 0.9)'
     }
   },

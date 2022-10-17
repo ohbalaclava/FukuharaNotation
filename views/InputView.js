@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import styles from '../styles/ScreenStyles'
 import Background from '../components/Background'
-import NoteSelectView from '../views/NoteSelectView'
-import AccidentalSelectView from './AccidentalSelectView.js'
 import OperationsView from './OperationsView.js'
 import { createScore } from '../model/Score'
 import ScoreTitle from '../components/ScoreTitle'
 import { downloadJson, uploadJson } from '../tools/Persistence'
+import ScoreMarksView from './ScoreMarksView'
+import { DimensionsContext } from '../data/Dimensions'
 
 InputView.propTypes = {
   score: PropTypes.object.isRequired,
@@ -17,6 +17,8 @@ InputView.propTypes = {
 }
 
 export default function InputView ({ score, refresh }) {
+  const { dimensions } = useContext(DimensionsContext)
+
   const border = {
     colour: 'grey',
     radius: 5,
@@ -46,10 +48,15 @@ export default function InputView ({ score, refresh }) {
   }
 
   return (
-    <View style={styles.input.view}>
+    <View style={[styles.input.view, dimensions.getInputViewStyle()]}>
       <Background border={border} source={require('../assets/bamboo.png')}/>
       <ScoreTitle title={score.getTitle()} onOK={(title) => { score.setTitle(title) }}/>
-      <NoteSelectView addNote={score.addNote} addAccidental={score.addAccidental} refresh={refresh}/>
+      <ScoreMarksView
+        addNote={score.addNote}
+        addAccidental={score.addAccidental}
+        addUnit={score.addUnit}
+        addDecoration={score.addDecoration}
+        refresh={refresh}/>
       <OperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh} download={download} upload={upload}/>
     </View>
   )

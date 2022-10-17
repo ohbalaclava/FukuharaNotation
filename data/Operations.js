@@ -1,19 +1,19 @@
 
 export const Operations = {
   delete: {
-    style: 'deleteButton',
+    style: 'operationButton',
     glyph: require('../assets/operations/backspace.png')
   },
   newline: {
-    style: 'generalButton',
+    style: 'operationButton',
     glyph: require('../assets/operations/turn_up.png')
   },
   download: {
-    style: 'generalButton',
+    style: 'operationButton',
     glyph: require('../assets/stand-in.png')
   },
   upload: {
-    style: 'generalButton',
+    style: 'operationButton',
     glyph: require('../assets/stand-in.png')
   }
 }
