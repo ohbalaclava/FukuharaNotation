@@ -12,14 +12,14 @@ AccidentalSelectView.propTypes = {
   refresh: PropTypes.func.isRequired
 }
 
-export default function AccidentalSelectView (props) {
+export default function AccidentalSelectView ({ addAccidental, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
 
   const renderAccidentalButton = ({ item }) => {
     return (
       <ImageButton
         image={item.glyph.white}
-        onPress={() => { props.addAccidental(item); props.refresh() }}
+        onPress={() => { addAccidental(item); refresh() }}
         buttonStyleName='accidentalButton'
         styleGroup='accidentals'
         otherStyle={dimensions.getAccidentalButtonStyle()}
