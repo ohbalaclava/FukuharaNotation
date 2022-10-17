@@ -3,14 +3,14 @@ import { nanoid } from 'nanoid'
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
 import Config from '../data/Config'
 
-export function createScore ({ id, title, lines, currentLine, lineCursor }) {
+export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
   let join = Join.None
   let joinChanged = false
   let postEditHook
 
   // constructor
   (function () {
-    id = id || nanoid()
+    docId = docId || nanoid()
     currentLine = currentLine || 0
     lineCursor = lineCursor || 0
 
@@ -178,9 +178,9 @@ export function createScore ({ id, title, lines, currentLine, lineCursor }) {
 
   function serialise () {
     return JSON.stringify({
-      id, title, lines, currentLine, lineCursor
+      docId, title, lines, currentLine, lineCursor
     }, (key, value) => {
-      if (key !== 'id' || this.lines) { // strip ids but not the score id
+      if (key !== 'id') { // strip ids
         return value
       }
     })
@@ -191,9 +191,9 @@ export function createScore ({ id, title, lines, currentLine, lineCursor }) {
     addOtherUnit,
     addAccidental,
     addOtherDecoration,
-    clone: () => createScore({ id, title, lines, currentLine, lineCursor }),
+    clone: () => createScore({ docId, title, lines, currentLine, lineCursor }),
     deleteMark,
-    getID: () => id,
+    getID: () => docId,
     getTitle: () => title,
     getCurrentLineIndex: () => currentLine,
     getCurrentMarkIndex: () => lineCursor,
