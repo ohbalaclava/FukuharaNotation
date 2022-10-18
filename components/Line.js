@@ -10,7 +10,8 @@ import Cursor from './Cursor'
 Line.propTypes = {
   line: PropTypes.array.isRequired,
   onPressMark: PropTypes.func.isRequired,
-  cursorIndex: PropTypes.number.isRequired
+  cursorIndex: PropTypes.number.isRequired,
+  markLengths: PropTypes.number.isRequired
 }
 
 const paddingButtonStyles = StyleSheet.create({
@@ -31,7 +32,7 @@ const paddingButtonStyles = StyleSheet.create({
   }
 })
 
-export default function Line ({ line, onPressMark, cursorIndex }) {
+export default function Line ({ line, onPressMark, cursorIndex, markLengths }) {
   const { dimensions } = useContext(DimensionsContext)
   const defaultButtonSize = {
     width: dimensions.getLineWidth(),
@@ -54,7 +55,7 @@ export default function Line ({ line, onPressMark, cursorIndex }) {
       <Pressable style={[paddingButtonStyles.bottom, defaultButtonSize]} onPress={() => onPressMark()}>
         <View/>
       </Pressable>
-      {(cursorIndex >= 0) ? <Cursor mark={cursorIndex}/> : <noscript/>}
+      {(cursorIndex >= 0) ? <Cursor markLengths={markLengths}/> : <noscript/>}
     </View>
   )
 }

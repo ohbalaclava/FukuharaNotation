@@ -13,12 +13,13 @@ ScoreView.propTypes = {
     onEdit: PropTypes.func.isRequired,
     getCurrentLineIndex: PropTypes.func.isRequired,
     getCurrentMarkIndex: PropTypes.func.isRequired,
+    getCurrentMarkIndexInLengths: PropTypes.func.isRequired,
     goto: PropTypes.func.isRequired
   }).isRequired,
   refresh: PropTypes.func.isRequired
 }
 
-function renderLine ({ line, index, goto, refresh, cursorIndex }) {
+function renderLine ({ line, index, goto, refresh, cursorIndex, markLengths }) {
   return (
     <Line
       line={line}
@@ -28,7 +29,8 @@ function renderLine ({ line, index, goto, refresh, cursorIndex }) {
           refresh()
         }
       }
-      cursorIndex={cursorIndex}/>
+      cursorIndex={cursorIndex}
+      markLengths={markLengths}/>
   )
 }
 
@@ -46,12 +48,14 @@ export default function ScoreView ({ score, refresh }) {
         inverted
         data={score.getLines()}
         renderItem={({ item, index }) => {
+          const isCurrentLine = index === score.getCurrentLineIndex()
           return renderLine({
             line: item,
             index,
             goto: score.goto,
             refresh,
-            cursorIndex: (index === score.getCurrentLineIndex()) ? score.getCurrentMarkIndex() : -1
+            markLengths: isCurrentLine ? score.getCurrentMarkIndexInLengths() : -1,
+            cursorIndex: isCurrentLine ? score.getCurrentMarkIndex() : -1
           })
         }}
         keyExtractor={(item) => item.id}

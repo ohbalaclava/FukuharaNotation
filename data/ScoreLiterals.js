@@ -273,8 +273,9 @@ export const ScoreMarks = {
       type: MarkType.Unit,
       name: Unit.DoubleDash,
       glyph: {
-        white: require('../assets/stand-in.png'),
-        black: require('../assets/stand-in.png')
+        white: require('../assets/marks/white/double-dash.png'),
+        black: require('../assets/marks/black/double-dash.png'),
+        height: 1.5
       }
     },
     {
@@ -370,10 +371,14 @@ const glyphs = new Map();
   ScoreMarks.joins.forEach(glyphBuilder)
 })()
 
-export function getBlackGlyph (markName) {
-  return glyphs.get(markName).black
+export function getGlyph (markName) {
+  return glyphs.get(markName)
 }
 
 export function getWhiteGlyph (markName) {
   return glyphs.get(markName).white
+}
+
+export function getBlackGlyph (markName) {
+  return glyphs.get(markName).black
 }

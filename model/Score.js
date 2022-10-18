@@ -19,6 +19,7 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
       currentLine = 0
       lineCursor = 0
       lines[0].id = nanoid()
+      lines[0].marksLength = 0
     } else {
       lines.forEach(line => {
         line.id = line.id || nanoid()
@@ -82,7 +83,8 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
     return {
       id: nanoid(),
       type: fullMark.type,
-      name: fullMark.name
+      name: fullMark.name,
+      height: fullMark.glyph.height || 1
     }
   }
 
@@ -94,34 +96,54 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
   }
 
   function addNote (note) {
-    lines[currentLine].splice(lineCursor, 0, createNoteMark(note))
-    if (lines[currentLine][lineCursor].join !== Join.None) {
-      lines[currentLine][lineCursor].joinPosition = (joinChanged) ? JoinPosition.Start : JoinPosition.Middle
+    const noteMark = createNoteMark(note)
+    const doAddNote = () => {
+      lines[currentLine].splice(lineCursor, 0, noteMark)
+      if (lines[currentLine][lineCursor].join !== Join.None) {
+        lines[currentLine][lineCursor].joinPosition = (joinChanged) ? JoinPosition.Start : JoinPosition.Middle
+      }
+
+      if (joinChanged) {
+        closeLastJoin()
+        joinChanged = false
+      }
+
+      lineCursor++
+      lines[currentLine].marksLength += noteMark.height
     }
 
-    if (joinChanged) {
-      closeLastJoin()
-      joinChanged = false
-    }
-
-    if (++lineCursor === Config.maxLineLength) {
+    const newLineLength = lines[currentLine].marksLength + noteMark.height
+    if (newLineLength <= Config.maxLineLength) {
+      doAddNote()
+    } else if (lineCursor === lines[currentLine].length) {
       newLine()
-    } else {
-      postEdit()
+      doAddNote()
     }
+
+    postEdit()
   }
 
   function addUnit (unit) {
-    lines[currentLine].splice(lineCursor, 0, createSimpleMark(unit))
+    const mark = createNoteMark(unit)
+    const doAddMark = () => {
+      lines[currentLine].splice(lineCursor, 0, mark)
 
-    closeLastJoin()
-    joinChanged = true
+      closeLastJoin()
+      joinChanged = true
 
-    if (++lineCursor === Config.maxLineLength) {
-      newLine()
-    } else {
-      postEdit()
+      lineCursor++
+      lines[currentLine].marksLength += mark.height
     }
+
+    const newLineLength = lines[currentLine].marksLength + mark.height
+    if (newLineLength <= Config.maxLineLength) {
+      doAddMark()
+    } else if (lineCursor === lines[currentLine].length) {
+      newLine()
+      doAddMark()
+    }
+
+    postEdit()
   }
 
   function addAccidental (accidental) {
@@ -160,8 +182,11 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
         postEdit()
       }
     } else {
-      lines[currentLine].splice(lineCursor - 1, 1)
+      const markIndex = lineCursor - 1
+      const markLength = lines[currentLine][markIndex].height
+      lines[currentLine].splice(markIndex, 1)
       lineCursor--
+      lines[currentLine].marksLength -= markLength
       postEdit()
     }
   }
@@ -173,6 +198,7 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
     currentLine++
     lineCursor = 0
     lines[currentLine].id = nanoid()
+    lines[currentLine].marksLength = 0
     postEdit()
   }
 
@@ -186,6 +212,12 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
     })
   }
 
+  function getCurrentMarkIndexInLengths () {
+    return lines[currentLine].reduce((total, mark, index) => {
+      return (index < lineCursor) ? total + mark.height : total
+    }, 0)
+  }
+
   return {
     addNote,
     addUnit,
@@ -197,6 +229,7 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
     getTitle: () => title,
     getCurrentLineIndex: () => currentLine,
     getCurrentMarkIndex: () => lineCursor,
+    getCurrentMarkIndexInLengths,
     getLines: () => lines,
     getLineCount: () => lines.length,
     goto,

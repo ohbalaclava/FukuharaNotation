@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import ImageButton from '../components/ImageButton'
 import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
-import { getBlackGlyph } from '../data/ScoreLiterals'
+import { getBlackGlyph, getGlyph } from '../data/ScoreLiterals'
 
 Accidental.propTypes = {
   accidental: PropTypes.shape({
@@ -28,14 +28,16 @@ Mark.propTypes = {
 export default function Mark ({ mark, onPress }) {
   const { dimensions } = useContext(DimensionsContext)
 
+  const glyph = getGlyph(mark.name)
+
   return (
     <View>
       <ImageButton
-        image={getBlackGlyph(mark.name)}
+        image={glyph.black}
         onPress={() => onPress()}
         buttonStyleName='mark'
         styleGroup='score'
-        otherStyle={dimensions.getNoteMarkStyle()}
+        otherStyle={dimensions.getNoteMarkStyle(glyph.height)}
       />
       <Accidental accidental={mark.accidental}/>
     </View>

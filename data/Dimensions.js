@@ -40,24 +40,16 @@ export default function Dimensions (window) {
   function updateNoteMarkDimensions () {
     markHeight = scoreContentHeight / (Config.maxLineLength + 1)
 
-    const padding = 2
-    const marginVertical = markHeight / 10
-    const marginHorizontal = markHeight * 0.15
-    const markImageLength = markHeight - 2 * (padding + marginVertical)
-
     noteMark = {
       image: {
-        width: markImageLength,
-        height: markImageLength
-      },
-      padding,
-      marginVertical,
-      marginHorizontal
+        width: markHeight,
+        height: markHeight
+      }
     }
   }
 
   function updateLineDimensions () {
-    lineWidth = 2 * (noteMark.marginHorizontal + noteMark.padding) + noteMark.image.width
+    lineWidth = noteMark.image.width
     linePaddingRight = lineWidth
     lineSeparation = scoreLineMarginRight + linePaddingRight
     lineFullWidth = lineWidth + lineSeparation
@@ -70,10 +62,7 @@ export default function Dimensions (window) {
       image: {
         width: noteMark.image.width,
         height: noteMark.image.width / 8
-      },
-      paddingLeft: noteMark.padding,
-      paddingRight: noteMark.padding,
-      marginHorizontal: noteMark.marginHorizontal
+      }
     }
   }
 
@@ -207,11 +196,31 @@ export default function Dimensions (window) {
     updateCursorDimensions()
   }
 
-  function getCursorStyle (mark) {
+  function getCursorStyle (markLengths) {
     return {
       ...cursor,
-      top: mark * markHeight + lineEndButtonHeight
+      top: markLengths * noteMark.image.height + lineEndButtonHeight
     }
+  }
+
+  function getUnitButtonStyle (height) {
+    const style = { ...unitButton }
+    const imageStyle = { ...unitButton.image }
+    if (height) {
+      imageStyle.height *= height
+      style.image = imageStyle
+    }
+    return style
+  }
+
+  function getNoteMarkStyle (height) {
+    const style = { ...noteMark }
+    const imageStyle = { ...noteMark.image }
+    if (height) {
+      imageStyle.height *= height
+      style.image = imageStyle
+    }
+    return style
   }
 
   return {
@@ -224,9 +233,9 @@ export default function Dimensions (window) {
     getInputViewStyle: () => inputPanel,
     getTitleStyle: () => title,
     getNoteButtonViewHeight: () => noteButtonPanelHeight,
-    getNoteMarkStyle: () => noteMark,
+    getNoteMarkStyle,
     getNoteButtonStyle: () => noteButton,
-    getUnitButtonStyle: () => unitButton,
+    getUnitButtonStyle,
     getAccidentalButtonViewStyle: () => accidentalButtonPanel,
     getAccidentalButtonStyle: () => accidentalButton,
     getOperationButtonViewHeight: () => operationsPanelHeight,
