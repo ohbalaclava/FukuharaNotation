@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Image, TouchableOpacity } from 'react-native-web'
+import { View, TouchableOpacity } from 'react-native-web'
 
 import styles from '../styles/ScreenStyles'
 
@@ -19,7 +19,17 @@ export default function ImageButton ({ image, onPress, styleGroup, buttonStyleNa
 
   return (
     <TouchableOpacity onPress={onPress} style={[buttonStyle, otherStyle]} activeOpacity={(pressedOpacity !== undefined) ? pressedOpacity : 0.5}>
-      <Image style={[buttonStyle.image, otherStyle.image]} source={image} />
+      <View
+        style={[
+          buttonStyle.image,
+          otherStyle.image,
+          {
+            backgroundImage: `url(${image})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat'
+          }
+        ]}/>
     </TouchableOpacity>
   )
 }

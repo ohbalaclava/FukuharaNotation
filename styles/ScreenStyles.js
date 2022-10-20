@@ -49,7 +49,10 @@ const styles = StyleSheet.create({
     noteButton: {
       flex: 'initial',
       borderColor: 'black',
-      backgroundColor: buttonColour
+      backgroundColor: buttonColour,
+      image: {
+        filter: 'invert(1)'
+      }
     }
   },
   accidentals: {
@@ -63,7 +66,10 @@ const styles = StyleSheet.create({
       margin: 5
     },
     accidentalButton: {
-      backgroundColor: buttonColour
+      backgroundColor: buttonColour,
+      image: {
+        filter: 'invert(1)'
+      }
     }
   },
   units: {
@@ -73,15 +79,9 @@ const styles = StyleSheet.create({
       justifyContent: 'space-around'
     },
     unitButton: {
-      padding: 10,
-      marginVertical: 6,
-      marginHorizontal: 6,
       image: {
-        width: 30,
-        height: 30
+        filter: 'invert(1)'
       },
-      borderRadius: 5,
-      borderWidth: 1,
       backgroundColor: buttonColour
     }
   },

@@ -18,7 +18,7 @@ export default function AccidentalSelectView ({ addAccidental, refresh }) {
   const renderAccidentalButton = ({ item }) => {
     return (
       <ImageButton
-        image={item.glyph.white}
+        image={item.glyph.source}
         onPress={() => { addAccidental(item); refresh() }}
         buttonStyleName='accidentalButton'
         styleGroup='accidentals'

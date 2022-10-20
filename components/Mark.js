@@ -14,7 +14,7 @@ Accidental.propTypes = {
 }
 
 function Accidental ({ accidental }) {
-  return (accidental) ? <Image style={[styles.score.accidental]} source={getBlackGlyph(accidental.name)} /> : <noscript />
+  return (accidental) ? <Image style={[styles.score.accidental]} source={getGlyph(accidental.name).source} /> : <noscript />
 }
 
 Mark.propTypes = {
@@ -33,7 +33,7 @@ export default function Mark ({ mark, onPress }) {
   return (
     <View>
       <ImageButton
-        image={glyph.black}
+        image={glyph.source}
         onPress={() => onPress()}
         buttonStyleName='mark'
         styleGroup='score'

@@ -17,7 +17,7 @@ export default function StrokeSelectView ({ addUnit, refresh }) {
   const renderUnitButton = ({ item }) => {
     return (
       <ImageButton
-        image={item.glyph.white}
+        image={item.glyph.source}
         onPress={() => { addUnit(item); refresh() }}
         buttonStyleName='unitButton'
         styleGroup='units'

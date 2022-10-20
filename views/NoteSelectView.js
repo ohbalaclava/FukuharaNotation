@@ -20,7 +20,7 @@ export default function NoteSelectView ({ addNote, addAccidental, refresh }) {
   const renderNoteButton = ({ item }) => {
     return (
       <ImageButton
-        image={item.glyph.white}
+        image={item.glyph.source}
         onPress={() => { addNote(item); refresh() }}
         buttonStyleName='noteButton'
         styleGroup='notes'
