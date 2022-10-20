@@ -14,6 +14,7 @@ export default function Dimensions (window) {
   let operationsPanelHeight
   let scoreContentHeight
   let noteMark
+  let accidentalMark
   let lineWidth
   let lineFullWidth
   let lineSeparation
@@ -45,6 +46,15 @@ export default function Dimensions (window) {
         width: markHeight,
         height: markHeight
       }
+    }
+  }
+
+  function updateAccidentalMarkDimensions () {
+    const accidentalHeight = markHeight / 2
+
+    accidentalMark = {
+      width: accidentalHeight,
+      height: accidentalHeight
     }
   }
 
@@ -192,6 +202,7 @@ export default function Dimensions (window) {
     updateInputPanelDimensions()
     updateScoreContentHeight()
     updateNoteMarkDimensions()
+    updateAccidentalMarkDimensions()
     updateLineDimensions()
     updateCursorDimensions()
   }
@@ -234,6 +245,7 @@ export default function Dimensions (window) {
     getTitleStyle: () => title,
     getNoteButtonViewHeight: () => noteButtonPanelHeight,
     getNoteMarkStyle,
+    getAccidentalMarkStyle: () => accidentalMark,
     getNoteButtonStyle: () => noteButton,
     getUnitButtonStyle,
     getAccidentalButtonViewStyle: () => accidentalButtonPanel,

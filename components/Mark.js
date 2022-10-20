@@ -7,16 +7,6 @@ import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
 import { getGlyph } from '../data/ScoreLiterals'
 
-Accidental.propTypes = {
-  accidental: PropTypes.shape({
-    name: PropTypes.string.isRequired
-  })
-}
-
-function Accidental ({ accidental }) {
-  return (accidental) ? <Image style={[styles.score.accidental]} source={getGlyph(accidental.name).source} /> : <noscript />
-}
-
 Mark.propTypes = {
   mark: PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -27,6 +17,16 @@ Mark.propTypes = {
 
 export default function Mark ({ mark, onPress }) {
   const { dimensions } = useContext(DimensionsContext)
+
+  Accidental.propTypes = {
+    accidental: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    })
+  }
+
+  function Accidental ({ accidental }) {
+    return (accidental) ? <Image style={[styles.score.accidental, dimensions.getAccidentalMarkStyle()]} source={getGlyph(accidental.name).source} /> : <noscript />
+  }
 
   const glyph = getGlyph(mark.name)
 

@@ -179,10 +179,9 @@ const styles = StyleSheet.create({
     },
     accidental: {
       position: 'absolute',
-      top: 10,
-      left: 38,
-      width: 20,
-      height: 20,
+      top: '50%',
+      right: '-25%',
+      transform: 'translateY(-50%)',
       opacity: markOpacity,
       zIndex: 1
     },
