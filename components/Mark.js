@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import ImageButton from '../components/ImageButton'
 import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
-import { getBlackGlyph, getGlyph } from '../data/ScoreLiterals'
+import { getGlyph } from '../data/ScoreLiterals'
 
 Accidental.propTypes = {
   accidental: PropTypes.shape({
