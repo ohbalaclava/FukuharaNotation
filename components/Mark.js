@@ -1,45 +1,37 @@
 import React, { useContext } from 'react'
-import { View, Image } from 'react-native-web'
+import { View } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import ImageButton from '../components/ImageButton'
-import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
 import { getGlyph } from '../data/ScoreLiterals'
+import Accidental from './Accidental'
+import Decorations from './Decorations'
 
 Mark.propTypes = {
   mark: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    accidental: PropTypes.object
+    accidental: PropTypes.object,
+    decorations: PropTypes.instanceOf(Map)
   }).isRequired,
   onPress: PropTypes.func.isRequired
 }
 
 export default function Mark ({ mark, onPress }) {
   const { dimensions } = useContext(DimensionsContext)
-
-  Accidental.propTypes = {
-    accidental: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    })
-  }
-
-  function Accidental ({ accidental }) {
-    return (accidental) ? <Image style={[styles.score.accidental, dimensions.getAccidentalMarkStyle()]} source={getGlyph(accidental.name).source} /> : <noscript />
-  }
-
   const glyph = getGlyph(mark.name)
 
   return (
     <View>
+      <Accidental accidental={mark.accidental}/>
+      <Decorations decorations={mark.decorations}/>
       <ImageButton
         image={glyph.source}
         onPress={() => onPress()}
         buttonStyleName='mark'
         styleGroup='score'
-        otherStyle={dimensions.getNoteMarkStyle(glyph.height)}
+        otherStyle={dimensions.getNoteMarkStyle(glyph.relativeHeight)}
       />
-      <Accidental accidental={mark.accidental}/>
     </View>
   )
 }

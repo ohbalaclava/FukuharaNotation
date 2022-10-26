@@ -15,6 +15,7 @@ export default function Dimensions (window) {
   let scoreContentHeight
   let noteMark
   let accidentalMark
+  let decorationMark
   let lineWidth
   let lineFullWidth
   let lineSeparation
@@ -27,6 +28,8 @@ export default function Dimensions (window) {
   let unitButton
   let accidentalButton
   let accidentalButtonPanel
+  let decorationButton
+  let decorationButtonPanel
   let squareOperationButton
   let wideOperationButton
   let titlePanelHeight
@@ -55,6 +58,22 @@ export default function Dimensions (window) {
     accidentalMark = {
       width: accidentalHeight,
       height: accidentalHeight
+    }
+  }
+
+  function updateDecorationMarkDimensions () {
+    decorationMark = {}
+    decorationMark.LeanTo = {
+      top: 0,
+      left: -noteMark.image.width * 0.25,
+      width: markHeight * 1.75,
+      height: markHeight
+    }
+    decorationMark.Dot = {
+      top: 0,
+      left: noteMark.image.width * 0.75,
+      width: markHeight,
+      height: markHeight
     }
   }
 
@@ -90,6 +109,7 @@ export default function Dimensions (window) {
     updateNoteButtonDimensions()
     updateUnitButtonDimensions()
     updateAccidentalButtonDimensions()
+    updateDecorationButtonDimensions()
     updateOperationButtonDimensions()
   }
 
@@ -167,6 +187,33 @@ export default function Dimensions (window) {
     }
   }
 
+  function updateDecorationButtonDimensions () {
+    const totalDecorationButtonHeight = noteButtonPanelHeight / 9
+    const borderWidth = 3
+    const margin = totalDecorationButtonHeight / 10
+    const decorationButtonLength = totalDecorationButtonHeight - 2 * margin
+    const padding = decorationButtonLength / 5
+    const buttonImageLength = decorationButtonLength - 2 * (padding + borderWidth)
+
+    decorationButton = {
+      image: {
+        width: buttonImageLength,
+        height: buttonImageLength
+      },
+      borderRadius: 5,
+      borderWidth,
+      width: decorationButtonLength,
+      height: decorationButtonLength,
+      padding,
+      marginVertical: margin,
+      marginHorizontal: margin
+    }
+
+    decorationButtonPanel = {
+      margin
+    }
+  }
+
   function updateOperationButtonDimensions () {
     const totalOperationButtonHeight = operationsPanelHeight / 2
     const borderWidth = 1
@@ -203,6 +250,7 @@ export default function Dimensions (window) {
     updateScoreContentHeight()
     updateNoteMarkDimensions()
     updateAccidentalMarkDimensions()
+    updateDecorationMarkDimensions()
     updateLineDimensions()
     updateCursorDimensions()
   }
@@ -214,21 +262,21 @@ export default function Dimensions (window) {
     }
   }
 
-  function getUnitButtonStyle (height) {
+  function getUnitButtonStyle (relativeHeight) {
     const style = { ...unitButton }
     const imageStyle = { ...unitButton.image }
-    if (height) {
-      imageStyle.height *= height
+    if (relativeHeight) {
+      imageStyle.height *= relativeHeight
       style.image = imageStyle
     }
     return style
   }
 
-  function getNoteMarkStyle (height) {
+  function getNoteMarkStyle (relativeHeight) {
     const style = { ...noteMark }
     const imageStyle = { ...noteMark.image }
-    if (height) {
-      imageStyle.height *= height
+    if (relativeHeight) {
+      imageStyle.height *= relativeHeight
       style.image = imageStyle
     }
     return style
@@ -246,10 +294,13 @@ export default function Dimensions (window) {
     getNoteButtonViewHeight: () => noteButtonPanelHeight,
     getNoteMarkStyle,
     getAccidentalMarkStyle: () => accidentalMark,
+    getDecorationMarkStyle: (decorationName) => decorationMark[decorationName],
     getNoteButtonStyle: () => noteButton,
     getUnitButtonStyle,
     getAccidentalButtonViewStyle: () => accidentalButtonPanel,
     getAccidentalButtonStyle: () => accidentalButton,
+    getDecorationButtonViewStyle: () => decorationButtonPanel,
+    getDecorationButtonStyle: () => decorationButton,
     getOperationButtonViewHeight: () => operationsPanelHeight,
     getSquareOperationButtonStyle: () => squareOperationButton,
     getWideOperationButtonStyle: () => wideOperationButton,

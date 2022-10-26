@@ -21,7 +21,7 @@ export default function StrokeSelectView ({ addUnit, refresh }) {
         onPress={() => { addUnit(item); refresh() }}
         buttonStyleName='unitButton'
         styleGroup='units'
-        otherStyle={dimensions.getUnitButtonStyle(item.glyph.height)}
+        otherStyle={dimensions.getUnitButtonStyle(item.glyph.relativeHeight)}
       />
     )
   }

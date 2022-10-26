@@ -84,7 +84,7 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
       id: nanoid(),
       type: fullMark.type,
       name: fullMark.name,
-      height: fullMark.glyph.height || 1
+      height: fullMark.glyph.relativeHeight || 1
     }
   }
 
@@ -162,11 +162,14 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
   function addDecoration (decoration) {
     const markIndex = lineCursor - 1
     if (markIndex >= 0 && lines[currentLine][markIndex].type === MarkType.Note) {
-      const existingDecoration = lines[currentLine][markIndex].decoration
-      if (existingDecoration && existingDecoration[decoration.name]) {
-        delete existingDecoration[decoration.name]
+      let existingDecorations = lines[currentLine][markIndex].decorations
+      if (!existingDecorations) {
+        existingDecorations = lines[currentLine][markIndex].decorations = new Map()
+      }
+      if (existingDecorations && existingDecorations.has(decoration.name)) {
+        existingDecorations.delete(decoration.name)
       } else {
-        existingDecoration[decoration.name] = createSimpleMark(decoration)
+        existingDecorations.set(decoration.name, createSimpleMark(decoration))
       }
       postEdit()
     }

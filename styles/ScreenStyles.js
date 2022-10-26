@@ -60,12 +60,26 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: 0,
       right: 0,
-      flexFlow: 'column nowrap',
+      flexFlow: 'row nowrap',
       justifyContent: 'center',
       backgroundColor: 'rgba(255, 0, 0, 0.2)',
       margin: 5
     },
     accidentalButton: {
+      backgroundColor: buttonColour,
+      image: {
+        filter: 'invert(1)'
+      }
+    }
+  },
+  decorations: {
+    view: {
+      flexFlow: 'column nowrap',
+      justifyContent: 'center',
+      backgroundColor: 'rgba(0, 255, 0, 0.2)',
+      margin: 5
+    },
+    decorationButton: {
       backgroundColor: buttonColour,
       image: {
         filter: 'invert(1)'
@@ -179,11 +193,20 @@ const styles = StyleSheet.create({
     },
     accidental: {
       position: 'absolute',
-      top: '50%',
-      right: '-25%',
+      top: '45%',
+      right: '-18%',
       transform: 'translateY(-50%)',
-      opacity: markOpacity,
-      zIndex: 1
+      opacity: markOpacity
+    },
+    decorations: {
+      position: 'absolute',
+      top: 0,
+      left: 0
+    },
+    decoration: {
+      position: 'absolute',
+      backgroundSize: 'contain',
+      opacity: markOpacity
     },
     cursor: {
       flex: 'none',

@@ -222,14 +222,14 @@ export const ScoreMarks = {
       type: MarkType.Decoration,
       name: Decoration.LeanTo,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/lean-to.png')
       }
     },
     {
       type: MarkType.Decoration,
       name: Decoration.Dot,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/dot.png')
       }
     }
   ],
@@ -246,7 +246,7 @@ export const ScoreMarks = {
       name: Unit.DoubleDash,
       glyph: {
         source: require('../assets/marks/double-dash.png'),
-        height: 1.75
+        relativeHeight: 1.75
       }
     },
     {
@@ -254,42 +254,45 @@ export const ScoreMarks = {
       name: Unit.TripleDash,
       glyph: {
         source: require('../assets/marks/triple-dash.png'),
-        height: 1.75
+        relativeHeight: 1.75
       }
     },
     {
       type: MarkType.Unit,
       name: Unit.QuadrupleDash,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/quadruple-dash.png'),
+        relativeHeight: 3
       }
     },
     {
       type: MarkType.Unit,
       name: Unit.Dot,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/dot.png')
       }
     },
     {
       type: MarkType.Unit,
       name: Unit.Tick,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/tick.png')
       }
     },
     {
       type: MarkType.Unit,
       name: Unit.Wiggle,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/wiggle.png'),
+        relativeHeight: 3
       }
     },
     {
       type: MarkType.Unit,
       name: Unit.Tail,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/tail.png'),
+        relativeHeight: 3
       }
     }
   ],
@@ -298,21 +301,27 @@ export const ScoreMarks = {
       type: MarkType.Join,
       name: Join.Arc,
       glyph: {
-        source: require('../assets/stand-in.png')
+        startSource: require('../assets/stand-in.png'),
+        middleSource: require('../assets/stand-in.png'),
+        endSource: require('../assets/stand-in.png')
       }
     },
     {
       type: MarkType.Join,
       name: Join.Line,
       glyph: {
-        source: require('../assets/stand-in.png')
+        startSource: require('../assets/stand-in.png'),
+        middleSource: require('../assets/stand-in.png'),
+        endSource: require('../assets/stand-in.png')
       }
     },
     {
       type: MarkType.Join,
       name: Join.DoubleLine,
       glyph: {
-        source: require('../assets/stand-in.png')
+        startSource: require('../assets/stand-in.png'),
+        middleSource: require('../assets/stand-in.png'),
+        endSource: require('../assets/stand-in.png')
       }
     }
   ]

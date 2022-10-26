@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import styles from '../styles/ScreenStyles'
 import NoteSelectView from './NoteSelectView'
 import StrokeSelectView from './StrokeSelectView'
+import DecorationSelectView from './DecorationSelectView'
 
 ScoreMarksView.propTypes = {
   addNote: PropTypes.func.isRequired,
@@ -19,6 +20,7 @@ export default function ScoreMarksView ({ addNote, addAccidental, addUnit, addDe
     <View style={styles.input.marks}>
       <NoteSelectView addNote={addNote} addAccidental={addAccidental} refresh={refresh}/>
       <StrokeSelectView addUnit={addUnit} refresh={refresh}/>
+      <DecorationSelectView addDecoration={addDecoration} refresh={refresh}/>
     </View>
   )
 }
