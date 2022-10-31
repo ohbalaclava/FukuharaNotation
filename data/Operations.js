@@ -15,5 +15,9 @@ export const Operations = {
   upload: {
     style: 'operationButton',
     glyph: require('../assets/operations/upload.png')
+  },
+  pdf: {
+    style: 'operationButton',
+    glyph: require('../assets/operations/pdf.png')
   }
 }

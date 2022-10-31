@@ -12,10 +12,11 @@ OperationsView.propTypes = {
   refresh: PropTypes.func.isRequired,
   newline: PropTypes.func.isRequired,
   download: PropTypes.func.isRequired,
-  upload: PropTypes.func.isRequired
+  upload: PropTypes.func.isRequired,
+  toPDF: PropTypes.func.isRequired
 }
 
-export default function OperationsView ({ deleteMark, newline, download, upload, refresh }) {
+export default function OperationsView ({ deleteMark, newline, download, upload, toPDF, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
 
   return (
@@ -48,6 +49,13 @@ export default function OperationsView ({ deleteMark, newline, download, upload,
           image={Operations.upload.glyph}
           onPress={() => { upload() }}
           buttonStyleName={Operations.upload.style}
+          styleGroup='operations'
+          otherStyle={dimensions.getSquareOperationButtonStyle()}
+        />
+        <ImageButton
+          image={Operations.pdf.glyph}
+          onPress={() => { toPDF() }}
+          buttonStyleName={Operations.pdf.style}
           styleGroup='operations'
           otherStyle={dimensions.getSquareOperationButtonStyle()}
         />
