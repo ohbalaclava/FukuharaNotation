@@ -6,6 +6,7 @@ import ImageButton from '../components/ImageButton'
 import { ScoreMarks } from '../data/ScoreLiterals'
 import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
+import Config from '../data/Config'
 
 AccidentalSelectView.propTypes = {
   addAccidental: PropTypes.func.isRequired,
@@ -18,6 +19,7 @@ export default function AccidentalSelectView ({ addAccidental, refresh }) {
   const renderAccidentalButton = ({ item }) => {
     return (
       <ImageButton
+        highlightColour={Config.inputButtonHighlightColour}
         image={item.glyph.source}
         onPress={() => { addAccidental(item); refresh() }}
         buttonStyleName='accidentalButton'

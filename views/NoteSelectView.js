@@ -7,6 +7,7 @@ import { ScoreMarks } from '../data/ScoreLiterals'
 import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
 import AccidentalSelectView from './AccidentalSelectView'
+import Config from '../data/Config'
 
 NoteSelectView.propTypes = {
   addNote: PropTypes.func.isRequired,
@@ -20,6 +21,7 @@ export default function NoteSelectView ({ addNote, addAccidental, refresh }) {
   const renderNoteButton = ({ item }) => {
     return (
       <ImageButton
+        highlightColour={Config.inputButtonHighlightColour}
         image={item.glyph.source}
         onPress={() => { addNote(item); refresh() }}
         buttonStyleName='noteButton'

@@ -47,6 +47,8 @@ export default function InputView ({ score, refresh }) {
     })
   }
 
+  function toPDF () {}
+
   return (
     <View style={[styles.input.view, dimensions.getInputViewStyle()]}>
       <Background border={border} source={require('../assets/bamboo.png')}/>
@@ -61,7 +63,7 @@ export default function InputView ({ score, refresh }) {
         addUnit={score.addUnit}
         addDecoration={score.addDecoration}
         refresh={refresh}/>
-      <OperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh} download={download} upload={upload}/>
+      <OperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh} download={download} upload={upload} toPDF={toPDF}/>
     </View>
   )
 }

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { ScoreMarks } from '../data/ScoreLiterals'
 import { DimensionsContext } from '../data/Dimensions'
 import ImageButton from '../components/ImageButton'
+import Config from '../data/Config'
 
 StrokeSelectView.propTypes = {
   addUnit: PropTypes.func.isRequired,
@@ -17,6 +18,7 @@ export default function StrokeSelectView ({ addUnit, refresh }) {
   const renderUnitButton = ({ item }) => {
     return (
       <ImageButton
+        highlightColour={Config.inputButtonHighlightColour}
         image={item.glyph.source}
         onPress={() => { addUnit(item); refresh() }}
         buttonStyleName='unitButton'
