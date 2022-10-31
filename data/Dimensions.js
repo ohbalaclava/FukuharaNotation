@@ -282,6 +282,16 @@ export default function Dimensions (window) {
     return style
   }
 
+  function getDecorationMarkStyle (decorationName, hasAccidental) {
+    const decoration = { ...decorationMark[decorationName] }
+    if (decorationName === 'LeanTo') {
+      decoration.left = hasAccidental ? -noteMark.image.width * 0.25 : -noteMark.image.width * 0.4
+    } else {
+      decoration.left = hasAccidental ? noteMark.image.width * 0.75 : noteMark.image.width * 0.6
+    }
+    return decoration
+  }
+
   return {
     getCursorStyle,
     getLineWidth: () => lineWidth,
@@ -294,7 +304,7 @@ export default function Dimensions (window) {
     getNoteButtonViewHeight: () => noteButtonPanelHeight,
     getNoteMarkStyle,
     getAccidentalMarkStyle: () => accidentalMark,
-    getDecorationMarkStyle: (decorationName) => decorationMark[decorationName],
+    getDecorationMarkStyle,
     getNoteButtonStyle: () => noteButton,
     getUnitButtonStyle,
     getAccidentalButtonViewStyle: () => accidentalButtonPanel,

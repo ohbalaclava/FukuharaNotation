@@ -7,10 +7,11 @@ import { DimensionsContext } from '../data/Dimensions'
 import { getGlyph } from '../data/ScoreLiterals'
 
 Decorations.propTypes = {
-  decorations: PropTypes.instanceOf(Map)
+  decorations: PropTypes.instanceOf(Map),
+  hasAccidental: PropTypes.bool
 }
 
-export default function Decorations ({ decorations }) {
+export default function Decorations ({ decorations, hasAccidental }) {
   const { dimensions } = useContext(DimensionsContext)
 
   const getDecorationsArray = () => {
@@ -21,7 +22,7 @@ export default function Decorations ({ decorations }) {
           key={decoration.name}
           style={[
             styles.score.decoration,
-            dimensions.getDecorationMarkStyle(decoration.name),
+            dimensions.getDecorationMarkStyle(decoration.name, hasAccidental),
             {
               backgroundImage: `url(${getGlyph(decoration.name).source})`,
               backgroundPosition: 'center',

@@ -24,7 +24,7 @@ export default function Mark ({ mark, onPress }) {
   return (
     <View>
       <Accidental accidental={mark.accidental}/>
-      <Decorations decorations={mark.decorations}/>
+      <Decorations decorations={mark.decorations} hasAccidental={mark.accidental !== undefined}/>
       <ImageButton
         image={glyph.source}
         onPress={() => onPress()}
