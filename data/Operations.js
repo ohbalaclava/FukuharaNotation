@@ -10,10 +10,10 @@ export const Operations = {
   },
   download: {
     style: 'operationButton',
-    glyph: require('../assets/stand-in.png')
+    glyph: require('../assets/operations/download.png')
   },
   upload: {
     style: 'operationButton',
-    glyph: require('../assets/stand-in.png')
+    glyph: require('../assets/operations/upload.png')
   }
 }
