@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid'
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
 import Config from '../data/Config'
 
-export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
+export function createScore ({ docId, title, notes, lines, currentLine, lineCursor }) {
   let join = Join.None
   let joinChanged = false
   let postEditHook
@@ -207,7 +207,7 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
 
   function serialise () {
     return JSON.stringify({
-      docId, title, lines, currentLine, lineCursor
+      docId, title, notes, lines, currentLine, lineCursor
     }, (key, value) => {
       if (key !== 'id') { // strip ids
         return value
@@ -230,6 +230,7 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
     deleteMark,
     getID: () => docId,
     getTitle: () => title,
+    getNotes: () => notes,
     getCurrentLineIndex: () => currentLine,
     getCurrentMarkIndex: () => lineCursor,
     getCurrentMarkIndexInLengths,
@@ -240,10 +241,11 @@ export function createScore ({ docId, title, lines, currentLine, lineCursor }) {
     serialise,
     setJoin,
     setTitle: newTitle => { title = newTitle },
+    setNotes: newNotes => { notes = newNotes },
     onEdit: func => { postEditHook = func }
   }
 }
 
 export function createEmptyScore () {
-  return createScore({ title: 'Untitled', lines: [], currentLine: 0, lineCursor: 0 })
+  return createScore({ title: 'Untitled', notes: '', lines: [], currentLine: 0, lineCursor: 0 })
 }

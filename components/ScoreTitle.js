@@ -7,36 +7,64 @@ import { DimensionsContext } from '../data/Dimensions'
 
 ScoreTitle.propTypes = {
   title: PropTypes.string,
+  notes: PropTypes.string,
   onOK: PropTypes.func,
   onCancel: PropTypes.func
 }
 
-export default function ScoreTitle ({ title, onOK, onCancel }) {
+export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
   const [titleDialogVisible, setTitleDialogVisible] = useState(false)
   const [_title, setTitle] = useState(() => title)
+  const [_notes, setNotes] = useState(() => notes)
+  const [updatedTitle, setUpdatedTitle] = useState(() => title)
+  const [updatedNotes, setUpdatedNotes] = useState(() => notes)
   const { dimensions } = useContext(DimensionsContext)
+
+  function openDialog () {
+    setTitleDialogVisible(true)
+  }
+
+  function closeDialog (commit) {
+    setTitleDialogVisible(false)
+    if (commit) {
+      setTitle(updatedTitle)
+      setNotes(updatedNotes)
+    } else {
+      setUpdatedTitle(_title)
+      setUpdatedNotes(_notes)
+    }
+  }
 
   return (
     <View>
-      <Text style={[styles.title, dimensions.getTitleStyle()]} onPress={() => setTitleDialogVisible(true)}>
+      <Text style={[styles.title, dimensions.getTitleStyle()]} onPress={() => openDialog()}>
         {_title}
       </Text>
 
-      <Modal onRequestClose={() => setTitleDialogVisible(false)} visible={titleDialogVisible} animationType="fade">
+      <Modal onRequestClose={() => closeDialog()} visible={titleDialogVisible} animationType="fade">
         <View style={styles.titleDialog.view}>
           <View style={styles.titleDialog.textComponents}>
-            <Text style={styles.titleDialog.label}>Title of this piece</Text>
+            <Text style={styles.titleDialog.label}>Title</Text>
             <TextInput
               defaultValue={_title}
-              onChange={(event) => setTitle(event.target.value)}
+              onChange={(event) => setUpdatedTitle(event.target.value)}
               selectTextOnFocus
               selectionColor='cadetblue'
-              style={styles.titleDialog.input}
+              style={styles.titleDialog.titleInput}
+            />
+            <Text style={styles.titleDialog.label}>Notes</Text>
+            <TextInput
+              defaultValue={_notes}
+              onChange={(event) => setUpdatedNotes(event.target.value)}
+              multiline
+              numberOfLines={5}
+              selectionColor='cadetblue'
+              style={styles.titleDialog.notesInput}
             />
           </View>
           <View style={styles.titleDialog.buttonComponents}>
-            <Button onPress={() => { setTitleDialogVisible(false); onOK(_title) }} title={'OK'} color='cadetblue'/>
-            <Button onPress={() => setTitleDialogVisible(false)} title={'Cancel'} color='cadetblue'/>
+            <Button onPress={() => { closeDialog(true); onOK && onOK(_title, _notes) }} title={'OK'} color='cadetblue'/>
+            <Button onPress={() => { closeDialog(); onCancel && onCancel() }} title={'Cancel'} color='cadetblue'/>
           </View>
         </View>
       </Modal>

@@ -160,12 +160,22 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold'
     },
-    input: {
+    titleInput: {
       flex: 1,
       padding: 20,
       fontFamily: 'serif',
       fontSize: 18,
       textAlign: 'center'
+    },
+    notesInput: {
+      flex: 1,
+      padding: 10,
+      fontFamily: 'serif',
+      fontSize: 14,
+      textAlign: 'left',
+      borderWidth: 1,
+      borderColor: 'grey',
+      borderStyle: 'dotted'
     }
   },
   score: {

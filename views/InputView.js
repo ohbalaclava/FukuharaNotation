@@ -50,7 +50,11 @@ export default function InputView ({ score, refresh }) {
   return (
     <View style={[styles.input.view, dimensions.getInputViewStyle()]}>
       <Background border={border} source={require('../assets/bamboo.png')}/>
-      <ScoreTitle title={score.getTitle()} onOK={(title) => { score.setTitle(title) }}/>
+      <ScoreTitle
+        title={score.getTitle()}
+        notes={score.getNotes()}
+        onOK={(title, notes) => { score.setTitle(title); score.setNotes(notes) }}
+      />
       <ScoreMarksView
         addNote={score.addNote}
         addAccidental={score.addAccidental}
