@@ -29,14 +29,14 @@ export const OperationButtons = {
 export const OctaveButtons = {
   ryo: {
     style: 'octaveButton',
-    glyph: require('../assets/stand-in.png')
+    glyph: require('../assets/operations/ryo.png')
   },
   kan: {
     style: 'octaveButton',
-    glyph: require('../assets/stand-in.png')
+    glyph: require('../assets/operations/kan.png')
   },
   daikan: {
     style: 'octaveButton',
-    glyph: require('../assets/stand-in.png')
+    glyph: require('../assets/operations/daikan.png')
   }
 }

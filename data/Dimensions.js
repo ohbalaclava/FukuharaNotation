@@ -149,13 +149,13 @@ export default function Dimensions (window) {
 
   function updateOctaveSelectorDimensions () {
     const marginBottom = octaveSelectorHeight / 5
-    const padding = octaveSelectorHeight / 5
-    const buttonImageSize = octaveSelectorHeight - marginBottom - padding * 2
+    const padding = octaveSelectorHeight / 10
+    const buttonImageHeight = octaveSelectorHeight - marginBottom - padding * 2
 
     octaveSelectorButton = {
       image: {
-        width: buttonImageSize,
-        height: buttonImageSize
+        width: buttonImageHeight * 2,
+        height: buttonImageHeight
       },
       marginBottom,
       padding

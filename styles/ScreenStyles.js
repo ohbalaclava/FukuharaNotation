@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
             }
           }
         }
-      },
+      }
     },
     operations: {
       flex: 2,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     },
     decorations: {
       position: 'absolute',
-      top: 0,
+      top: -1,
       left: 0
     },
     decoration: {
