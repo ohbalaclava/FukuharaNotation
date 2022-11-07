@@ -133,14 +133,15 @@ const styles = StyleSheet.create({
       editOps: {
         flex: 1,
         flexFlow: 'row nowrap',
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'space-between'
       },
       fileOps: {
-        flex: 1,
         flexFlow: 'row nowrap',
-        justifyContent: 'center',
-        alignItems: 'center'
+        position: 'absolute',
+        right: '100%',
+        backgroundColor: 'rgb(0, 0, 0)',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5
       },
       operationButton: {
         backgroundColor: 'rgba(245, 245, 245, 0.9)'

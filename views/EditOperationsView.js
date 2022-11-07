@@ -6,14 +6,18 @@ import ImageButton from '../components/ImageButton'
 import styles from '../styles/ScreenStyles'
 import { OperationButtons } from '../data/ButtonDefinitions'
 import { DimensionsContext } from '../data/Dimensions'
+import FileOperationsView from './FileOperationsView'
 
 EditOperationsView.propTypes = {
   deleteMark: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired,
-  newline: PropTypes.func.isRequired
+  newline: PropTypes.func.isRequired,
+  download: PropTypes.func.isRequired,
+  upload: PropTypes.func.isRequired,
+  toPDF: PropTypes.func.isRequired
 }
 
-export default function EditOperationsView ({ deleteMark, newline, refresh }) {
+export default function EditOperationsView ({ deleteMark, newline, download, upload, toPDF, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
   const style = styles.input.operations
 
@@ -31,12 +35,7 @@ export default function EditOperationsView ({ deleteMark, newline, refresh }) {
           buttonStyleName={OperationButtons.newline.style}
           style={[style[OperationButtons.newline.style], dimensions.getSquareOperationButtonStyle()]}
         />
-        <ImageButton
-          image={OperationButtons.menu.glyph}
-          onPress={() => { }}
-          buttonStyleName={OperationButtons.menu.style}
-          style={[style[OperationButtons.menu.style], dimensions.getSquareOperationButtonStyle({ small: true })]}
-        />
+        <FileOperationsView download={download} upload={upload} toPDF={toPDF}/>
       </View>
     </View>
   )

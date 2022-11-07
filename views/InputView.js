@@ -64,7 +64,14 @@ export default function InputView ({ score, refresh }) {
         addDecoration={score.addDecoration}
         refresh={refresh}
       />
-      <EditOperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh}/>
+      <EditOperationsView
+        deleteMark={score.deleteMark}
+        newline={score.newLine}
+        refresh={refresh}
+        download={download}
+        upload={upload}
+        toPDF={toPDF}
+      />
     </View>
   )
 }
