@@ -6,6 +6,8 @@ import * as Dimensions from '../data/Dimensions'
 
 const markOpacity = 0.66
 const buttonColour = 'rgb(50, 50, 50)'
+const selectedRadioButtonColour = 'rgba(192, 100, 100, 0.4)'
+const unselectedRadioButtonColour = 'rgba(192, 192, 192, 0.4)'
 
 const styles = StyleSheet.create({
   container: {
@@ -30,108 +32,123 @@ const styles = StyleSheet.create({
       borderColor: 'grey',
       borderRadius: 5
     },
+    title: {
+      flex: 1,
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+      textAlign: 'center',
+      fontFamily: 'serif',
+      borderWidth: 1,
+      borderTopLeftRadius: 5,
+      borderTopRightRadius: 5,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+      borderColor: 'grey',
+      overflow: 'clip'
+    },
     marks: {
       flex: 'initial',
-      flexFlow: 'row nowrap'
-    }
-  },
-  notes: {
-    view: {
-      flex: 'initial',
       flexFlow: 'row nowrap',
-      justifyContent: 'space-around'
-    },
-    buttons: {
-      flex: 1,
-      flexFlow: 'column nowrap',
-      justifyContent: 'flex-start'
-    },
-    noteButton: {
-      flex: 'initial',
-      borderColor: 'black',
-      backgroundColor: buttonColour,
-      image: {
-        filter: 'invert(1)'
-      }
-    }
-  },
-  accidentals: {
-    view: {
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
-      flexFlow: 'row nowrap',
-      justifyContent: 'center',
-      backgroundColor: 'rgba(255, 0, 0, 0.2)',
-      margin: 5
-    },
-    accidentalButton: {
-      backgroundColor: buttonColour,
-      image: {
-        filter: 'invert(1)'
-      }
-    }
-  },
-  decorations: {
-    view: {
-      flexFlow: 'column nowrap',
-      justifyContent: 'center',
-      backgroundColor: 'rgba(0, 255, 0, 0.2)',
-      margin: 5
-    },
-    decorationButton: {
-      backgroundColor: buttonColour,
-      image: {
-        filter: 'invert(1)'
-      }
-    }
-  },
-  units: {
-    view: {
-      flex: 'initial',
-      flexFlow: 'column nowrap',
-      justifyContent: 'space-around'
-    },
-    unitButton: {
-      image: {
-        filter: 'invert(1)'
+      sections: {
+        flex: 'initial',
+        flexFlow: 'column nowrap',
+        notes: {
+          flex: 'initial',
+          flexFlow: 'column nowrap',
+          octaveView: {
+            flex: 1,
+            flexFlow: 'row nowrap'
+          },
+          octaves: {
+            flex: 1,
+            flexFlow: 'row nowrap',
+            button: {
+              flex: 'initial',
+              borderColor: 'black',
+              backgroundColor: buttonColour,
+              image: {
+                filter: 'invert(1)'
+              }
+            }
+          },
+          octaveSelector: {
+            flex: 'initial',
+            flexFlow: 'row nowrap',
+            button: {
+              selected: {
+                flex: 2,
+                backgroundColor: selectedRadioButtonColour,
+                image: {
+                  marginHorizontal: 'auto'
+                }
+              },
+              unselected: {
+                flex: 1,
+                backgroundColor: unselectedRadioButtonColour,
+                image: {
+                  marginHorizontal: 'auto'
+                }
+              }
+            }
+          }
+        },
+        strokes: {
+          flex: 'initial',
+          flexFlow: 'row nowrap',
+          alignItems: 'flex-end',
+          button: {
+            image: {
+              filter: 'invert(1)'
+            },
+            backgroundColor: buttonColour
+          }
+        },
+        accidentals: {
+          flexFlow: 'column nowrap',
+          backgroundColor: 'rgba(255, 0, 0, 0.2)',
+          margin: 5,
+          button: {
+            backgroundColor: buttonColour,
+            image: {
+              filter: 'invert(1)'
+            }
+          }
+        },
+        decorations: {
+          flexFlow: 'column nowrap',
+          backgroundColor: 'rgba(0, 255, 0, 0.2)',
+          margin: 5,
+          button: {
+            backgroundColor: buttonColour,
+            image: {
+              filter: 'invert(1)'
+            }
+          }
+        }
       },
-      backgroundColor: buttonColour
-    }
-  },
-  operations: {
-    view: {
+    },
+    operations: {
       flex: 2,
       flexFlow: 'column nowrap',
       justifyContent: 'space-evenly',
-      row1: {
+      editOps: {
         flex: 1,
         flexFlow: 'row nowrap',
         justifyContent: 'center',
         alignItems: 'center'
       },
-      row2: {
+      fileOps: {
         flex: 1,
         flexFlow: 'row nowrap',
         justifyContent: 'center',
         alignItems: 'center'
+      },
+      operationButton: {
+        backgroundColor: 'rgba(245, 245, 245, 0.9)'
+      },
+      menuButton: {
+        backgroundColor: 'rgba(192, 192, 192, 0.9)'
       }
-    },
-    operationButton: {
-      backgroundColor: 'rgba(245, 245, 245, 0.9)'
     }
-  },
-  title: {
-    flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    textAlign: 'center',
-    fontFamily: 'serif',
-    borderWidth: 1,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderColor: 'grey'
   },
   titleDialog: {
     view: {

@@ -9,14 +9,16 @@ RadioButtons.propTypes = {
     image: PropTypes.string
   })),
   onSelect: PropTypes.func,
-  styles: PropTypes.shape({
+  buttonStyles: PropTypes.shape({
     selected: PropTypes.object,
     unselected: PropTypes.object
-  })
+  }),
+  initialSelectedId: PropTypes.string,
+  style: PropTypes.object
 }
 
-export default function RadioButtons ({ buttonData, onSelect, styles }) {
-  const [selectedItemId, setSelectedItemId] = useState(null)
+export default function RadioButtons ({ buttonData, onSelect, buttonStyles, initialSelectedId, style }) {
+  const [selectedItemId, setSelectedItemId] = useState(() => initialSelectedId || buttonData[0].id)
 
   const selectHandler = (item) => {
     onSelect(item)
@@ -48,16 +50,16 @@ export default function RadioButtons ({ buttonData, onSelect, styles }) {
   }
 
   return (
-    <View>
+    <View style={style}>
       {buttonData.map((item) => {
-        const style = item.id === selectedItemId ? styles.selected : styles.unselected
+        const buttonStyle = item.id === selectedItemId ? buttonStyles.selected : buttonStyles.unselected
         return (
           <Pressable
             key={item.id}
-            onPress={selectHandler(item)}
-            style={style}
+            onPress={() => selectHandler(item)}
+            style={buttonStyle}
           >
-            {getButtonDisplay(item, style)}
+            {getButtonDisplay(item, buttonStyle)}
           </Pressable>
         )
       })}

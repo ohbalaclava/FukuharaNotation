@@ -1,5 +1,5 @@
 
-export const Operations = {
+export const OperationButtons = {
   delete: {
     style: 'operationButton',
     glyph: require('../assets/operations/backspace.png')
@@ -19,5 +19,24 @@ export const Operations = {
   pdf: {
     style: 'operationButton',
     glyph: require('../assets/operations/pdf.png')
+  },
+  menu: {
+    style: 'menuButton',
+    glyph: require('../assets/stand-in.png')
+  }
+}
+
+export const OctaveButtons = {
+  ryo: {
+    style: 'octaveButton',
+    glyph: require('../assets/stand-in.png')
+  },
+  kan: {
+    style: 'octaveButton',
+    glyph: require('../assets/stand-in.png')
+  },
+  daikan: {
+    style: 'octaveButton',
+    glyph: require('../assets/stand-in.png')
   }
 }

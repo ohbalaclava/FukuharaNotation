@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 
 import styles from '../styles/ScreenStyles'
 import Background from '../components/Background'
-import OperationsView from './OperationsView.js'
 import { createScore } from '../model/Score'
 import ScoreTitle from '../components/ScoreTitle'
 import { downloadJson, uploadJson } from '../tools/Persistence'
-import ScoreMarksView from './ScoreMarksView'
 import { DimensionsContext } from '../data/Dimensions'
+import ScoreMarksSelectView from './ScoreMarksSelectView'
+import EditOperationsView from './EditOperationsView'
 
 InputView.propTypes = {
   score: PropTypes.object.isRequired,
@@ -57,13 +57,14 @@ export default function InputView ({ score, refresh }) {
         notes={score.getNotes()}
         onOK={(title, notes) => { score.setTitle(title); score.setNotes(notes) }}
       />
-      <ScoreMarksView
+      <ScoreMarksSelectView
         addNote={score.addNote}
         addAccidental={score.addAccidental}
-        addUnit={score.addUnit}
+        addStroke={score.addStroke}
         addDecoration={score.addDecoration}
-        refresh={refresh}/>
-      <OperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh} download={download} upload={upload} toPDF={toPDF}/>
+        refresh={refresh}
+      />
+      <EditOperationsView deleteMark={score.deleteMark} newline={score.newLine} refresh={refresh}/>
     </View>
   )
 }

@@ -1,17 +1,22 @@
 import Config from './Config'
 import { createContext } from 'react'
+import deepmerge from '../tools/DeepMerge'
 
 export const scoreContentPadding = 20
 export const scoreLineMarginRight = 5
 export const inputPanelMargin = 20
 
 const wideButtonAspectRatio = 1.5
-const inputPanelAspectRatio = 0.37
 
 export default function Dimensions (window) {
   let inputPanelHeight
+  let scoreMarksButtonPanelHeight
   let noteButtonPanelHeight
-  let operationsPanelHeight
+  let strokeButtonPanelHeight
+  let titlePanelHeight
+  let editOpsPanelHeight
+  let octaveSelectorHeight
+
   let scoreContentHeight
   let noteMark
   let accidentalMark
@@ -23,19 +28,31 @@ export default function Dimensions (window) {
   let lineEndButtonHeight
   let cursor
   let linePaddingRight
+
   let inputPanel
+  let octaveSelectorButton
   let noteButton
-  let unitButton
+  let strokeButton
   let accidentalButton
   let accidentalButtonPanel
   let decorationButton
   let decorationButtonPanel
   let squareOperationButton
   let wideOperationButton
-  let titlePanelHeight
   let title
 
   setWindowDimensions(window)
+
+  function setWindowDimensions (windowDimensions) {
+    window = windowDimensions
+    updateInputPanelDimensions()
+    updateScoreContentHeight()
+    updateNoteMarkDimensions()
+    updateAccidentalMarkDimensions()
+    updateDecorationMarkDimensions()
+    updateLineDimensions()
+    updateCursorDimensions()
+  }
 
   function updateScoreContentHeight () {
     scoreContentHeight = window.height - scoreContentPadding * 2
@@ -98,32 +115,55 @@ export default function Dimensions (window) {
   function updateInputPanelDimensions () {
     inputPanelHeight = window.height - inputPanelMargin * 2
     titlePanelHeight = inputPanelHeight / 24
-    noteButtonPanelHeight = inputPanelHeight * 0.77
-    operationsPanelHeight = inputPanelHeight - noteButtonPanelHeight - titlePanelHeight
+    editOpsPanelHeight = inputPanelHeight / 12
+    scoreMarksButtonPanelHeight = inputPanelHeight - titlePanelHeight - editOpsPanelHeight
+    noteButtonPanelHeight = scoreMarksButtonPanelHeight / 2
+    octaveSelectorHeight = noteButtonPanelHeight / 12
+    strokeButtonPanelHeight = scoreMarksButtonPanelHeight - noteButtonPanelHeight
 
     inputPanel = {
-      minWidth: inputPanelHeight * inputPanelAspectRatio
+      minWidth: 'max-content'
     }
 
     updateTitleDimensions()
+    updateOctaveSelectorDimensions()
     updateNoteButtonDimensions()
-    updateUnitButtonDimensions()
+    updateStrokeButtonDimensions()
     updateAccidentalButtonDimensions()
     updateDecorationButtonDimensions()
-    updateOperationButtonDimensions()
+    updateEditOpsButtonDimensions()
   }
 
   function updateTitleDimensions () {
-    const padding = titlePanelHeight / 5
+    const paddingTop = titlePanelHeight / 4
+    const paddingBottom = titlePanelHeight / 3
+
     title = {
       minHeight: titlePanelHeight,
-      fontSize: titlePanelHeight - 2 * padding,
+      maxHeight: titlePanelHeight,
+      fontSize: titlePanelHeight - paddingTop - paddingBottom,
+      paddingTop,
+      paddingBottom
+    }
+  }
+
+  function updateOctaveSelectorDimensions () {
+    const marginBottom = octaveSelectorHeight / 5
+    const padding = octaveSelectorHeight / 5
+    const buttonImageSize = octaveSelectorHeight - marginBottom - padding * 2
+
+    octaveSelectorButton = {
+      image: {
+        width: buttonImageSize,
+        height: buttonImageSize
+      },
+      marginBottom,
       padding
     }
   }
 
   function updateNoteButtonDimensions () {
-    const totalNoteButtonHeight = noteButtonPanelHeight / 9
+    const totalNoteButtonHeight = (noteButtonPanelHeight - octaveSelectorHeight) / 5
     const borderWidth = 3
     const marginVertical = totalNoteButtonHeight / 10
     const marginHorizontal = totalNoteButtonHeight * 0.15
@@ -147,75 +187,70 @@ export default function Dimensions (window) {
     }
   }
 
-  function updateUnitButtonDimensions () {
-    unitButton = {
+  function updateStrokeButtonDimensions () {
+    const buttonImageSize = strokeButtonPanelHeight / 12
+    const borderWidth = 3
+    const margin = buttonImageSize / 6
+    const padding = buttonImageSize / 3 - borderWidth
+
+    strokeButton = {
       image: {
-        ...noteButton.image
+        width: buttonImageSize,
+        height: buttonImageSize
       },
       borderRadius: 5,
-      borderWidth: 1,
-      padding: noteButton.padding,
-      marginVertical: noteButton.marginVertical + 2,
-      marginHorizontal: noteButton.marginHorizontal
+      borderWidth,
+      padding,
+      margin
     }
   }
 
   function updateAccidentalButtonDimensions () {
-    const totalAccidentalButtonHeight = noteButtonPanelHeight / 9
+    const buttonImageSize = noteButtonPanelHeight / 12
     const borderWidth = 3
-    const margin = totalAccidentalButtonHeight / 10
-    const accidentalButtonLength = totalAccidentalButtonHeight - 2 * margin
-    const padding = accidentalButtonLength / 5
-    const buttonImageLength = accidentalButtonLength - 2 * (padding + borderWidth)
+    const margin = buttonImageSize / 6
+    const padding = buttonImageSize / 3 - borderWidth
 
     accidentalButton = {
       image: {
-        width: buttonImageLength,
-        height: buttonImageLength
+        width: buttonImageSize,
+        height: buttonImageSize
       },
       borderRadius: 5,
       borderWidth,
-      width: accidentalButtonLength,
-      height: accidentalButtonLength,
       padding,
-      marginVertical: margin,
-      marginHorizontal: margin
+      margin
     }
 
     accidentalButtonPanel = {
-      margin
+      height: 'max-content'
     }
   }
 
   function updateDecorationButtonDimensions () {
-    const totalDecorationButtonHeight = noteButtonPanelHeight / 9
+    const buttonImageSize = noteButtonPanelHeight / 12
     const borderWidth = 3
-    const margin = totalDecorationButtonHeight / 10
-    const decorationButtonLength = totalDecorationButtonHeight - 2 * margin
-    const padding = decorationButtonLength / 5
-    const buttonImageLength = decorationButtonLength - 2 * (padding + borderWidth)
+    const margin = buttonImageSize / 6
+    const padding = buttonImageSize / 3 - borderWidth
 
     decorationButton = {
       image: {
-        width: buttonImageLength,
-        height: buttonImageLength
+        width: buttonImageSize,
+        height: buttonImageSize
       },
       borderRadius: 5,
       borderWidth,
-      width: decorationButtonLength,
-      height: decorationButtonLength,
       padding,
-      marginVertical: margin,
-      marginHorizontal: margin
+      margin
     }
 
     decorationButtonPanel = {
-      margin
+      height: 'max-content'
     }
   }
 
-  function updateOperationButtonDimensions () {
-    const totalOperationButtonHeight = operationsPanelHeight / 2
+  function updateEditOpsButtonDimensions () {
+    const totalOperationButtonHeight = editOpsPanelHeight
     const borderWidth = 1
     const margin = totalOperationButtonHeight / 10
     const operationButtonHeight = totalOperationButtonHeight - 2 * margin
@@ -244,17 +279,6 @@ export default function Dimensions (window) {
     }
   }
 
-  function setWindowDimensions (windowDimensions) {
-    window = windowDimensions
-    updateInputPanelDimensions()
-    updateScoreContentHeight()
-    updateNoteMarkDimensions()
-    updateAccidentalMarkDimensions()
-    updateDecorationMarkDimensions()
-    updateLineDimensions()
-    updateCursorDimensions()
-  }
-
   function getCursorStyle (markLengths) {
     return {
       ...cursor,
@@ -262,9 +286,16 @@ export default function Dimensions (window) {
     }
   }
 
-  function getUnitButtonStyle (relativeHeight) {
-    const style = { ...unitButton }
-    const imageStyle = { ...unitButton.image }
+  function getOctaveSelectorButtonStyle (baseStyle) {
+    return {
+      selected: deepmerge(baseStyle.selected, octaveSelectorButton),
+      unselected: deepmerge(baseStyle.unselected, octaveSelectorButton)
+    }
+  }
+
+  function getStrokeButtonStyle (relativeHeight) {
+    const style = { ...strokeButton }
+    const imageStyle = { ...strokeButton.image }
     if (relativeHeight) {
       imageStyle.height *= relativeHeight
       style.image = imageStyle
@@ -305,13 +336,13 @@ export default function Dimensions (window) {
     getNoteMarkStyle,
     getAccidentalMarkStyle: () => accidentalMark,
     getDecorationMarkStyle,
+    getOctaveSelectorButtonStyle,
     getNoteButtonStyle: () => noteButton,
-    getUnitButtonStyle,
+    getStrokeButtonStyle,
     getAccidentalButtonViewStyle: () => accidentalButtonPanel,
     getAccidentalButtonStyle: () => accidentalButton,
     getDecorationButtonViewStyle: () => decorationButtonPanel,
     getDecorationButtonStyle: () => decorationButton,
-    getOperationButtonViewHeight: () => operationsPanelHeight,
     getSquareOperationButtonStyle: () => squareOperationButton,
     getWideOperationButtonStyle: () => wideOperationButton,
     getWindowStyle: () => window,

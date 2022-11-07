@@ -1,13 +1,16 @@
-import React, { useContext } from 'react'
-import { FlatList, View } from 'react-native-web'
+import React, { useContext, useState } from 'react'
+import { View } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import ImageButton from '../components/ImageButton'
 import { ScoreMarks } from '../data/ScoreLiterals'
 import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
-import AccidentalSelectView from './AccidentalSelectView'
 import Config from '../data/Config'
+import GridView from './GridView'
+import RadioButtons from '../components/RadioButtons'
+import { OctaveButtons } from '../data/ButtonDefinitions'
+import AccidentalSelectView from './AccidentalSelectView'
 
 NoteSelectView.propTypes = {
   addNote: PropTypes.func.isRequired,
@@ -16,45 +19,68 @@ NoteSelectView.propTypes = {
 }
 
 export default function NoteSelectView ({ addNote, addAccidental, refresh }) {
+  const [visibleOctave, setVisibleOctave] = useState(() => 'ryo')
   const { dimensions } = useContext(DimensionsContext)
+  const style = styles.input.marks.sections.notes
 
   const renderNoteButton = ({ item }) => {
     return (
       <ImageButton
+        key={item.name}
         highlightColour={Config.inputButtonHighlightColour}
         image={item.glyph.source}
         onPress={() => { addNote(item); refresh() }}
-        buttonStyleName='noteButton'
-        styleGroup='notes'
-        otherStyle={dimensions.getNoteButtonStyle()}
+        style={[style.octaves.button, dimensions.getNoteButtonStyle()]}
       />
     )
   }
 
+  function getButtonData () {
+    const buttonData = []
+    for (const [key, value] of Object.entries(OctaveButtons)) {
+      buttonData.push({
+        id: key,
+        image: value.glyph
+      })
+    }
+    return buttonData
+  }
+
+  function getStyle (octave) {
+    return (octave === visibleOctave) ? { display: 'flex' } : { display: 'none' }
+  }
+
   return (
-    <View style={[styles.notes.view, { height: dimensions.getNoteButtonViewHeight() }]}>
-      <FlatList
-        numColumns='1'
-        data={ScoreMarks.notes.ryo}
-        renderItem={renderNoteButton}
-        keyExtractor={(item) => item.name}
-        contentContainerStyle={styles.notes.buttons}
+    <View style={[style, { height: dimensions.getNoteButtonViewHeight() }]}>
+      <RadioButtons
+        buttonData={getButtonData()}
+        onSelect={(octaveButton) => setVisibleOctave(octaveButton.id)}
+        buttonStyles={dimensions.getOctaveSelectorButtonStyle(style.octaveSelector.button)}
+        style={style.octaveSelector}
       />
-      <FlatList
-        numColumns='1'
-        data={ScoreMarks.notes.kan}
-        renderItem={renderNoteButton}
-        keyExtractor={(item) => item.name}
-        contentContainerStyle={styles.notes.buttons}
-      />
-      <FlatList
-        numColumns='1'
-        data={ScoreMarks.notes.daikan}
-        renderItem={renderNoteButton}
-        keyExtractor={(item) => item.name}
-        contentContainerStyle={styles.notes.buttons}
-      />
-      <AccidentalSelectView addAccidental={addAccidental} refresh={refresh}/>
+      <View style={style.octaveView}>
+        <View style={style.octaves}>
+          <GridView
+            noRows={5}
+            items={ScoreMarks.notes.ryo}
+            renderItem={renderNoteButton}
+            style={getStyle('ryo')}
+          />
+          <GridView
+            noRows={4}
+            items={ScoreMarks.notes.kan}
+            renderItem={renderNoteButton}
+            style={getStyle('kan')}
+          />
+          <GridView
+            noRows={3}
+            items={ScoreMarks.notes.daikan}
+            renderItem={renderNoteButton}
+            style={getStyle('daikan')}
+          />
+        </View>
+        <AccidentalSelectView addAccidental={addAccidental} refresh={refresh}/>
+      </View>
     </View>
   )
 }

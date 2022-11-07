@@ -1,40 +1,45 @@
 import React, { useContext } from 'react'
-import { FlatList, View } from 'react-native-web'
+import { View } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import { ScoreMarks } from '../data/ScoreLiterals'
 import { DimensionsContext } from '../data/Dimensions'
 import ImageButton from '../components/ImageButton'
 import Config from '../data/Config'
+import GridView from './GridView'
+import styles from '../styles/ScreenStyles'
+import DecorationSelectView from './DecorationSelectView'
 
 StrokeSelectView.propTypes = {
-  addUnit: PropTypes.func.isRequired,
+  addStroke: PropTypes.func.isRequired,
+  addDecoration: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired
 }
 
-export default function StrokeSelectView ({ addUnit, refresh }) {
+export default function StrokeSelectView ({ addStroke, addDecoration, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
+  const style = styles.input.marks.sections.strokes
 
-  const renderUnitButton = ({ item }) => {
+  const renderStrokeButton = ({ item }) => {
     return (
       <ImageButton
+        key={item.name}
         highlightColour={Config.inputButtonHighlightColour}
         image={item.glyph.source}
-        onPress={() => { addUnit(item); refresh() }}
-        buttonStyleName='unitButton'
-        styleGroup='units'
-        otherStyle={dimensions.getUnitButtonStyle(item.glyph.relativeHeight)}
+        onPress={() => { addStroke(item); refresh() }}
+        style={[style.button, dimensions.getStrokeButtonStyle(item.glyph.relativeHeight)]}
       />
     )
   }
 
   return (
-    <View>
-      <FlatList
-        data={ScoreMarks.units}
-        renderItem={renderUnitButton}
-        keyExtractor={(item) => item.name}
+    <View style={style}>
+      <GridView
+        items={ScoreMarks.strokes}
+        renderItem={renderStrokeButton}
+        noRows={4}
       />
+      <DecorationSelectView addDecoration={addDecoration} refresh={refresh}/>
     </View>
   )
 }

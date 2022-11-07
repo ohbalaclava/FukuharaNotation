@@ -1,9 +1,9 @@
 import { createEnum } from '../tools/Enum'
 
-export const MarkType = createEnum('Note', 'Accidental', 'Unit', 'Decoration', 'Join')
+export const MarkType = createEnum('Note', 'Accidental', 'Stroke', 'Decoration', 'Join')
 export const Join = createEnum('None', 'Arc', 'Line', 'DoubleLine')
 export const Accidental = createEnum('Meri', 'None', 'Kari')
-export const Unit = createEnum('Dash', 'DoubleDash', 'TripleDash', 'QuadrupleDash', 'Tail', 'Wiggle', 'Dot', 'Tick')
+export const Stroke = createEnum('Dash', 'DoubleDash', 'TripleDash', 'QuadrupleDash', 'Tail', 'Wiggle', 'Dot', 'Tick')
 export const Decoration = createEnum('LeanTo', 'Dot')
 export const JoinPosition = createEnum('Start', 'Middle', 'End')
 export const On = createEnum('Ryo', 'Kan', 'Daikan')
@@ -73,6 +73,14 @@ export const ScoreMarks = {
         name: '七',
         glyph: {
           source: require('../assets/numerals/nana.png')
+        }
+      },
+      {
+        type: MarkType.Note,
+        octave: On.Ryo,
+        name: '七-alt',
+        glyph: {
+          source: require('../assets/stand-in.png')
         }
       },
       {
@@ -233,63 +241,63 @@ export const ScoreMarks = {
       }
     }
   ],
-  units: [
+  strokes: [
     {
-      type: MarkType.Unit,
-      name: Unit.Dash,
+      type: MarkType.Stroke,
+      name: Stroke.Dash,
       glyph: {
         source: require('../assets/marks/dash.png')
       }
     },
     {
-      type: MarkType.Unit,
-      name: Unit.DoubleDash,
+      type: MarkType.Stroke,
+      name: Stroke.DoubleDash,
       glyph: {
         source: require('../assets/marks/double-dash.png'),
-        relativeHeight: 1.75
+        relativeHeight: 2
       }
     },
     {
-      type: MarkType.Unit,
-      name: Unit.TripleDash,
+      type: MarkType.Stroke,
+      name: Stroke.TripleDash,
       glyph: {
         source: require('../assets/marks/triple-dash.png'),
-        relativeHeight: 1.75
+        relativeHeight: 2
       }
     },
     {
-      type: MarkType.Unit,
-      name: Unit.QuadrupleDash,
+      type: MarkType.Stroke,
+      name: Stroke.QuadrupleDash,
       glyph: {
         source: require('../assets/marks/quadruple-dash.png'),
         relativeHeight: 3
       }
     },
     {
-      type: MarkType.Unit,
-      name: Unit.Dot,
+      type: MarkType.Stroke,
+      name: Stroke.Dot,
       glyph: {
         source: require('../assets/marks/dot.png')
       }
     },
     {
-      type: MarkType.Unit,
-      name: Unit.Tick,
+      type: MarkType.Stroke,
+      name: Stroke.Tick,
       glyph: {
         source: require('../assets/marks/tick.png')
       }
     },
     {
-      type: MarkType.Unit,
-      name: Unit.Wiggle,
+      type: MarkType.Stroke,
+      name: Stroke.Wiggle,
       glyph: {
         source: require('../assets/marks/wiggle.png'),
         relativeHeight: 3
       }
     },
     {
-      type: MarkType.Unit,
-      name: Unit.Tail,
+      type: MarkType.Stroke,
+      name: Stroke.Tail,
       glyph: {
         source: require('../assets/marks/tail.png'),
         relativeHeight: 3
@@ -339,7 +347,7 @@ const glyphs = new Map();
   ScoreMarks.notes.daikan.forEach(glyphBuilder)
   ScoreMarks.accidentals.forEach(glyphBuilder)
   ScoreMarks.decorations.forEach(glyphBuilder)
-  ScoreMarks.units.forEach(glyphBuilder)
+  ScoreMarks.strokes.forEach(glyphBuilder)
   ScoreMarks.joins.forEach(glyphBuilder)
 })()
 

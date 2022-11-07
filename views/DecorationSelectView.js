@@ -15,6 +15,7 @@ DecorationSelectView.propTypes = {
 
 export default function DecorationSelectView ({ addDecoration, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
+  const style = styles.input.marks.sections.decorations
 
   const renderDecorationButton = ({ item }) => {
     return (
@@ -22,15 +23,13 @@ export default function DecorationSelectView ({ addDecoration, refresh }) {
         highlightColour={Config.inputButtonHighlightColour}
         image={item.glyph.source}
         onPress={() => { addDecoration(item); refresh() }}
-        buttonStyleName='decorationButton'
-        styleGroup='decorations'
-        otherStyle={dimensions.getDecorationButtonStyle()}
+        style={[style.button, dimensions.getDecorationButtonStyle()]}
       />
     )
   }
 
   return (
-    <View style={ [styles.decorations.view, dimensions.getDecorationButtonViewStyle()] }>
+    <View style={ [style, dimensions.getDecorationButtonViewStyle()] }>
       <FlatList
         data={ScoreMarks.decorations}
         renderItem={renderDecorationButton}

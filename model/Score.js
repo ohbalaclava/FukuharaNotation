@@ -123,8 +123,8 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     postEdit()
   }
 
-  function addUnit (unit) {
-    const mark = createNoteMark(unit)
+  function addStroke (stroke) {
+    const mark = createNoteMark(stroke)
     const doAddMark = () => {
       lines[currentLine].splice(lineCursor, 0, mark)
 
@@ -223,7 +223,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
 
   return {
     addNote,
-    addUnit,
+    addStroke,
     addAccidental,
     addDecoration,
     clone: () => createScore({ docId, title, lines, currentLine, lineCursor }),

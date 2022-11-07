@@ -37,7 +37,7 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
 
   return (
     <View>
-      <Text style={[styles.title, dimensions.getTitleStyle()]} onPress={() => openDialog()}>
+      <Text style={[styles.input.title, dimensions.getTitleStyle()]} onPress={() => openDialog()}>
         {_title}
       </Text>
 

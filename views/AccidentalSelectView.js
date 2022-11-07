@@ -15,6 +15,7 @@ AccidentalSelectView.propTypes = {
 
 export default function AccidentalSelectView ({ addAccidental, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
+  const style = styles.input.marks.sections.accidentals
 
   const renderAccidentalButton = ({ item }) => {
     return (
@@ -22,15 +23,13 @@ export default function AccidentalSelectView ({ addAccidental, refresh }) {
         highlightColour={Config.inputButtonHighlightColour}
         image={item.glyph.source}
         onPress={() => { addAccidental(item); refresh() }}
-        buttonStyleName='accidentalButton'
-        styleGroup='accidentals'
-        otherStyle={dimensions.getAccidentalButtonStyle()}
+        style={[style.button, dimensions.getAccidentalButtonStyle()]}
       />
     )
   }
 
   return (
-    <View style={ [styles.accidentals.view, dimensions.getAccidentalButtonViewStyle()] }>
+    <View style={ [style, dimensions.getAccidentalButtonViewStyle()] }>
       <FlatList
         data={ScoreMarks.accidentals}
         renderItem={renderAccidentalButton}

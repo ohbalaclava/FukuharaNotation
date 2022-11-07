@@ -7,6 +7,7 @@ import { DimensionsContext } from '../data/Dimensions'
 import { getGlyph } from '../data/ScoreLiterals'
 import Accidental from './Accidental'
 import Decorations from './Decorations'
+import styles from '../styles/ScreenStyles'
 
 Mark.propTypes = {
   mark: PropTypes.shape({
@@ -28,9 +29,7 @@ export default function Mark ({ mark, onPress }) {
       <ImageButton
         image={glyph.source}
         onPress={() => onPress()}
-        buttonStyleName='mark'
-        styleGroup='score'
-        otherStyle={dimensions.getNoteMarkStyle(glyph.relativeHeight)}
+        style={[styles.score.mark, dimensions.getNoteMarkStyle(glyph.relativeHeight)]}
       />
     </View>
   )
