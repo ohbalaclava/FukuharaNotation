@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(245, 245, 245, 0.9)'
       },
       menuButton: {
-        backgroundColor: 'rgba(192, 192, 192, 0.9)'
+        backgroundColor: 'rgba(208, 208, 208, 0.7)'
       }
     }
   },

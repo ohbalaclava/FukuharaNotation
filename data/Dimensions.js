@@ -115,7 +115,7 @@ export default function Dimensions (window) {
   function updateInputPanelDimensions () {
     inputPanelHeight = window.height - inputPanelMargin * 2
     titlePanelHeight = inputPanelHeight / 24
-    editOpsPanelHeight = inputPanelHeight / 12
+    editOpsPanelHeight = inputPanelHeight / 13
     scoreMarksButtonPanelHeight = inputPanelHeight - titlePanelHeight - editOpsPanelHeight
     noteButtonPanelHeight = scoreMarksButtonPanelHeight / 2
     octaveSelectorHeight = noteButtonPanelHeight / 12
