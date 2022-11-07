@@ -80,7 +80,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '七-alt',
         glyph: {
-          source: require('../assets/stand-in.png')
+          source: require('../assets/numerals/nana-circled.png')
         }
       },
       {
