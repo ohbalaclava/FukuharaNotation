@@ -33,10 +33,9 @@ export default function Dimensions (window) {
   let octaveSelectorButton
   let noteButton
   let strokeButton
+  let joinButton
   let accidentalButton
-  let accidentalButtonPanel
   let decorationButton
-  let decorationButtonPanel
   let squareOperationButton
   let wideOperationButton
   let title
@@ -129,6 +128,7 @@ export default function Dimensions (window) {
     updateOctaveSelectorDimensions()
     updateNoteButtonDimensions()
     updateStrokeButtonDimensions()
+    updateJoinButtonDimensions()
     updateAccidentalButtonDimensions()
     updateDecorationButtonDimensions()
     updateEditOpsButtonDimensions()
@@ -205,6 +205,24 @@ export default function Dimensions (window) {
     }
   }
 
+  function updateJoinButtonDimensions () {
+    const buttonImageSize = noteButtonPanelHeight / 12
+    const borderWidth = 3
+    const margin = buttonImageSize / 6
+    const padding = buttonImageSize / 3 - borderWidth
+
+    joinButton = {
+      image: {
+        width: buttonImageSize,
+        height: buttonImageSize
+      },
+      borderRadius: 5,
+      borderWidth,
+      padding,
+      margin
+    }
+  }
+
   function updateAccidentalButtonDimensions () {
     const buttonImageSize = noteButtonPanelHeight / 12
     const borderWidth = 3
@@ -220,10 +238,6 @@ export default function Dimensions (window) {
       borderWidth,
       padding,
       margin
-    }
-
-    accidentalButtonPanel = {
-      height: 'max-content'
     }
   }
 
@@ -242,10 +256,6 @@ export default function Dimensions (window) {
       borderWidth,
       padding,
       margin
-    }
-
-    decorationButtonPanel = {
-      height: 'max-content'
     }
   }
 
@@ -290,6 +300,13 @@ export default function Dimensions (window) {
     return {
       selected: deepmerge(baseStyle.selected, octaveSelectorButton),
       unselected: deepmerge(baseStyle.unselected, octaveSelectorButton)
+    }
+  }
+
+  function getJoinButtonStyle (baseStyle) {
+    return {
+      selected: deepmerge(baseStyle.selected, joinButton),
+      unselected: deepmerge(baseStyle.unselected, joinButton)
     }
   }
 
@@ -339,9 +356,8 @@ export default function Dimensions (window) {
     getOctaveSelectorButtonStyle,
     getNoteButtonStyle: () => noteButton,
     getStrokeButtonStyle,
-    getAccidentalButtonViewStyle: () => accidentalButtonPanel,
+    getJoinButtonStyle,
     getAccidentalButtonStyle: () => accidentalButton,
-    getDecorationButtonViewStyle: () => decorationButtonPanel,
     getDecorationButtonStyle: () => decorationButton,
     getSquareOperationButtonStyle: () => squareOperationButton,
     getWideOperationButtonStyle: () => wideOperationButton,

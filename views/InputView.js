@@ -62,6 +62,7 @@ export default function InputView ({ score, refresh }) {
         addAccidental={score.addAccidental}
         addStroke={score.addStroke}
         addDecoration={score.addDecoration}
+        setJoin={score.setJoin}
         refresh={refresh}
       />
       <EditOperationsView

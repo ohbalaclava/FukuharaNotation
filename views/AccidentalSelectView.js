@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FlatList, View } from 'react-native-web'
+import { FlatList } from 'react-native-web'
 import PropTypes from 'prop-types'
 
 import ImageButton from '../components/ImageButton'
@@ -29,12 +29,12 @@ export default function AccidentalSelectView ({ addAccidental, refresh }) {
   }
 
   return (
-    <View style={ [style, dimensions.getAccidentalButtonViewStyle()] }>
-      <FlatList
-        data={ScoreMarks.accidentals}
-        renderItem={renderAccidentalButton}
-        keyExtractor={(item) => item.name}
-      />
-    </View>
+    <FlatList
+      data={ScoreMarks.accidentals}
+      renderItem={renderAccidentalButton}
+      keyExtractor={(item) => item.name}
+      style={{ flex: 'initial' }}
+      contentContainerStyle={style}
+    />
   )
 }

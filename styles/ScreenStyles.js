@@ -102,10 +102,28 @@ const styles = StyleSheet.create({
             backgroundColor: buttonColour
           }
         },
+        joins: {
+          flexFlow: 'column nowrap',
+          backgroundColor: 'rgba(255, 255, 0, 0.2)',
+          margin: 5,
+          height: 'max-content',
+          button: {
+            selected: {
+              flex: 1,
+              backgroundColor: selectedRadioButtonColour
+            },
+            unselected: {
+              flex: 1,
+              backgroundColor: unselectedRadioButtonColour
+            }
+          }
+        },
         accidentals: {
+          flex: 'initial',
           flexFlow: 'column nowrap',
           backgroundColor: 'rgba(255, 0, 0, 0.2)',
           margin: 5,
+          height: 'min-content',
           button: {
             backgroundColor: buttonColour,
             image: {
@@ -114,9 +132,11 @@ const styles = StyleSheet.create({
           }
         },
         decorations: {
+          flex: 'initial',
           flexFlow: 'column nowrap',
           backgroundColor: 'rgba(0, 255, 0, 0.2)',
           margin: 5,
+          height: 'min-content',
           button: {
             backgroundColor: buttonColour,
             image: {

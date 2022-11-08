@@ -9,14 +9,16 @@ import Config from '../data/Config'
 import GridView from './GridView'
 import styles from '../styles/ScreenStyles'
 import DecorationSelectView from './DecorationSelectView'
+import JoinSelectView from './JoinSelectView'
 
 StrokeSelectView.propTypes = {
   addStroke: PropTypes.func.isRequired,
   addDecoration: PropTypes.func.isRequired,
+  setJoin: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired
 }
 
-export default function StrokeSelectView ({ addStroke, addDecoration, refresh }) {
+export default function StrokeSelectView ({ addStroke, addDecoration, setJoin, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
   const style = styles.input.marks.sections.strokes
 
@@ -39,7 +41,10 @@ export default function StrokeSelectView ({ addStroke, addDecoration, refresh })
         renderItem={renderStrokeButton}
         noRows={4}
       />
-      <DecorationSelectView addDecoration={addDecoration} refresh={refresh}/>
+      <View style={{ flexFlow: 'column nowrap' }}>
+        <JoinSelectView setJoin={setJoin} refresh={refresh}/>
+        <DecorationSelectView addDecoration={addDecoration} refresh={refresh}/>
+      </View>
     </View>
   )
 }
