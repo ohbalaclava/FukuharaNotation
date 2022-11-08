@@ -13,16 +13,21 @@ RadioButtons.propTypes = {
     selected: PropTypes.object,
     unselected: PropTypes.object
   }),
-  initialSelectedId: PropTypes.string,
-  style: PropTypes.object
+  initialSelected: PropTypes.string,
+  style: PropTypes.object,
+  allowUnselected: PropTypes.bool
 }
 
-export default function RadioButtons ({ buttonData, onSelect, buttonStyles, initialSelectedId, style }) {
-  const [selectedItemId, setSelectedItemId] = useState(() => initialSelectedId || buttonData[0].id)
+export default function RadioButtons ({ buttonData, onSelect, buttonStyles, initialSelected, style, allowUnselected }) {
+  const [selectedItemId, setSelectedItemId] = useState(() => initialSelected || buttonData[0].id)
 
   const selectHandler = (item) => {
-    onSelect(item)
-    setSelectedItemId(item.id)
+    if (!allowUnselected || selectedItemId !== item.id) {
+      onSelect(item)
+      setSelectedItemId(item.id)
+    } else {
+      setSelectedItemId(RadioButtons.None)
+    }
   }
 
   const getButtonDisplay = (item, style) => {
@@ -66,3 +71,5 @@ export default function RadioButtons ({ buttonData, onSelect, buttonStyles, init
     </View>
   )
 }
+
+RadioButtons.None = '_NO_SELECTION_'
