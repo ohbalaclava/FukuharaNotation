@@ -309,21 +309,21 @@ export const ScoreMarks = {
       type: MarkType.Join,
       name: Join.Arc,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/join_arc.png')
       }
     },
     {
       type: MarkType.Join,
       name: Join.Line,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/join_single.png')
       }
     },
     {
       type: MarkType.Join,
       name: Join.DoubleLine,
       glyph: {
-        source: require('../assets/stand-in.png')
+        source: require('../assets/marks/join_double.png')
       }
     }
   ]

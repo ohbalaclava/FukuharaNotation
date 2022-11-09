@@ -3,9 +3,7 @@ import { nanoid } from 'nanoid'
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
 import Config from '../data/Config'
 
-export function createScore ({ docId, title, notes, lines, currentLine, lineCursor }) {
-  let join = Join.None
-  let joinChanged = false
+export function createScore ({ docId, title, notes, lines, currentLine, lineCursor, join, joinChanged }) {
   let postEditHook
 
   // constructor
@@ -95,6 +93,13 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     return mark
   }
 
+  function createStrokeMark (note) {
+    const mark = createSimpleMark(note)
+    mark.join = Join.None
+
+    return mark
+  }
+
   function addNote (note) {
     const noteMark = createNoteMark(note)
     const doAddNote = () => {
@@ -124,7 +129,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   }
 
   function addStroke (stroke) {
-    const mark = createNoteMark(stroke)
+    const mark = createStrokeMark(stroke)
     const doAddMark = () => {
       lines[currentLine].splice(lineCursor, 0, mark)
 
@@ -226,7 +231,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     addStroke,
     addAccidental,
     addDecoration,
-    clone: () => createScore({ docId, title, lines, currentLine, lineCursor }),
+    clone: () => createScore({ docId, title, lines, currentLine, lineCursor, join, joinChanged }),
     deleteMark,
     getID: () => docId,
     getTitle: () => title,
@@ -247,5 +252,13 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
 }
 
 export function createEmptyScore () {
-  return createScore({ title: 'Untitled', notes: '', lines: [], currentLine: 0, lineCursor: 0 })
+  return createScore({
+    title: 'Untitled',
+    notes: '',
+    lines: [],
+    currentLine: 0,
+    lineCursor: 0,
+    join: Join.None,
+    joinChanged: false
+  })
 }
