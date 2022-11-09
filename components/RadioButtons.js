@@ -22,11 +22,12 @@ export default function RadioButtons ({ buttonData, onSelect, buttonStyles, init
   const [selectedItemId, setSelectedItemId] = useState(() => initialSelected || buttonData[0].id)
 
   const selectHandler = (item) => {
-    if (!allowUnselected || selectedItemId !== item.id) {
-      onSelect(item)
-      setSelectedItemId(item.id)
-    } else {
+    if (selectedItemId === item.id && allowUnselected) {
+      onSelect(RadioButtons.None)
       setSelectedItemId(RadioButtons.None)
+    } else if (selectedItemId !== item.id) {
+      onSelect(item.id)
+      setSelectedItemId(item.id)
     }
   }
 
