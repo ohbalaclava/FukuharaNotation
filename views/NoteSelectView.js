@@ -54,7 +54,7 @@ export default function NoteSelectView ({ addNote, addAccidental, refresh }) {
     <View style={[style, { height: dimensions.getNoteButtonViewHeight() }]}>
       <RadioButtons
         buttonData={getButtonData()}
-        onSelect={(octaveButton) => setVisibleOctave(octaveButton.id)}
+        onSelect={(octave) => setVisibleOctave(octave)}
         buttonStyles={dimensions.getOctaveSelectorButtonStyle(style.octaveSelector.button)}
         style={style.octaveSelector}
       />
