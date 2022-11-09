@@ -6,8 +6,6 @@ import * as Dimensions from '../data/Dimensions'
 
 const markOpacity = 0.66
 const buttonColour = 'rgb(50, 50, 50)'
-const selectedRadioButtonColour = 'rgba(192, 100, 100, 0.4)'
-const unselectedRadioButtonColour = 'rgba(192, 192, 192, 0.4)'
 
 const styles = StyleSheet.create({
   container: {
@@ -76,14 +74,18 @@ const styles = StyleSheet.create({
             button: {
               selected: {
                 flex: 2,
-                backgroundColor: selectedRadioButtonColour,
+                backgroundColor: 'rgba(192, 100, 100, 0.4)',
+                borderBottomWidth: 1,
+                borderColor: 'grey',
                 image: {
                   marginHorizontal: 'auto'
                 }
               },
               unselected: {
                 flex: 1,
-                backgroundColor: unselectedRadioButtonColour,
+                backgroundColor: 'rgba(192, 192, 192, 0.4)',
+                borderBottomWidth: 1,
+                borderColor: 'grey',
                 image: {
                   marginHorizontal: 'auto'
                 }
@@ -104,17 +106,20 @@ const styles = StyleSheet.create({
         },
         joins: {
           flexFlow: 'column nowrap',
-          backgroundColor: 'rgba(255, 255, 0, 0.2)',
+          backgroundColor: 'rgba(0, 255, 0, 0.2)',
           margin: 5,
           height: 'max-content',
           button: {
             selected: {
               flex: 1,
-              backgroundColor: selectedRadioButtonColour
+              backgroundColor: 'rgb(255, 255, 255)'
             },
             unselected: {
               flex: 1,
-              backgroundColor: unselectedRadioButtonColour
+              backgroundColor: 'rgb(0, 0, 0)',
+              image: {
+                filter: 'invert(1)'
+              }
             }
           }
         },
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
         decorations: {
           flex: 'initial',
           flexFlow: 'column nowrap',
-          backgroundColor: 'rgba(0, 255, 0, 0.2)',
+          backgroundColor: 'rgba(255, 0, 0, 0.2)',
           margin: 5,
           height: 'min-content',
           button: {
