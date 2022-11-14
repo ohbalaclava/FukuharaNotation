@@ -49,6 +49,11 @@ export default function InputView ({ score, refresh }) {
 
   function toPDF () {}
 
+  function clear () {
+    score.clear()
+    refresh()
+  }
+
   return (
     <View style={[styles.input.view, dimensions.getInputViewStyle()]}>
       <Background border={border} source={require('../assets/bamboo.png')}/>
@@ -72,6 +77,7 @@ export default function InputView ({ score, refresh }) {
         download={download}
         upload={upload}
         toPDF={toPDF}
+        clear={clear}
       />
     </View>
   )

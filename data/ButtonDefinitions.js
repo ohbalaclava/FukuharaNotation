@@ -20,6 +20,10 @@ export const OperationButtons = {
     style: 'operationButton',
     glyph: require('../assets/operations/pdf.png')
   },
+  clear: {
+    style: 'operationButton',
+    glyph: require('../assets/stand-in.png')
+  },
   menu: {
     style: 'menuButton',
     glyph: require('../assets/operations/menu.png')

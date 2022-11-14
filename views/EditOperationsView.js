@@ -14,10 +14,11 @@ EditOperationsView.propTypes = {
   newline: PropTypes.func.isRequired,
   download: PropTypes.func.isRequired,
   upload: PropTypes.func.isRequired,
-  toPDF: PropTypes.func.isRequired
+  toPDF: PropTypes.func.isRequired,
+  clear: PropTypes.func.isRequired
 }
 
-export default function EditOperationsView ({ deleteMark, newline, download, upload, toPDF, refresh }) {
+export default function EditOperationsView ({ deleteMark, newline, download, upload, toPDF, clear, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
   const style = styles.input.operations
 
@@ -35,7 +36,7 @@ export default function EditOperationsView ({ deleteMark, newline, download, upl
           buttonStyleName={OperationButtons.newline.style}
           style={[style[OperationButtons.newline.style], dimensions.getSquareOperationButtonStyle()]}
         />
-        <FileOperationsView download={download} upload={upload} toPDF={toPDF}/>
+        <FileOperationsView download={download} upload={upload} toPDF={toPDF} clear={clear}/>
       </View>
     </View>
   )

@@ -9,16 +9,12 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   // constructor
   (function () {
     docId = docId || nanoid()
-    currentLine = currentLine || 0
-    lineCursor = lineCursor || 0
 
     if (lines.length === 0) {
-      lines.push([])
-      currentLine = 0
-      lineCursor = 0
-      lines[0].id = nanoid()
-      lines[0].marksLength = 0
+      clear()
     } else {
+      currentLine = currentLine || 0
+      lineCursor = lineCursor || 0
       lines.forEach(line => {
         line.id = line.id || nanoid()
         line.forEach(mark => {
@@ -242,11 +238,25 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     }, 0)
   }
 
+  function clear () {
+    if (lines.length > 0) {
+      lines = []
+    }
+    lines.push([])
+    currentLine = 0
+    lineCursor = 0
+    lines[0].id = nanoid()
+    lines[0].marksLength = 0
+    joinChanged = false
+    previousJoin = join
+  }
+
   return {
     addNote,
     addStroke,
     addAccidental,
     addDecoration,
+    clear,
     clone: () => createScore({ docId, title, lines, currentLine, lineCursor, join, joinChanged, previousJoin }),
     deleteMark,
     getID: () => docId,
