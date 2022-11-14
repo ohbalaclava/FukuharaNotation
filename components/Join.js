@@ -7,11 +7,14 @@ import { DimensionsContext } from '../data/Dimensions'
 import { getGlyph, Join as JoinType } from '../data/ScoreLiterals'
 
 Join.propTypes = {
-  join: PropTypes.string.isRequired
+  join: PropTypes.string.isRequired,
+  size: PropTypes.number
 }
 
-export default function Join ({ join }) {
+export default function Join ({ join, size }) {
   const { dimensions } = useContext(DimensionsContext)
 
-  return (join !== JoinType.None) ? <Image style={[styles.score.accidental, dimensions.getAccidentalMarkStyle()]} source={getGlyph(join).source} /> : <noscript />
+  if (join !== JoinType.None && size) {
+    return <Image style={[styles.score.join, dimensions.getJoinStyle(size)]} source={getGlyph(join).source} />
+  }
 }

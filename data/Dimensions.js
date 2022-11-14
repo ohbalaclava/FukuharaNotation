@@ -206,7 +206,7 @@ export default function Dimensions (window) {
   }
 
   function updateJoinButtonDimensions () {
-    const buttonImageSize = noteButtonPanelHeight / 12
+    const buttonImageSize = noteButtonPanelHeight / 13
     const borderWidth = 3
     const margin = buttonImageSize / 6
     const padding = buttonImageSize / 3 - borderWidth
@@ -340,6 +340,14 @@ export default function Dimensions (window) {
     return decoration
   }
 
+  function getJoinStyle (size) {
+    return {
+      width: noteMark.image.width,
+      height: size * noteMark.image.height,
+      resizeMode: 'stretch'
+    }
+  }
+
   return {
     getCursorStyle,
     getLineWidth: () => lineWidth,
@@ -353,6 +361,7 @@ export default function Dimensions (window) {
     getNoteMarkStyle,
     getAccidentalMarkStyle: () => accidentalMark,
     getDecorationMarkStyle,
+    getJoinStyle,
     getOctaveSelectorButtonStyle,
     getNoteButtonStyle: () => noteButton,
     getStrokeButtonStyle,

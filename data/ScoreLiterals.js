@@ -1,7 +1,7 @@
 import { createEnum } from '../tools/Enum'
 
 export const MarkType = createEnum('Note', 'Accidental', 'Stroke', 'Decoration', 'Join')
-export const Join = createEnum('None', 'Arc', 'Line', 'DoubleLine')
+export const Join = createEnum('None', 'Arc', 'Line', 'DoubleLine', 'TripleLine')
 export const Accidental = createEnum('Meri', 'None', 'Kari')
 export const Stroke = createEnum('Dash', 'DoubleDash', 'TripleDash', 'QuadrupleDash', 'Tail', 'Wiggle', 'Dot', 'Tick')
 export const Decoration = createEnum('LeanTo', 'Dot')
@@ -324,6 +324,13 @@ export const ScoreMarks = {
       name: Join.DoubleLine,
       glyph: {
         source: require('../assets/marks/join_double.png')
+      }
+    },
+    {
+      type: MarkType.Join,
+      name: Join.TripleLine,
+      glyph: {
+        source: require('../assets/marks/join_triple.png')
       }
     }
   ]

@@ -15,7 +15,8 @@ Mark.propTypes = {
     name: PropTypes.string.isRequired,
     accidental: PropTypes.object,
     decorations: PropTypes.instanceOf(Map),
-    join: PropTypes.string
+    join: PropTypes.string,
+    joinLength: PropTypes.number
   }).isRequired,
   onPress: PropTypes.func.isRequired
 }
@@ -28,7 +29,7 @@ export default function Mark ({ mark, onPress }) {
     <View>
       <Accidental accidental={mark.accidental}/>
       <Decorations decorations={mark.decorations} hasAccidental={mark.accidental !== undefined}/>
-      <Join join={mark.join}/>
+      <Join join={mark.join} size={mark.joinLength}/>
       <ImageButton
         image={glyph.source}
         onPress={() => onPress()}

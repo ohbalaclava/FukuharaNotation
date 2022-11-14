@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid'
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
 import Config from '../data/Config'
 
-export function createScore ({ docId, title, notes, lines, currentLine, lineCursor, join, joinChanged }) {
+export function createScore ({ docId, title, notes, lines, currentLine, lineCursor, join, joinChanged, previousJoin }) {
   let postEditHook
 
   // constructor
@@ -32,28 +32,29 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     postEditHook && postEditHook()
   }
 
-  function repairJoins () {
-    let inJoin = false
+  function processJoins () {
+    let startMark
+    let inJoin = Join.None
     for (const mark of lines[currentLine]) {
       if (mark.join !== Join.None) {
-        if (inJoin) {
+        if (inJoin === mark.join) {
+          startMark.joinLength++
           switch (mark.joinPosition) {
             case JoinPosition.Start:
               mark.joinPosition = JoinPosition.Middle
               break
             case JoinPosition.End:
-              inJoin = false
+              inJoin = Join.None
               break
           }
         } else {
-          switch (mark.joinPosition) {
-            case JoinPosition.Start:
-              inJoin = true
-              break
-            case JoinPosition.Middle:
-              inJoin = true
+          startMark = mark
+          startMark.joinLength = 1
+          if (mark.joinPosition !== JoinPosition.End) {
+            inJoin = mark.join
+            if (mark.joinPosition === JoinPosition.Middle) {
               mark.joinPosition = JoinPosition.Start
-              break
+            }
           }
         }
       }
@@ -63,13 +64,18 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   function closeLastJoin () {
     if (lineCursor > 0 && lines[currentLine][lineCursor - 1].join !== Join.None) {
       lines[currentLine][lineCursor - 1].joinPosition = JoinPosition.End
-      repairJoins()
     }
   }
 
   function setJoin (joinType) {
+    previousJoin = join
     join = joinType
-    joinChanged = true
+
+    const markIndex = lineCursor - 1
+    if (markIndex >= 0 && lines[currentLine][markIndex].type === MarkType.Note) {
+      lines[currentLine][markIndex].join = joinType
+      processJoins()
+    }
   }
 
   function goto (line, index) {
@@ -117,6 +123,11 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
       lines[currentLine].marksLength += noteMark.height
     }
 
+    if (previousJoin !== join) {
+      joinChanged = true
+      previousJoin = join
+    }
+
     const newLineLength = lines[currentLine].marksLength + noteMark.height
     if (newLineLength <= Config.maxLineLength) {
       doAddNote()
@@ -125,6 +136,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
       doAddNote()
     }
 
+    processJoins()
     postEdit()
   }
 
@@ -148,6 +160,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
       doAddMark()
     }
 
+    processJoins()
     postEdit()
   }
 
@@ -187,6 +200,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
         lines.splice(currentLine, 1)
         currentLine--
         lineCursor = lines[currentLine].length
+        processJoins()
         postEdit()
       }
     } else {
@@ -195,6 +209,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
       lines[currentLine].splice(markIndex, 1)
       lineCursor--
       lines[currentLine].marksLength -= markLength
+      processJoins()
       postEdit()
     }
   }
@@ -207,6 +222,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     lineCursor = 0
     lines[currentLine].id = nanoid()
     lines[currentLine].marksLength = 0
+    processJoins()
     postEdit()
   }
 
@@ -231,7 +247,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     addStroke,
     addAccidental,
     addDecoration,
-    clone: () => createScore({ docId, title, lines, currentLine, lineCursor, join, joinChanged }),
+    clone: () => createScore({ docId, title, lines, currentLine, lineCursor, join, joinChanged, previousJoin }),
     deleteMark,
     getID: () => docId,
     getTitle: () => title,
@@ -259,6 +275,7 @@ export function createEmptyScore () {
     currentLine: 0,
     lineCursor: 0,
     join: Join.None,
-    joinChanged: false
+    joinChanged: false,
+    previousJoin: Join.None
   })
 }

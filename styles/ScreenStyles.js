@@ -261,6 +261,13 @@ const styles = StyleSheet.create({
       backgroundSize: 'contain',
       opacity: markOpacity
     },
+    join: {
+      overflow: 'inherit',
+      position: 'absolute',
+      top: '0',
+      left: '85%',
+      opacity: markOpacity
+    },
     cursor: {
       flex: 'none',
       image: {
