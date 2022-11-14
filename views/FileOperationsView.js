@@ -6,6 +6,7 @@ import ImageButton from '../components/ImageButton'
 import styles from '../styles/ScreenStyles'
 import { OperationButtons } from '../data/ButtonDefinitions'
 import { DimensionsContext } from '../data/Dimensions'
+import ConfirmClearDialog from '../components/ConfirmClearDialog'
 
 FileOperationsView.propTypes = {
   download: PropTypes.func.isRequired,
@@ -45,21 +46,23 @@ export default function FileOperationsView ({ download, upload, toPDF, clear }) 
           onPress={getRunAndCloseFunc(download)}
           style={[style[OperationButtons.download.style], dimensions.getSquareOperationButtonStyle()]}
         />
-        <ImageButton
-          image={OperationButtons.upload.glyph}
-          onPress={getRunAndCloseFunc(upload)}
-          style={[style[OperationButtons.upload.style], dimensions.getSquareOperationButtonStyle()]}
-        />
+        <ConfirmClearDialog onYes={getRunAndCloseFunc(upload)} onNo={toggleMenu}>
+          <ImageButton
+            image={OperationButtons.upload.glyph}
+            style={[style[OperationButtons.upload.style], dimensions.getSquareOperationButtonStyle()]}
+          />
+        </ConfirmClearDialog>
         <ImageButton
           image={OperationButtons.pdf.glyph}
           onPress={getRunAndCloseFunc(toPDF)}
           style={[style[OperationButtons.pdf.style], dimensions.getSquareOperationButtonStyle()]}
         />
-        <ImageButton
-          image={OperationButtons.clear.glyph}
-          onPress={getRunAndCloseFunc(clear)}
-          style={[style[OperationButtons.clear.style], dimensions.getSquareOperationButtonStyle()]}
-        />
+        <ConfirmClearDialog onYes={getRunAndCloseFunc(clear)} onNo={toggleMenu}>
+          <ImageButton
+            image={OperationButtons.clear.glyph}
+            style={[style[OperationButtons.clear.style], dimensions.getSquareOperationButtonStyle()]}
+          />
+        </ConfirmClearDialog>
       </View>
     </View>
   )

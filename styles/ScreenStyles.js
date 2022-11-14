@@ -221,6 +221,28 @@ const styles = StyleSheet.create({
       borderStyle: 'dotted'
     }
   },
+  twoOptionDialog: {
+    view: {
+      flex: 1,
+      flexFlow: 'column nowrap',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    buttons: {
+      flexFlow: 'row nowrap',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 20,
+      marginVertical: 20
+    },
+    message: {
+      padding: 20,
+      textAlign: 'center',
+      fontFamily: 'serif',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  },
   score: {
     flex: 1,
     border: '0px dashed black',

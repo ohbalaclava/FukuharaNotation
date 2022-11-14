@@ -5,7 +5,7 @@ import deepmerge from '../tools/DeepMerge'
 
 ImageButton.propTypes = {
   image: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   pressedOpacity: PropTypes.number,
   highlightColour: PropTypes.string

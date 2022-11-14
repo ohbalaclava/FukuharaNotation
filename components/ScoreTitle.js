@@ -41,7 +41,7 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
         {_title}
       </Text>
 
-      <Modal onRequestClose={() => closeDialog()} visible={titleDialogVisible} animationType="fade">
+      <Modal onRequestClose={closeDialog} visible={titleDialogVisible} animationType="fade">
         <View style={styles.titleDialog.view}>
           <View style={styles.titleDialog.textComponents}>
             <Text style={styles.titleDialog.label}>Title</Text>
