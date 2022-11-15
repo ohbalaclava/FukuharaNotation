@@ -45,7 +45,6 @@ export default function FileOperationsView ({ download, upload, toPDF, clear }) 
       <ImageButton
         image={OperationButtons.menu.glyph}
         onPress={toggleMenu}
-        buttonStyleName={OperationButtons.menu.style}
         style={[style[OperationButtons.menu.style], dimensions.getSquareOperationButtonStyle()]}
       />
 
