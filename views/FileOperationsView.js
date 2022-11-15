@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { View } from 'react-native-web'
+import { useSpring, animated, config } from 'react-spring'
 import PropTypes from 'prop-types'
 
 import ImageButton from '../components/ImageButton'
@@ -15,10 +16,18 @@ FileOperationsView.propTypes = {
   clear: PropTypes.func.isRequired
 }
 
+const AnimatedView = animated(View)
+
 export default function FileOperationsView ({ download, upload, toPDF, clear }) {
   const { dimensions } = useContext(DimensionsContext)
   const [visible, setVisible] = useState(false)
   const style = styles.input.operations
+
+  const { transform, opacity } = useSpring({
+    opacity: visible ? 1 : 0,
+    transform: `perspective(600px) rotateX(${visible ? 90 : 0}deg)`,
+    config: config.default
+  })
 
   function toggleMenu () {
     setVisible(!visible)
@@ -37,10 +46,10 @@ export default function FileOperationsView ({ download, upload, toPDF, clear }) 
         image={OperationButtons.menu.glyph}
         onPress={toggleMenu}
         buttonStyleName={OperationButtons.menu.style}
-        style={[style[OperationButtons.menu.style], dimensions.getSquareOperationButtonStyle({ small: true })]}
+        style={[style[OperationButtons.menu.style], dimensions.getSquareOperationButtonStyle()]}
       />
 
-      <View style={[style.fileOps, { display: (visible) ? 'flex' : 'none' }]}>
+      <AnimatedView style={Object.assign({}, style.fileOps, { opacity, transform, rotateX: '-90deg' })}>
         <ImageButton
           image={OperationButtons.download.glyph}
           onPress={getRunAndCloseFunc(download)}
@@ -63,7 +72,7 @@ export default function FileOperationsView ({ download, upload, toPDF, clear }) 
             style={[style[OperationButtons.clear.style], dimensions.getSquareOperationButtonStyle()]}
           />
         </ConfirmClearDialog>
-      </View>
+      </AnimatedView>
     </View>
   )
 }
