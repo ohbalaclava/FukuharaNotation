@@ -174,6 +174,12 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5
       },
+      showHideButton: {
+        position: 'absolute',
+        top: '50%',
+        left: 0,
+        backgroundColor: 'rgba(245, 245, 245, 0.9)'
+      },
       operationButton: {
         backgroundColor: 'rgba(245, 245, 245, 0.9)'
       },

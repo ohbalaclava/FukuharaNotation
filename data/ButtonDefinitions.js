@@ -1,5 +1,9 @@
 
 export const OperationButtons = {
+  showhide: {
+    style: 'showHideButton',
+    glyph: require('../assets/operations/showhide.png')
+  },
   delete: {
     style: 'operationButton',
     glyph: require('../assets/operations/backspace.png')

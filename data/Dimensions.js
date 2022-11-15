@@ -31,6 +31,7 @@ export default function Dimensions (window) {
   let linePaddingRight
 
   let inputPanel
+  let showHideButton
   let octaveSelectorButton
   let noteButton
   let strokeButton
@@ -122,10 +123,12 @@ export default function Dimensions (window) {
     strokeButtonPanelHeight = scoreMarksButtonPanelHeight - noteButtonPanelHeight
 
     inputPanel = {
-      minWidth: 'max-content',
+      width: 'max-content',
+      maxWidth: 'min-content',
       minHeight: minimumInputPanelHeight
     }
 
+    updateShowHideButtonDimensions()
     updateTitleDimensions()
     updateOctaveSelectorDimensions()
     updateNoteButtonDimensions()
@@ -160,6 +163,23 @@ export default function Dimensions (window) {
         height: buttonImageHeight
       },
       marginBottom,
+      padding
+    }
+  }
+
+  function updateShowHideButtonDimensions () {
+    const noteButtonSize = noteButtonPanelHeight / 20
+    const borderWidth = 1
+    const padding = noteButtonSize / 5
+    const buttonImageSize = noteButtonSize - 2 * (padding + borderWidth)
+
+    showHideButton = {
+      image: {
+        width: buttonImageSize,
+        height: buttonImageSize
+      },
+      borderRadius: 5,
+      borderWidth,
       padding
     }
   }
@@ -358,6 +378,7 @@ export default function Dimensions (window) {
     getLineSeparation: () => lineSeparation,
     getLineEndButtonHeight: () => lineEndButtonHeight,
     getInputViewStyle: () => inputPanel,
+    getShowHideButtonStyle: () => showHideButton,
     getTitleStyle: () => title,
     getNoteButtonViewHeight: () => noteButtonPanelHeight,
     getNoteMarkStyle,
