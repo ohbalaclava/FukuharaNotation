@@ -53,11 +53,11 @@ const styles = StyleSheet.create({
           flex: 'initial',
           flexFlow: 'column nowrap',
           octaveView: {
-            flex: 1,
+            flex: 'initial',
             flexFlow: 'row nowrap'
           },
           octaves: {
-            flex: 1,
+            flex: 'initial',
             flexFlow: 'row nowrap',
             button: {
               flex: 'initial',
@@ -105,8 +105,11 @@ const styles = StyleSheet.create({
           }
         },
         joins: {
+          flex: 'initial',
           flexFlow: 'column nowrap',
-          backgroundColor: 'rgba(0, 255, 0, 0.2)',
+          border: '1px dashed',
+          borderColor: buttonColour,
+          borderRadius: 5,
           margin: 5,
           height: 'max-content',
           button: {
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
             },
             unselected: {
               flex: 1,
-              backgroundColor: 'rgb(0, 0, 0)',
+              backgroundColor: buttonColour,
               image: {
                 filter: 'invert(1)'
               }
@@ -127,6 +130,7 @@ const styles = StyleSheet.create({
           flex: 'initial',
           flexFlow: 'column nowrap',
           backgroundColor: 'rgba(255, 0, 0, 0.2)',
+          borderRadius: 5,
           margin: 5,
           height: 'min-content',
           button: {
@@ -140,6 +144,7 @@ const styles = StyleSheet.create({
           flex: 'initial',
           flexFlow: 'column nowrap',
           backgroundColor: 'rgba(255, 0, 0, 0.2)',
+          borderRadius: 5,
           margin: 5,
           height: 'min-content',
           button: {
@@ -152,7 +157,7 @@ const styles = StyleSheet.create({
       }
     },
     operations: {
-      flex: 2,
+      flex: 'initial',
       flexFlow: 'column nowrap',
       justifyContent: 'space-evenly',
       editOps: {
@@ -163,6 +168,7 @@ const styles = StyleSheet.create({
       fileOps: {
         flexFlow: 'row nowrap',
         position: 'absolute',
+        top: -1,
         right: '100%',
         backgroundColor: 'rgb(0, 0, 0)',
         borderTopLeftRadius: 5,
