@@ -25,7 +25,7 @@ export default function InputView ({ score, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
   const [visible, setVisible] = useState(true)
 
-  const { transform, transformShowHide, opacity, width } = useSpring({
+  const { transform, opacity, width } = useSpring({
     width: visible ? 200 : 20,
     opacity: visible ? 1 : 0,
     transform: `perspective(600px) rotateY(${visible ? 90 : 0}deg)`,
