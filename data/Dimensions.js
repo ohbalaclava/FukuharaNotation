@@ -6,6 +6,7 @@ export const scoreContentPadding = 20
 export const scoreLineMarginRight = 5
 export const inputPanelMargin = 20
 
+const minimumInputPanelHeight = 400
 const wideButtonAspectRatio = 1.5
 
 export default function Dimensions (window) {
@@ -112,7 +113,7 @@ export default function Dimensions (window) {
   }
 
   function updateInputPanelDimensions () {
-    inputPanelHeight = window.height - inputPanelMargin * 2
+    inputPanelHeight = Math.max(window.height - inputPanelMargin * 2, minimumInputPanelHeight)
     titlePanelHeight = inputPanelHeight / 24
     editOpsPanelHeight = inputPanelHeight / 13
     scoreMarksButtonPanelHeight = inputPanelHeight - titlePanelHeight - editOpsPanelHeight
@@ -121,7 +122,8 @@ export default function Dimensions (window) {
     strokeButtonPanelHeight = scoreMarksButtonPanelHeight - noteButtonPanelHeight
 
     inputPanel = {
-      minWidth: 'max-content'
+      minWidth: 'max-content',
+      minHeight: minimumInputPanelHeight
     }
 
     updateTitleDimensions()
