@@ -22,7 +22,7 @@ export const OperationButtons = {
   },
   clear: {
     style: 'operationButton',
-    glyph: require('../assets/stand-in.png')
+    glyph: require('../assets/operations/cross.png')
   },
   menu: {
     style: 'menuButton',
