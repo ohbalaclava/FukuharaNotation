@@ -33,7 +33,6 @@ export default function EditOperationsView ({ deleteMark, newline, download, upl
         <ImageButton
           image={OperationButtons.newline.glyph}
           onPress={() => { newline(); refresh() }}
-          buttonStyleName={OperationButtons.newline.style}
           style={[style[OperationButtons.newline.style], dimensions.getSquareOperationButtonStyle()]}
         />
         <FileOperationsView download={download} upload={upload} toPDF={toPDF} clear={clear}/>
