@@ -29,9 +29,11 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
     if (commit) {
       setTitle(updatedTitle)
       setNotes(updatedNotes)
+      onOK && onOK(updatedTitle, updatedNotes)
     } else {
       setUpdatedTitle(_title)
       setUpdatedNotes(_notes)
+      onCancel && onCancel()
     }
   }
 
@@ -63,8 +65,8 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
             />
           </View>
           <View style={styles.titleDialog.buttonComponents}>
-            <Button onPress={() => { closeDialog(true); onOK && onOK(_title, _notes) }} title={'OK'} color='cadetblue'/>
-            <Button onPress={() => { closeDialog(); onCancel && onCancel() }} title={'Cancel'} color='cadetblue'/>
+            <Button onPress={() => { closeDialog(true) }} title={'OK'} color='cadetblue'/>
+            <Button onPress={() => { closeDialog() }} title={'Cancel'} color='cadetblue'/>
           </View>
         </View>
       </Modal>

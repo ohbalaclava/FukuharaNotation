@@ -90,7 +90,7 @@ export default function InputView ({ score, refresh }) {
         <ScoreTitle
           title={score.getTitle()}
           notes={score.getNotes()}
-          onOK={(title, notes) => { score.setTitle(title); score.setNotes(notes) }}
+          onOK={(title, notes) => { score.setTitle(title); score.setNotes(notes); refresh() }}
         />
         <ScoreMarksSelectView
           addNote={score.addNote}

@@ -240,7 +240,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     addAccidental,
     addDecoration,
     clear,
-    clone: () => createScore({ docId, title, lines, currentLine, lineCursor, join, joinChanged }),
+    clone: () => createScore({ docId, title, notes, lines, currentLine, lineCursor, join, joinChanged }),
     deleteMark,
     getID: () => docId,
     getTitle: () => title,
