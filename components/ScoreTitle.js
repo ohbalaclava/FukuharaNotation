@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
+import Config from '../data/Config'
 
 ScoreTitle.propTypes = {
   title: PropTypes.string,
@@ -66,6 +67,7 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
               numberOfLines={5}
               selectionColor='cadetblue'
               style={styles.titleDialog.notesInput}
+              maxLength={Config.maxNotesLength}
             />
           </View>
           <View style={styles.titleDialog.buttonComponents}>
