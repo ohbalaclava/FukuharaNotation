@@ -1,6 +1,6 @@
 
-export function downloadJson ({ filename, json }) {
-  const blob = new Blob([json])
+export function download ({ filename, mimeType, data }) {
+  const blob = new Blob([data], { mimeType })
   const downloadUrl = URL.createObjectURL(blob)
 
   const downloadLink = document.createElement('a')
