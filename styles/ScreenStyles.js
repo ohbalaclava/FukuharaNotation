@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     view: {
       flexFlow: 'row nowrap',
       backgroundImage: `url(${paper})`,
-      backgroundRepeat: 'repeat'
+      backgroundRepeat: 'repeat',
+      minWidth: 'min-content'
     }
   },
   input: {
