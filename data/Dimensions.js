@@ -7,6 +7,7 @@ export const scoreLineMarginRight = 5
 export const inputPanelMargin = 20
 
 const minimumInputPanelHeight = 400
+const inputPanelAspectRatio = 0.2637
 const wideButtonAspectRatio = 1.5
 
 export default function Dimensions (window) {
@@ -124,7 +125,7 @@ export default function Dimensions (window) {
 
     inputPanel = {
       width: 'max-content',
-      maxWidth: 'min-content',
+      maxWidth: inputPanelAspectRatio * inputPanelHeight,
       minHeight: minimumInputPanelHeight
     }
 
@@ -146,6 +147,7 @@ export default function Dimensions (window) {
     title = {
       minHeight: titlePanelHeight,
       maxHeight: titlePanelHeight,
+      maxWidth: 0.2637 * inputPanelHeight,
       fontSize: titlePanelHeight - paddingTop - paddingBottom,
       paddingTop,
       paddingBottom
