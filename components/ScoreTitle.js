@@ -37,10 +37,14 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
     }
   }
 
+  function trim (text) {
+    return (text.length > 24) ? `${text.substring(0, 21)}...` : text
+  }
+
   return (
     <View>
       <Text style={[styles.input.title, dimensions.getTitleStyle()]} onPress={() => openDialog()}>
-        {_title}
+        {trim(_title)}
       </Text>
 
       <Modal onRequestClose={closeDialog} visible={titleDialogVisible} animationType="fade">
