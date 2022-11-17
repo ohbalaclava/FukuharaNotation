@@ -7,12 +7,13 @@ import styles from '../styles/ScreenStyles'
 import Background from '../components/Background'
 import { createScore } from '../model/Score'
 import ScoreTitle from '../components/ScoreTitle'
-import { downloadJson, uploadJson } from '../tools/Persistence'
+import { download, uploadJson } from '../tools/Persistence'
 import { DimensionsContext } from '../data/Dimensions'
 import ScoreMarksSelectView from './ScoreMarksSelectView'
 import EditOperationsView from './EditOperationsView'
 import ImageButton from '../components/ImageButton'
 import { OperationButtons } from '../data/ButtonDefinitions'
+import getPDFScore from '../model/PDFScore'
 
 InputView.propTypes = {
   score: PropTypes.object.isRequired,
@@ -47,11 +48,17 @@ export default function InputView ({ score, refresh }) {
     // TODO
   }
 
-  function download () {
+  function getFilename (extension) {
     const title = score.getTitle()
-    const filename = `${(title && title.length > 0) ? title : 'untitled'}.shinobue.json`
+    return `${(title && title.length > 0) ? title : 'untitled'}.shinobue.${extension}`
+  }
 
-    downloadJson({ filename, json: score.serialise() })
+  function downloadJson () {
+    download({ filename: getFilename('json'), mimeType: 'application/json', data: score.serialise() })
+  }
+
+  function downloadPDF () {
+    getPDFScore(score).save(getFilename('pdf'))
   }
 
   function upload () {
@@ -64,8 +71,6 @@ export default function InputView ({ score, refresh }) {
       }
     })
   }
-
-  function toPDF () {}
 
   function clear () {
     score.clear()
@@ -104,9 +109,9 @@ export default function InputView ({ score, refresh }) {
           deleteMark={score.deleteMark}
           newline={score.newLine}
           refresh={refresh}
-          download={download}
+          download={downloadJson}
           upload={upload}
-          toPDF={toPDF}
+          toPDF={downloadPDF}
           clear={clear}
         />
       </AnimatedView>
