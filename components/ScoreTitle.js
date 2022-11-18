@@ -42,6 +42,10 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
     return (text.length > 24) ? `${text.substring(0, 21)}...` : text
   }
 
+  function replaceLineBreaks (text) {
+    return text.replaceAll('\n', '  ')
+  }
+
   return (
     <View>
       <Text style={[styles.input.title, dimensions.getTitleStyle()]} onPress={() => openDialog()}>
@@ -62,7 +66,9 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
             <Text style={styles.titleDialog.label}>Notes</Text>
             <TextInput
               defaultValue={_notes}
-              onChange={(event) => setUpdatedNotes(event.target.value)}
+              onChange={(event) => {
+                setUpdatedNotes(replaceLineBreaks(event.target.value))
+              }}
               multiline
               numberOfLines={5}
               selectionColor='cadetblue'
