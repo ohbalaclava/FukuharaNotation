@@ -15,10 +15,11 @@ EditOperationsView.propTypes = {
   download: PropTypes.func.isRequired,
   upload: PropTypes.func.isRequired,
   toPDF: PropTypes.func.isRequired,
-  clear: PropTypes.func.isRequired
+  clear: PropTypes.func.isRequired,
+  isScoreNonEmpty: PropTypes.func.isRequired
 }
 
-export default function EditOperationsView ({ deleteMark, newline, download, upload, toPDF, clear, refresh }) {
+export default function EditOperationsView ({ deleteMark, newline, download, upload, toPDF, clear, isScoreNonEmpty, refresh }) {
   const { dimensions } = useContext(DimensionsContext)
   const style = styles.input.operations
 
@@ -35,7 +36,7 @@ export default function EditOperationsView ({ deleteMark, newline, download, upl
           onPress={() => { newline(); refresh() }}
           style={[style[OperationButtons.newline.style], dimensions.getSquareOperationButtonStyle()]}
         />
-        <FileOperationsView download={download} upload={upload} toPDF={toPDF} clear={clear}/>
+        <FileOperationsView download={download} upload={upload} toPDF={toPDF} clear={clear} isScoreNonEmpty={isScoreNonEmpty}/>
       </View>
     </View>
   )

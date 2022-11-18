@@ -113,6 +113,7 @@ export default function InputView ({ score, refresh }) {
           upload={upload}
           toPDF={downloadPDF}
           clear={clear}
+          isScoreNonEmpty={() => !score.isEmpty()}
         />
       </AnimatedView>
     </View>

@@ -13,12 +13,13 @@ FileOperationsView.propTypes = {
   download: PropTypes.func.isRequired,
   upload: PropTypes.func.isRequired,
   toPDF: PropTypes.func.isRequired,
-  clear: PropTypes.func.isRequired
+  clear: PropTypes.func.isRequired,
+  isScoreNonEmpty: PropTypes.func.isRequired
 }
 
 const AnimatedView = animated(View)
 
-export default function FileOperationsView ({ download, upload, toPDF, clear }) {
+export default function FileOperationsView ({ download, upload, toPDF, clear, isScoreNonEmpty }) {
   const { dimensions } = useContext(DimensionsContext)
   const [visible, setVisible] = useState(false)
   const style = styles.input.operations
@@ -54,9 +55,10 @@ export default function FileOperationsView ({ download, upload, toPDF, clear }) 
           onPress={getRunAndCloseFunc(download)}
           style={[style[OperationButtons.download.style], dimensions.getSquareOperationButtonStyle()]}
         />
-        <ConfirmClearDialog onYes={getRunAndCloseFunc(upload)} onNo={toggleMenu}>
+        <ConfirmClearDialog isConfirmationRequired={isScoreNonEmpty} onYes={getRunAndCloseFunc(upload)} onNo={toggleMenu}>
           <ImageButton
             image={OperationButtons.upload.glyph}
+            onPress={getRunAndCloseFunc(upload)}
             style={[style[OperationButtons.upload.style], dimensions.getSquareOperationButtonStyle()]}
           />
         </ConfirmClearDialog>
@@ -65,9 +67,10 @@ export default function FileOperationsView ({ download, upload, toPDF, clear }) 
           onPress={getRunAndCloseFunc(toPDF)}
           style={[style[OperationButtons.pdf.style], dimensions.getSquareOperationButtonStyle()]}
         />
-        <ConfirmClearDialog onYes={getRunAndCloseFunc(clear)} onNo={toggleMenu}>
+        <ConfirmClearDialog isConfirmationRequired={isScoreNonEmpty} onYes={getRunAndCloseFunc(clear)} onNo={toggleMenu}>
           <ImageButton
             image={OperationButtons.clear.glyph}
+            onPress={getRunAndCloseFunc(clear)}
             style={[style[OperationButtons.clear.style], dimensions.getSquareOperationButtonStyle()]}
           />
         </ConfirmClearDialog>

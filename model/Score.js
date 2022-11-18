@@ -257,7 +257,8 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     setJoin,
     setTitle: newTitle => { title = newTitle },
     setNotes: newNotes => { notes = newNotes },
-    onEdit: func => { postEditHook = func }
+    onEdit: func => { postEditHook = func },
+    isEmpty: () => lines.length === 1 && lines[0].length === 0
   }
 }
 
