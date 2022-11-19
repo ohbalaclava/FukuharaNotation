@@ -104,7 +104,6 @@ export default function getPDFScore (score) {
     x: layout.score.firstPageRight - layout.score.lineWidth,
     y: layout.score.top
   }
-  let page = 0
 
   // eslint-disable-next-line new-cap
   const doc = new jsPDF({
@@ -149,7 +148,6 @@ export default function getPDFScore (score) {
 
   function newPage () {
     doc.addPage(layout.name, layout.orientation)
-    page++
     markOrigin.x = layout.score.right - layout.score.lineWidth
     markOrigin.y = layout.score.top
   }
