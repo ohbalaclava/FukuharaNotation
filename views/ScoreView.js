@@ -50,7 +50,7 @@ export default function ScoreView ({ score, refresh }) {
         renderItem={({ item, index }) => {
           const isCurrentLine = index === score.getCurrentLineIndex()
           return renderLine({
-            line: item,
+            line: item.marks,
             index,
             goto: score.goto,
             refresh,

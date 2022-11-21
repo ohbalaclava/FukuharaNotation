@@ -64,6 +64,7 @@ export default function InputView ({ score, refresh }) {
   function upload () {
     uploadJson({
       onload: (json) => {
+        json.join = score.getJoin()
         refresh(createScore(json))
       },
       onerror: (name, message) => {

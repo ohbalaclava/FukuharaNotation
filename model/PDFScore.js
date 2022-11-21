@@ -158,7 +158,7 @@ export default function getPDFScore (score) {
   }
 
   function addLine (line) {
-    line.forEach((mark) => {
+    line.marks.forEach((mark) => {
       addMark(mark)
     })
   }

@@ -18,7 +18,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
       lineCursor = lineCursor || 0
       lines.forEach(line => {
         line.id = line.id || nanoid()
-        line.forEach(mark => {
+        line.marks.forEach(mark => {
           mark.id = mark.id || nanoid()
         })
       })
@@ -32,7 +32,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   function processJoins () {
     let startMark
     let inJoin = Join.None
-    for (const mark of lines[currentLine]) {
+    for (const mark of lines[currentLine].marks) {
       if (mark.join !== Join.None) {
         if (inJoin === mark.join && mark.joinPosition !== JoinPosition.Start) {
           startMark.joinLength++
@@ -54,8 +54,8 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   }
 
   function closeLastJoin () {
-    if (lineCursor > 0 && lines[currentLine][lineCursor - 1].join !== Join.None) {
-      lines[currentLine][lineCursor - 1].joinPosition = JoinPosition.End
+    if (lineCursor > 0 && lines[currentLine].marks[lineCursor - 1].join !== Join.None) {
+      lines[currentLine].marks[lineCursor - 1].joinPosition = JoinPosition.End
     }
   }
 
@@ -66,7 +66,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
 
   function goto (line, index) {
     currentLine = (line === undefined) ? lines.length - 1 : line
-    lineCursor = (index === undefined) ? lines[currentLine].length : index
+    lineCursor = (index === undefined) ? lines[currentLine].marks.length : index
   }
 
   function createSimpleMark (fullMark) {
@@ -95,9 +95,9 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   function addNote (note) {
     const noteMark = createNoteMark(note)
     const doAddNote = () => {
-      lines[currentLine].splice(lineCursor, 0, noteMark)
-      if (lines[currentLine][lineCursor].join !== Join.None) {
-        lines[currentLine][lineCursor].joinPosition = (joinChanged) ? JoinPosition.Start : JoinPosition.Middle
+      lines[currentLine].marks.splice(lineCursor, 0, noteMark)
+      if (lines[currentLine].marks[lineCursor].join !== Join.None) {
+        lines[currentLine].marks[lineCursor].joinPosition = (joinChanged) ? JoinPosition.Start : JoinPosition.Middle
       }
 
       if (joinChanged) {
@@ -112,7 +112,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     const newLineLength = lines[currentLine].marksLength + noteMark.height
     if (newLineLength <= Config.maxLineLength) {
       doAddNote()
-    } else if (lineCursor === lines[currentLine].length) {
+    } else if (lineCursor === lines[currentLine].marks.length) {
       newLine()
       doAddNote()
     }
@@ -124,7 +124,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   function addStroke (stroke) {
     const mark = createStrokeMark(stroke)
     const doAddMark = () => {
-      lines[currentLine].splice(lineCursor, 0, mark)
+      lines[currentLine].marks.splice(lineCursor, 0, mark)
 
       closeLastJoin()
       joinChanged = true
@@ -136,7 +136,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     const newLineLength = lines[currentLine].marksLength + mark.height
     if (newLineLength <= Config.maxLineLength) {
       doAddMark()
-    } else if (lineCursor === lines[currentLine].length) {
+    } else if (lineCursor === lines[currentLine].marks.length) {
       newLine()
       doAddMark()
     }
@@ -147,12 +147,12 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
 
   function addAccidental (accidental) {
     const markIndex = lineCursor - 1
-    if (markIndex >= 0 && lines[currentLine][markIndex].type === MarkType.Note) {
-      const existingAccidental = lines[currentLine][markIndex].accidental
+    if (markIndex >= 0 && lines[currentLine].marks[markIndex].type === MarkType.Note) {
+      const existingAccidental = lines[currentLine].marks[markIndex].accidental
       if (existingAccidental && existingAccidental.name === accidental.name) {
-        delete lines[currentLine][markIndex].accidental
+        delete lines[currentLine].marks[markIndex].accidental
       } else {
-        lines[currentLine][markIndex].accidental = createSimpleMark(accidental)
+        lines[currentLine].marks[markIndex].accidental = createSimpleMark(accidental)
       }
       postEdit()
     }
@@ -160,10 +160,10 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
 
   function addDecoration (decoration) {
     const markIndex = lineCursor - 1
-    if (markIndex >= 0 && lines[currentLine][markIndex].type === MarkType.Note) {
-      let existingDecorations = lines[currentLine][markIndex].decorations
+    if (markIndex >= 0 && lines[currentLine].marks[markIndex].type === MarkType.Note) {
+      let existingDecorations = lines[currentLine].marks[markIndex].decorations
       if (!existingDecorations) {
-        existingDecorations = lines[currentLine][markIndex].decorations = new Map()
+        existingDecorations = lines[currentLine].marks[markIndex].decorations = new Map()
       }
       if (existingDecorations && existingDecorations.has(decoration.name)) {
         existingDecorations.delete(decoration.name)
@@ -177,17 +177,17 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   function deleteMark () {
     if (lineCursor === 0) {
       if (currentLine !== 0) {
-        lines[currentLine - 1].push(...lines[currentLine])
+        lines[currentLine - 1].marks.push(...lines[currentLine].marks)
         lines.splice(currentLine, 1)
         currentLine--
-        lineCursor = lines[currentLine].length
+        lineCursor = lines[currentLine].marks.length
         processJoins()
         postEdit()
       }
     } else {
       const markIndex = lineCursor - 1
-      const markLength = lines[currentLine][markIndex].height
-      lines[currentLine].splice(markIndex, 1)
+      const markLength = lines[currentLine].marks[markIndex].height
+      lines[currentLine].marks.splice(markIndex, 1)
       lineCursor--
       lines[currentLine].marksLength -= markLength
       processJoins()
@@ -197,12 +197,13 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
 
   function newLine () {
     closeLastJoin()
-    const newLine = lines[currentLine].splice(lineCursor)
+    const newLine = {}
+    newLine.marks = lines[currentLine].marks.splice(lineCursor)
+    newLine.id = nanoid()
+    newLine.marksLength = 0
     lines.splice(currentLine + 1, 0, newLine)
     currentLine++
     lineCursor = 0
-    lines[currentLine].id = nanoid()
-    lines[currentLine].marksLength = 0
     processJoins()
     postEdit()
   }
@@ -218,7 +219,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
   }
 
   function getCurrentMarkIndexInLengths () {
-    return lines[currentLine].reduce((total, mark, index) => {
+    return lines[currentLine].marks.reduce((total, mark, index) => {
       return (index < lineCursor) ? total + mark.height : total
     }, 0)
   }
@@ -227,9 +228,10 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     if (lines.length > 0) {
       lines = []
     }
-    lines.push([])
+    lines.push({})
     currentLine = 0
     lineCursor = 0
+    lines[0].marks = []
     lines[0].id = nanoid()
     lines[0].marksLength = 0
     joinChanged = false
@@ -246,6 +248,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     getID: () => docId,
     getTitle: () => title,
     getNotes: () => notes,
+    getJoin: () => join,
     getCurrentLineIndex: () => currentLine,
     getCurrentMarkIndex: () => lineCursor,
     getCurrentMarkIndexInLengths,
@@ -258,7 +261,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     setTitle: newTitle => { title = newTitle },
     setNotes: newNotes => { notes = newNotes },
     onEdit: func => { postEditHook = func },
-    isEmpty: () => lines.length === 1 && lines[0].length === 0
+    isEmpty: () => lines.length === 1 && lines[0].marks.length === 0
   }
 }
 
