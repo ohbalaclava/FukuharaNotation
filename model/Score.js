@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid'
 
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
 import Config from '../data/Config'
+import { toJSON } from '../tools/Persistence'
 
 export function createScore ({ docId, title, author, notes, lines, currentLine, lineCursor, join, joinChanged, version }) {
   let postEditHook
@@ -218,7 +219,7 @@ export function createScore ({ docId, title, author, notes, lines, currentLine, 
   }
 
   function serialise () {
-    return JSON.stringify({
+    return toJSON({
       docId, title, notes, lines, currentLine, lineCursor, version
     }, (key, value) => {
       if (key !== 'id') { // strip ids

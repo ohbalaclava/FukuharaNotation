@@ -21,7 +21,7 @@ export function uploadJson ({ onload, onerror }) {
     const reader = new FileReader()
 
     reader.addEventListener('load', () => {
-      onload(JSON.parse(reader.result))
+      onload(fromJSON(reader.result))
     })
 
     reader.addEventListener('error', () => {
@@ -32,4 +32,28 @@ export function uploadJson ({ onload, onerror }) {
   })
 
   uploadInput.click()
+}
+
+export function toJSON (value, replacer) {
+  return JSON.stringify(value, (key, value) => {
+    if (value instanceof Map) {
+      return {
+        type: 'Map',
+        data: [...value]
+      }
+    } else {
+      return (replacer && replacer(key, value)) || value
+    }
+  })
+}
+
+export function fromJSON (json, reviver) {
+  return JSON.parse(json, (key, value) => {
+    if (typeof value === 'object') {
+      if (value.type === 'Map') {
+        return new Map(value.data)
+      }
+    }
+    return (reviver && reviver(key, value)) || value
+  })
 }
