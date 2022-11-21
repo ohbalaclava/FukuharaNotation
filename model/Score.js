@@ -106,10 +106,10 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
       }
 
       lineCursor++
-      lines[currentLine].marksLength += noteMark.height
+      lines[currentLine].height += noteMark.height
     }
 
-    const newLineLength = lines[currentLine].marksLength + noteMark.height
+    const newLineLength = lines[currentLine].height + noteMark.height
     if (newLineLength <= Config.maxLineLength) {
       doAddNote()
     } else if (lineCursor === lines[currentLine].marks.length) {
@@ -130,10 +130,10 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
       joinChanged = true
 
       lineCursor++
-      lines[currentLine].marksLength += mark.height
+      lines[currentLine].height += mark.height
     }
 
-    const newLineLength = lines[currentLine].marksLength + mark.height
+    const newLineLength = lines[currentLine].height + mark.height
     if (newLineLength <= Config.maxLineLength) {
       doAddMark()
     } else if (lineCursor === lines[currentLine].marks.length) {
@@ -186,10 +186,10 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
       }
     } else {
       const markIndex = lineCursor - 1
-      const markLength = lines[currentLine].marks[markIndex].height
+      const markHeight = lines[currentLine].marks[markIndex].height
       lines[currentLine].marks.splice(markIndex, 1)
       lineCursor--
-      lines[currentLine].marksLength -= markLength
+      lines[currentLine].height -= markHeight
       processJoins()
       postEdit()
     }
@@ -200,7 +200,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     const newLine = {}
     newLine.marks = lines[currentLine].marks.splice(lineCursor)
     newLine.id = nanoid()
-    newLine.marksLength = 0
+    newLine.height = 0
     lines.splice(currentLine + 1, 0, newLine)
     currentLine++
     lineCursor = 0
@@ -233,7 +233,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     lineCursor = 0
     lines[0].marks = []
     lines[0].id = nanoid()
-    lines[0].marksLength = 0
+    lines[0].height = 0
     joinChanged = false
   }
 
