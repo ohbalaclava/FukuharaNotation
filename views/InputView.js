@@ -95,8 +95,9 @@ export default function InputView ({ score, refresh }) {
         <Background border={border} source={require('../assets/bamboo.png')}/>
         <ScoreTitle
           title={score.getTitle()}
+          author={score.getAuthor()}
           notes={score.getNotes()}
-          onOK={(title, notes) => { score.setTitle(title); score.setNotes(notes); refresh() }}
+          onOK={(title, author, notes) => { score.setTitle(title); score.setAuthor(author); score.setNotes(notes); refresh() }}
         />
         <ScoreMarksSelectView
           addNote={score.addNote}

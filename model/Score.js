@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
 import Config from '../data/Config'
 
-export function createScore ({ docId, title, notes, lines, currentLine, lineCursor, join, joinChanged, version }) {
+export function createScore ({ docId, title, author, notes, lines, currentLine, lineCursor, join, joinChanged, version }) {
   let postEditHook
 
   // constructor
@@ -252,10 +252,11 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     addAccidental,
     addDecoration,
     clear,
-    clone: () => createScore({ docId, title, notes, lines, currentLine, lineCursor, join, joinChanged, version }),
+    clone: () => createScore({ docId, title, author, notes, lines, currentLine, lineCursor, join, joinChanged, version }),
     deleteMark,
     getID: () => docId,
     getTitle: () => title,
+    getAuthor: () => author,
     getNotes: () => notes,
     getJoin: () => join,
     getCurrentLineIndex: () => currentLine,
@@ -268,6 +269,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
     serialise,
     setJoin,
     setTitle: newTitle => { title = newTitle },
+    setAuthor: newAuthor => { author = newAuthor },
     setNotes: newNotes => { notes = newNotes },
     onEdit: func => { postEditHook = func },
     isEmpty: () => lines.length === 1 && lines[0].marks.length === 0
@@ -277,6 +279,7 @@ export function createScore ({ docId, title, notes, lines, currentLine, lineCurs
 export function createEmptyScore () {
   return createScore({
     title: 'Untitled',
+    author: '',
     notes: '',
     lines: [],
     currentLine: 0,

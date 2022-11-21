@@ -8,16 +8,19 @@ import Config from '../data/Config'
 
 ScoreTitle.propTypes = {
   title: PropTypes.string,
+  author: PropTypes.string,
   notes: PropTypes.string,
   onOK: PropTypes.func,
   onCancel: PropTypes.func
 }
 
-export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
+export default function ScoreTitle ({ title, author, notes, onOK, onCancel }) {
   const [titleDialogVisible, setTitleDialogVisible] = useState(false)
   const [_title, setTitle] = useState(() => title)
+  const [_author, setAuthor] = useState(() => author)
   const [_notes, setNotes] = useState(() => notes)
   const [updatedTitle, setUpdatedTitle] = useState(() => title)
+  const [updatedAuthor, setUpdatedAuthor] = useState(() => author)
   const [updatedNotes, setUpdatedNotes] = useState(() => notes)
   const { dimensions } = useContext(DimensionsContext)
 
@@ -29,10 +32,12 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
     setTitleDialogVisible(false)
     if (commit) {
       setTitle(updatedTitle)
+      setAuthor(updatedAuthor)
       setNotes(updatedNotes)
-      onOK && onOK(updatedTitle, updatedNotes)
+      onOK && onOK(updatedTitle, updatedAuthor, updatedNotes)
     } else {
       setUpdatedTitle(_title)
+      setUpdatedAuthor(_author)
       setUpdatedNotes(_notes)
       onCancel && onCancel()
     }
@@ -62,6 +67,14 @@ export default function ScoreTitle ({ title, notes, onOK, onCancel }) {
               selectTextOnFocus
               selectionColor='cadetblue'
               style={styles.titleDialog.titleInput}
+            />
+            <Text style={styles.titleDialog.label}>Author</Text>
+            <TextInput
+              defaultValue={_author}
+              onChange={(event) => setUpdatedAuthor(event.target.value)}
+              selectTextOnFocus
+              selectionColor='cadetblue'
+              style={styles.titleDialog.authorInput}
             />
             <Text style={styles.titleDialog.label}>Notes</Text>
             <TextInput

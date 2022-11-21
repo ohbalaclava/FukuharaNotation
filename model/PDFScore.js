@@ -42,6 +42,18 @@ const A4PortraitLayout = (function () {
     }
   }
 
+  const author = {
+    fontSize: 14,
+    x: title.x - mm(14) - 3,
+    y: margins.top + 1,
+    opts: {
+      align: 'left',
+      rotationDirection: 0,
+      angle: 90,
+      maxWidth: usable.height * 0.4
+    }
+  }
+
   const notes = {
     fontSize: 12,
     x: margins.right - mm(12),
@@ -75,6 +87,7 @@ const A4PortraitLayout = (function () {
     marginSizes,
     margins,
     title,
+    author,
     notes,
     score,
     linesPerPage,
@@ -114,6 +127,7 @@ export default function getPDFScore (score) {
 
   (function () { // constructor
     addTitle()
+    addAuthor()
     addNotes()
     addLines()
   }())
@@ -125,6 +139,16 @@ export default function getPDFScore (score) {
       layout.title.x,
       layout.title.y,
       layout.title.opts
+    )
+  }
+
+  function addAuthor () {
+    doc.setFontSize(layout.author.fontSize)
+    doc.text(
+      score.getAuthor(),
+      layout.author.x,
+      layout.author.y,
+      layout.author.opts
     )
   }
 

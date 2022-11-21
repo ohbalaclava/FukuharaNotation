@@ -223,6 +223,13 @@ const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center'
     },
+    authorInput: {
+      flex: 1,
+      padding: 20,
+      fontFamily: 'serif',
+      fontSize: 16,
+      textAlign: 'center'
+    },
     notesInput: {
       flex: 1,
       padding: 10,
