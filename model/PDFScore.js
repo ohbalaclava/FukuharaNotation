@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf'
 import Config from '../data/Config'
-import { getGlyph } from '../data/ScoreLiterals'
+import { Decoration, getGlyph } from '../data/ScoreLiterals'
 
 const mm = pt => 0.3528 * pt
 
@@ -74,12 +74,21 @@ const A4PortraitLayout = (function () {
 
   const score = {
     lineWidth,
-    markHeight: markSize,
-    markHalfHeight: markSize / 2,
-    markWidth: markSize,
-    accidentalHeight: accidentalSize,
-    accidentalHalfHeight: accidentalSize / 2,
-    accidentalWidth: accidentalSize,
+    mark: {
+      height: markSize,
+      halfHeight: markSize / 2,
+      width: markSize,
+      halfWidth: markSize / 2
+    },
+    accidental: {
+      height: accidentalSize,
+      halfHeight: accidentalSize / 2,
+      width: accidentalSize
+    },
+    decoration: {
+      height: markSize,
+      width: markSize
+    },
     top: margins.top,
     right: margins.right,
     firstPageRight: margins.left + linesPerPage(0) * lineWidth
@@ -198,29 +207,49 @@ export default function getPDFScore (score) {
       'PNG',
       markOrigin.x,
       markOrigin.y,
-      layout.score.markWidth,
-      layout.score.markHeight * mark.height
+      layout.score.mark.width,
+      layout.score.mark.height * mark.height
     )
 
     mark.accidental && addAccidental(mark.accidental)
-    mark.decoration && addDecoration(mark.decoration)
+    mark.decorations && addDecorations(mark.decorations, mark.accidental !== undefined)
 
-    markOrigin.y += mark.height * layout.score.markHeight
+    markOrigin.y += mark.height * layout.score.mark.height
   }
 
   function addAccidental (accidental, markIndex) {
     doc.addImage(
       getImage(accidental),
       'PNG',
-      markOrigin.x + layout.score.markWidth - 3,
-      markOrigin.y + layout.score.markHalfHeight - layout.score.accidentalHalfHeight - 2,
-      layout.score.accidentalWidth,
-      layout.score.accidentalHeight
+      markOrigin.x + layout.score.mark.width - 3,
+      markOrigin.y + layout.score.mark.halfHeight - layout.score.accidental.halfHeight - 2,
+      layout.score.accidental.width,
+      layout.score.accidental.height
     )
   }
 
-  function addDecoration (decoration, markIndex) {
-    // draw decoration
+  function addDecorations (decorations, hasAccidental) {
+    decorations.forEach((decoration) => {
+      let x, y, width, height
+      if (decoration.name === Decoration.LeanTo) {
+        x = markOrigin.x
+        y = markOrigin.y - 1
+        width = layout.score.decoration.width
+        if (hasAccidental) {
+          width += layout.score.accidental.width
+        }
+        height = layout.score.decoration.height
+      } else { // Decoration.Dot
+        x = markOrigin.x + layout.score.mark.halfWidth + 1
+        if (hasAccidental) {
+          x += layout.score.accidental.width
+        }
+        y = markOrigin.y
+        width = layout.score.decoration.width
+        height = layout.score.decoration.height
+      }
+      doc.addImage(getImage(decoration), 'PNG', x, y, width, height)
+    })
   }
 
   return doc
