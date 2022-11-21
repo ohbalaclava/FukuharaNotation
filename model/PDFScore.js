@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf'
 import Config from '../data/Config'
-import { Decoration, getGlyph } from '../data/ScoreLiterals'
+import { Decoration, getGlyph, Join } from '../data/ScoreLiterals'
 
 const mm = pt => 0.3528 * pt
 
@@ -89,6 +89,9 @@ const A4PortraitLayout = (function () {
       height: markSize,
       width: markSize
     },
+    join: {
+      xOffset: markSize * 0.85
+    },
     top: margins.top,
     right: margins.right,
     firstPageRight: margins.left + linesPerPage(0) * lineWidth
@@ -111,14 +114,14 @@ const A4PortraitLayout = (function () {
 
 const getImage = (function () {
   const cache = new Map()
-  return (mark) => {
-    if (cache.has(mark.name)) {
-      return cache.get(mark.name)
+  return (markName) => {
+    if (cache.has(markName)) {
+      return cache.get(markName)
     } else {
-      const glyph = getGlyph(mark.name)
+      const glyph = getGlyph(markName)
       const image = new Image()
       image.src = glyph.source
-      cache.set(mark.name, image)
+      cache.set(markName, image)
       return image
     }
   }
@@ -203,7 +206,7 @@ export default function getPDFScore (score) {
 
   function addMark (mark) {
     doc.addImage(
-      getImage(mark),
+      getImage(mark.name),
       'PNG',
       markOrigin.x,
       markOrigin.y,
@@ -213,13 +216,16 @@ export default function getPDFScore (score) {
 
     mark.accidental && addAccidental(mark.accidental)
     mark.decorations && addDecorations(mark.decorations, mark.accidental !== undefined)
+    if (mark.join !== Join.None) {
+      addJoin(mark.join, mark.joinLength)
+    }
 
     markOrigin.y += mark.height * layout.score.mark.height
   }
 
   function addAccidental (accidental, markIndex) {
     doc.addImage(
-      getImage(accidental),
+      getImage(accidental.name),
       'PNG',
       markOrigin.x + layout.score.mark.width - 3,
       markOrigin.y + layout.score.mark.halfHeight - layout.score.accidental.halfHeight - 2,
@@ -248,8 +254,21 @@ export default function getPDFScore (score) {
         width = layout.score.decoration.width
         height = layout.score.decoration.height
       }
-      doc.addImage(getImage(decoration), 'PNG', x, y, width, height)
+      doc.addImage(getImage(decoration.name), 'PNG', x, y, width, height)
     })
+  }
+
+  function addJoin (type, length) {
+    if (length) {
+      doc.addImage(
+        getImage(type),
+        'PNG',
+        markOrigin.x + layout.score.join.xOffset,
+        markOrigin.y,
+        layout.score.mark.width,
+        layout.score.mark.height * length
+      )
+    }
   }
 
   return doc
