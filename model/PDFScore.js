@@ -68,13 +68,18 @@ const A4PortraitLayout = (function () {
 
   const lineWidth = usable.width / Config.linesPerPage
   const markSize = Math.min(usable.height / Config.maxLineLength, lineWidth)
+  const accidentalSize = markSize / 2
   const linesPerPage = (page) => page === 0 ? Config.linesPerPage - 1 : Config.linesPerPage
   const pageBreak = (lineNumber) => lineNumber === Config.linesPerPage - 1 || (lineNumber + 1) % Config.linesPerPage === 0
 
   const score = {
     lineWidth,
     markHeight: markSize,
+    markHalfHeight: markSize / 2,
     markWidth: markSize,
+    accidentalHeight: accidentalSize,
+    accidentalHalfHeight: accidentalSize / 2,
+    accidentalWidth: accidentalSize,
     top: margins.top,
     right: margins.right,
     firstPageRight: margins.left + linesPerPage(0) * lineWidth
@@ -188,7 +193,14 @@ export default function getPDFScore (score) {
   }
 
   function addMark (mark) {
-    doc.addImage(getImage(mark), 'PNG', markOrigin.x, markOrigin.y, layout.score.markWidth, layout.score.markHeight * mark.height)
+    doc.addImage(
+      getImage(mark),
+      'PNG',
+      markOrigin.x,
+      markOrigin.y,
+      layout.score.markWidth,
+      layout.score.markHeight * mark.height
+    )
 
     mark.accidental && addAccidental(mark.accidental)
     mark.decoration && addDecoration(mark.decoration)
@@ -197,7 +209,14 @@ export default function getPDFScore (score) {
   }
 
   function addAccidental (accidental, markIndex) {
-    // draw accidental
+    doc.addImage(
+      getImage(accidental),
+      'PNG',
+      markOrigin.x + layout.score.markWidth - 3,
+      markOrigin.y + layout.score.markHalfHeight - layout.score.accidentalHalfHeight - 2,
+      layout.score.accidentalWidth,
+      layout.score.accidentalHeight
+    )
   }
 
   function addDecoration (decoration, markIndex) {
