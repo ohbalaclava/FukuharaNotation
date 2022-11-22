@@ -1,4 +1,4 @@
-import { version as appVersion } from '../package.json'
+import packageInfo from '../../package.json'
 import { nanoid } from 'nanoid'
 
 import { Join, JoinPosition, MarkType } from '../data/ScoreLiterals'
@@ -287,6 +287,6 @@ export function createEmptyScore () {
     lineCursor: 0,
     join: Join.None,
     joinChanged: false,
-    version: appVersion
+    version: packageInfo.version
   })
 }

@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fuknot-dev-144738-authRole",
+      "UnauthRoleArn": "arn:aws:iam::195755769494:role/amplify-fuknot-dev-144738-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::195755769494:role/amplify-fuknot-dev-144738-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-fuknot-dev-144738-deployment",
+      "UnauthRoleName": "amplify-fuknot-dev-144738-unauthRole",
+      "StackName": "amplify-fuknot-dev-144738",
+      "StackId": "arn:aws:cloudformation:eu-west-2:195755769494:stack/amplify-fuknot-dev-144738/9cbc2540-6a74-11ed-ba3b-024049d1029c",
+      "AmplifyAppId": "d1lp7j31ea6vo4"
+    }
+  }
+}
