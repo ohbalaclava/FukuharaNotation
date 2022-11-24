@@ -263,6 +263,21 @@ const styles = StyleSheet.create({
       fontWeight: 'bold'
     }
   },
+  busyDialog: {
+    view: {
+      flex: 1,
+      flexFlow: 'column nowrap',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    message: {
+      padding: 20,
+      textAlign: 'center',
+      fontFamily: 'serif',
+      fontSize: 18,
+      fontWeight: 'bold'
+    }
+  },
   score: {
     flex: 1,
     border: '0px dashed black',

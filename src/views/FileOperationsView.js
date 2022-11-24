@@ -8,6 +8,7 @@ import styles from '../styles/ScreenStyles'
 import { OperationButtons } from '../data/ButtonDefinitions'
 import { DimensionsContext } from '../data/Dimensions'
 import ConfirmClearDialog from '../components/ConfirmClearDialog'
+import BusyDialog from '../components/BusyDialog'
 
 FileOperationsView.propTypes = {
   download: PropTypes.func.isRequired,
@@ -62,11 +63,12 @@ export default function FileOperationsView ({ download, upload, toPDF, clear, is
             style={[style[OperationButtons.upload.style], dimensions.getSquareOperationButtonStyle()]}
           />
         </ConfirmClearDialog>
-        <ImageButton
-          image={OperationButtons.pdf.glyph}
-          onPress={getRunAndCloseFunc(toPDF)}
-          style={[style[OperationButtons.pdf.style], dimensions.getSquareOperationButtonStyle()]}
-        />
+        <BusyDialog message="Generating PDF" workFunc={getRunAndCloseFunc(toPDF)}>
+          <ImageButton
+            image={OperationButtons.pdf.glyph}
+            style={[style[OperationButtons.pdf.style], dimensions.getSquareOperationButtonStyle()]}
+          />
+        </BusyDialog>
         <ConfirmClearDialog isConfirmationRequired={isScoreNonEmpty} onYes={getRunAndCloseFunc(clear)} onNo={toggleMenu}>
           <ImageButton
             image={OperationButtons.clear.glyph}
