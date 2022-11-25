@@ -125,7 +125,7 @@ export default function Dimensions (window) {
 
     inputPanel = {
       width: 'max-content',
-      maxWidth: inputPanelAspectRatio * inputPanelHeight,
+      maxWidth: 'min-content',
       minHeight: minimumInputPanelHeight
     }
 

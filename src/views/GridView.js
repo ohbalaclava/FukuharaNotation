@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexFlow: 'column nowrap',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    minWidth: 'min-content'
   }
 })
 
