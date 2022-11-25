@@ -200,7 +200,7 @@ export default function Dimensions (window) {
         width: buttonImageLength,
         height: buttonImageLength
       },
-      borderRadius: 50,
+      borderRadius: 100,
       borderWidth,
       width: noteButtonDiameter,
       height: noteButtonDiameter,
