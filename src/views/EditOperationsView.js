@@ -29,7 +29,7 @@ export default function EditOperationsView ({ deleteMark, newline, download, upl
         <ImageButton
           image={OperationButtons.delete.glyph}
           onPress={() => { deleteMark(); refresh() }}
-          style={[style[OperationButtons.delete.style], dimensions.getWideOperationButtonStyle()]}
+          style={[style[OperationButtons.delete.style], dimensions.getSquareOperationButtonStyle()]}
         />
         <ImageButton
           image={OperationButtons.newline.glyph}

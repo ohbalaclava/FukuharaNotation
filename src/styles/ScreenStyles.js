@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
       overflow: 'inherit',
       position: 'absolute',
       top: '0',
-      left: '85%',
+      left: '100%',
       opacity: markOpacity
     },
     cursor: {
