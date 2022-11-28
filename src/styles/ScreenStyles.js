@@ -36,12 +36,6 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
       textAlign: 'center',
       fontFamily: 'serif',
-      borderWidth: 1,
-      borderTopLeftRadius: 5,
-      borderTopRightRadius: 5,
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-      borderColor: 'grey',
       overflow: 'clip'
     },
     marks: {
@@ -72,6 +66,8 @@ const styles = StyleSheet.create({
           octaveSelector: {
             flex: 'initial',
             flexFlow: 'row nowrap',
+            borderColor: 'grey',
+            borderTopWidth: 1,
             button: {
               selected: {
                 flex: 2,
