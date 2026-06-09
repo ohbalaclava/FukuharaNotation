@@ -92,7 +92,7 @@ export default function InputView ({ score, refresh }) {
       />
 
       <AnimatedView style={Object.assign({}, styles.input.view, dimensions.getInputViewStyle(), { opacity, width, transform, rotateY: '-90deg' })}>
-        <Background border={border} source={require('../assets/bamboo.png')}/>
+        <Background border={border} source={new URL('../assets/bamboo.png', import.meta.url).href}/>
         <ScoreTitle
           title={score.getTitle()}
           author={score.getAuthor()}
