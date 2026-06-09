@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import styles from '../styles/ScreenStyles'
 import { DimensionsContext } from '../data/Dimensions'
 
-const Glyph = require('../assets/cursor.png')
+const Glyph = new URL('../assets/cursor.png', import.meta.url).href
 
 Cursor.propTypes = {
   markLengths: PropTypes.number.isRequired

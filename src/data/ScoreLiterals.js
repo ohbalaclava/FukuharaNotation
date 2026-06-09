@@ -16,7 +16,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: 'tsutsune',
         glyph: {
-          source: require('../assets/numerals/dot-nana.png')
+          source: new URL('../assets/numerals/dot-nana.png', import.meta.url).href
         }
       },
       {
@@ -24,7 +24,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '一',
         glyph: {
-          source: require('../assets/numerals/ichi.png')
+          source: new URL('../assets/numerals/ichi.png', import.meta.url).href
         }
       },
       {
@@ -32,7 +32,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '二',
         glyph: {
-          source: require('../assets/numerals/ni.png')
+          source: new URL('../assets/numerals/ni.png', import.meta.url).href
         }
       },
       {
@@ -40,7 +40,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '三',
         glyph: {
-          source: require('../assets/numerals/san.png')
+          source: new URL('../assets/numerals/san.png', import.meta.url).href
         }
       },
       {
@@ -48,7 +48,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '四',
         glyph: {
-          source: require('../assets/numerals/shi.png')
+          source: new URL('../assets/numerals/shi.png', import.meta.url).href
         }
       },
       {
@@ -56,7 +56,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '五',
         glyph: {
-          source: require('../assets/numerals/go.png')
+          source: new URL('../assets/numerals/go.png', import.meta.url).href
         }
       },
       {
@@ -64,7 +64,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '六',
         glyph: {
-          source: require('../assets/numerals/roku.png')
+          source: new URL('../assets/numerals/roku.png', import.meta.url).href
         }
       },
       {
@@ -72,7 +72,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '七',
         glyph: {
-          source: require('../assets/numerals/nana.png')
+          source: new URL('../assets/numerals/nana.png', import.meta.url).href
         }
       },
       {
@@ -80,7 +80,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '七-alt',
         glyph: {
-          source: require('../assets/numerals/nana-circled.png')
+          source: new URL('../assets/numerals/nana-circled.png', import.meta.url).href
         }
       },
       {
@@ -88,7 +88,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '0',
         glyph: {
-          source: require('../assets/numerals/zero.png')
+          source: new URL('../assets/numerals/zero.png', import.meta.url).href
         }
       }
     ],
@@ -98,7 +98,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '1',
         glyph: {
-          source: require('../assets/numerals/one.png')
+          source: new URL('../assets/numerals/one.png', import.meta.url).href
         }
       },
       {
@@ -106,7 +106,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '2',
         glyph: {
-          source: require('../assets/numerals/two.png')
+          source: new URL('../assets/numerals/two.png', import.meta.url).href
         }
       },
       {
@@ -114,7 +114,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '3',
         glyph: {
-          source: require('../assets/numerals/three.png')
+          source: new URL('../assets/numerals/three.png', import.meta.url).href
         }
       },
       {
@@ -122,7 +122,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '4',
         glyph: {
-          source: require('../assets/numerals/four.png')
+          source: new URL('../assets/numerals/four.png', import.meta.url).href
         }
       },
       {
@@ -130,7 +130,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '5',
         glyph: {
-          source: require('../assets/numerals/five.png')
+          source: new URL('../assets/numerals/five.png', import.meta.url).href
         }
       },
       {
@@ -138,7 +138,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '6',
         glyph: {
-          source: require('../assets/numerals/six.png')
+          source: new URL('../assets/numerals/six.png', import.meta.url).href
         }
       },
       {
@@ -146,7 +146,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '7',
         glyph: {
-          source: require('../assets/numerals/seven.png')
+          source: new URL('../assets/numerals/seven.png', import.meta.url).href
         }
       },
       {
@@ -154,7 +154,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '0dot',
         glyph: {
-          source: require('../assets/numerals/zero-dot.png')
+          source: new URL('../assets/numerals/zero-dot.png', import.meta.url).href
         }
       }
     ],
@@ -164,7 +164,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '8',
         glyph: {
-          source: require('../assets/numerals/eight.png')
+          source: new URL('../assets/numerals/eight.png', import.meta.url).href
         }
       },
       {
@@ -172,7 +172,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '2dot',
         glyph: {
-          source: require('../assets/numerals/two-dot.png')
+          source: new URL('../assets/numerals/two-dot.png', import.meta.url).href
         }
       },
       {
@@ -180,7 +180,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '3dot',
         glyph: {
-          source: require('../assets/numerals/three-dot.png')
+          source: new URL('../assets/numerals/three-dot.png', import.meta.url).href
         }
       },
       {
@@ -188,7 +188,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '4dot',
         glyph: {
-          source: require('../assets/numerals/four-dot.png')
+          source: new URL('../assets/numerals/four-dot.png', import.meta.url).href
         }
       },
       {
@@ -196,7 +196,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '5dot',
         glyph: {
-          source: require('../assets/numerals/five-dot.png')
+          source: new URL('../assets/numerals/five-dot.png', import.meta.url).href
         }
       },
       {
@@ -204,7 +204,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '6dot',
         glyph: {
-          source: require('../assets/numerals/six-dot.png')
+          source: new URL('../assets/numerals/six-dot.png', import.meta.url).href
         }
       }
     ]
@@ -214,14 +214,14 @@ export const ScoreMarks = {
       type: MarkType.Accidental,
       name: Accidental.Meri,
       glyph: {
-        source: require('../assets/numerals/me.png')
+        source: new URL('../assets/numerals/me.png', import.meta.url).href
       }
     },
     {
       type: MarkType.Accidental,
       name: Accidental.Kari,
       glyph: {
-        source: require('../assets/numerals/ka.png')
+        source: new URL('../assets/numerals/ka.png', import.meta.url).href
       }
     }
   ],
@@ -230,14 +230,14 @@ export const ScoreMarks = {
       type: MarkType.Decoration,
       name: Decoration.LeanTo,
       glyph: {
-        source: require('../assets/marks/lean-to.png')
+        source: new URL('../assets/marks/lean-to.png', import.meta.url).href
       }
     },
     {
       type: MarkType.Decoration,
       name: Decoration.Dot,
       glyph: {
-        source: require('../assets/marks/dot.png')
+        source: new URL('../assets/marks/dot.png', import.meta.url).href
       }
     }
   ],
@@ -246,14 +246,14 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.Dash,
       glyph: {
-        source: require('../assets/marks/dash.png')
+        source: new URL('../assets/marks/dash.png', import.meta.url).href
       }
     },
     {
       type: MarkType.Stroke,
       name: Stroke.DoubleDash,
       glyph: {
-        source: require('../assets/marks/double-dash.png'),
+        source: new URL('../assets/marks/double-dash.png', import.meta.url).href,
         relativeHeight: 2
       }
     },
@@ -261,7 +261,7 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.TripleDash,
       glyph: {
-        source: require('../assets/marks/triple-dash.png'),
+        source: new URL('../assets/marks/triple-dash.png', import.meta.url).href,
         relativeHeight: 2
       }
     },
@@ -269,7 +269,7 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.QuadrupleDash,
       glyph: {
-        source: require('../assets/marks/quadruple-dash.png'),
+        source: new URL('../assets/marks/quadruple-dash.png', import.meta.url).href,
         relativeHeight: 3
       }
     },
@@ -277,21 +277,21 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.Dot,
       glyph: {
-        source: require('../assets/marks/dot.png')
+        source: new URL('../assets/marks/dot.png', import.meta.url).href
       }
     },
     {
       type: MarkType.Stroke,
       name: Stroke.Tick,
       glyph: {
-        source: require('../assets/marks/tick.png')
+        source: new URL('../assets/marks/tick.png', import.meta.url).href
       }
     },
     {
       type: MarkType.Stroke,
       name: Stroke.Wiggle,
       glyph: {
-        source: require('../assets/marks/wiggle.png'),
+        source: new URL('../assets/marks/wiggle.png', import.meta.url).href,
         relativeHeight: 3
       }
     },
@@ -299,7 +299,7 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.Tail,
       glyph: {
-        source: require('../assets/marks/tail.png'),
+        source: new URL('../assets/marks/tail.png', import.meta.url).href,
         relativeHeight: 3
       }
     }
@@ -309,28 +309,28 @@ export const ScoreMarks = {
       type: MarkType.Join,
       name: Join.Arc,
       glyph: {
-        source: require('../assets/marks/join_arc.png')
+        source: new URL('../assets/marks/join_arc.png', import.meta.url).href
       }
     },
     {
       type: MarkType.Join,
       name: Join.Line,
       glyph: {
-        source: require('../assets/marks/join_single.png')
+        source: new URL('../assets/marks/join_single.png', import.meta.url).href
       }
     },
     {
       type: MarkType.Join,
       name: Join.DoubleLine,
       glyph: {
-        source: require('../assets/marks/join_double.png')
+        source: new URL('../assets/marks/join_double.png', import.meta.url).href
       }
     },
     {
       type: MarkType.Join,
       name: Join.TripleLine,
       glyph: {
-        source: require('../assets/marks/join_triple.png')
+        source: new URL('../assets/marks/join_triple.png', import.meta.url).href
       }
     }
   ]
