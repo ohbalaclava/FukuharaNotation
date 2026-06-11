@@ -1,34 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
 import TwoOptionDialog from './TwoOptionDialog'
-import { View } from 'react-native-web'
 
-ConfirmClearDialog.propTypes = {
-  isConfirmationRequired: PropTypes.func,
-  onYes: PropTypes.func.isRequired,
-  onNo: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
-}
+// When confirmation is not required the trigger runs onYes directly,
+// matching the old behaviour where the wrapped button kept its own onPress.
 
-export default function ConfirmClearDialog ({ isConfirmationRequired, onYes, onNo, children }) {
-  if (isConfirmationRequired()) {
-    return (
-      <TwoOptionDialog
-        message={'The current score will be cleared. Do you wish to continue?'}
-        optionOneLabel={'Yes'}
-        optionTwoLabel={'No'}
-        onOptionOne={onYes}
-        onOptionTwo={onNo}
-      >
-        {children}
-      </TwoOptionDialog>
-    )
-  } else {
-    return (
-      <View>
-        {children}
-      </View>
-    )
+export default {
+  view ({ attrs }) {
+    if (attrs.isConfirmationRequired()) {
+      return m(TwoOptionDialog, {
+        message: 'The current score will be cleared. Do you wish to continue?',
+        optionOneLabel: 'Yes',
+        optionTwoLabel: 'No',
+        onOptionOne: attrs.onYes,
+        onOptionTwo: attrs.onNo,
+        trigger: attrs.trigger
+      })
+    }
+    return m('div.v', attrs.trigger(attrs.onYes))
   }
 }

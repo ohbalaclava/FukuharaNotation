@@ -1,38 +1,34 @@
-import React, { useState } from 'react'
-import { Button, Modal, Text, View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
-import styles from '../styles/ScreenStyles'
+import Modal from './Modal'
 
-TwoOptionDialog.propTypes = {
-  message: PropTypes.string,
-  optionOneLabel: PropTypes.string,
-  optionTwoLabel: PropTypes.string,
-  onOptionOne: PropTypes.func,
-  onOptionTwo: PropTypes.func,
-  children: PropTypes.element.isRequired
-}
+// `trigger` replaces React.cloneElement injection: call sites pass
+// trigger: (open) => m(ImageButton, { onPress: open, ... })
 
-export default function TwoOptionDialog ({ message, optionOneLabel, optionTwoLabel, onOptionOne, onOptionTwo, children }) {
-  const [dialogVisible, setDialogVisible] = useState(false)
+export default function TwoOptionDialog () {
+  let dialogVisible = false
 
-  function closeDialog () {
-    setDialogVisible(false)
+  return {
+    view ({ attrs }) {
+      const openDialog = () => { dialogVisible = true }
+      const closeDialog = () => { dialogVisible = false }
+
+      return m('div.v', [
+        attrs.trigger(openDialog),
+        m(Modal, { visible: dialogVisible },
+          m('div.v.dialog-view', [
+            m('span.dialog-message', attrs.message),
+            m('div.v.dialog-buttons', [
+              m('button.dialog-btn', {
+                onclick: () => { closeDialog(); attrs.onOptionOne && attrs.onOptionOne() }
+              }, attrs.optionOneLabel),
+              m('button.dialog-btn', {
+                onclick: () => { closeDialog(); attrs.onOptionTwo && attrs.onOptionTwo() }
+              }, attrs.optionTwoLabel)
+            ])
+          ])
+        )
+      ])
+    }
   }
-
-  return (
-    <View>
-      {React.cloneElement(children, { onPress: () => setDialogVisible(true) })}
-
-      <Modal onRequestClose={closeDialog} visible={dialogVisible} animationType="fade">
-        <View style={styles.twoOptionDialog.view}>
-          <Text style={styles.twoOptionDialog.message}>{message}</Text>
-          <View style={styles.twoOptionDialog.buttons}>
-            <Button onPress={() => { closeDialog(); onOptionOne && onOptionOne() }} title={optionOneLabel} color='cadetblue'/>
-            <Button onPress={() => { closeDialog(); onOptionTwo && onOptionTwo() }} title={optionTwoLabel} color='cadetblue'/>
-          </View>
-        </View>
-      </Modal>
-    </View>
-  )
 }

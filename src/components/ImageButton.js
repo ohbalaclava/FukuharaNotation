@@ -1,48 +1,31 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { View, TouchableOpacity, TouchableHighlight } from 'react-native-web'
+import m from 'mithril'
 import deepmerge from '../tools/DeepMerge'
+import { toCSS } from '../styles/StyleUtils'
 
-ImageButton.propTypes = {
-  image: PropTypes.string.isRequired,
-  onPress: PropTypes.func,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-  pressedOpacity: PropTypes.number,
-  highlightColour: PropTypes.string
-}
+// Touchable button with an image rendered as a contained background.
+// `style` keeps the react-native-web era array API: fragments from
+// ScreenStyles.js deep-merged with runtime geometry from Dimensions.js.
+// `highlightColour` selects TouchableHighlight behaviour (.touch-hl),
+// otherwise TouchableOpacity (.touch-fade).
 
-export default function ImageButton ({ image, onPress, style, pressedOpacity, highlightColour }) {
-  if (Array.isArray(style)) {
-    style = deepmerge.all(style)
-  }
+export default {
+  view ({ attrs }) {
+    let style = attrs.style
+    if (Array.isArray(style)) {
+      style = deepmerge.all(style)
+    }
 
-  function getWrappedView () {
-    return (
-      <View
-        style={[
-          style.image,
-          {
-            backgroundImage: `url(${image})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat'
-          }
-        ]}
-      />
-    )
-  }
-
-  if (highlightColour) {
-    return (
-      <TouchableHighlight underlayColor={highlightColour} onPress={onPress} style={style} activeOpacity={(pressedOpacity !== undefined) ? pressedOpacity : 0.5}>
-        {getWrappedView()}
-      </TouchableHighlight>
-    )
-  } else {
-    return (
-      <TouchableOpacity onPress={onPress} style={style} activeOpacity={(pressedOpacity !== undefined) ? pressedOpacity : 0.5}>
-        {getWrappedView()}
-      </TouchableOpacity>
+    return m('div.v' + (attrs.highlightColour ? '.touch-hl' : '.touch-fade'),
+      {
+        style: toCSS(style),
+        onclick: attrs.onPress
+      },
+      m('div.v.bg-img', {
+        style: {
+          ...toCSS(style.image),
+          backgroundImage: `url(${attrs.image})`
+        }
+      })
     )
   }
 }

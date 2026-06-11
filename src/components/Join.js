@@ -1,20 +1,17 @@
-import React, { useContext } from 'react'
-import { Image } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
-import styles from '../styles/ScreenStyles'
-import { DimensionsContext } from '../data/Dimensions'
+import { dims } from '../data/dimensionsStore'
 import { getGlyph, Join as JoinType } from '../data/ScoreLiterals'
+import { toCSS } from '../styles/StyleUtils'
 
-Join.propTypes = {
-  join: PropTypes.string.isRequired,
-  size: PropTypes.number
-}
-
-export default function Join ({ join, size }) {
-  const { dimensions } = useContext(DimensionsContext)
-
-  if (join !== JoinType.None && size) {
-    return <Image style={[styles.score.join, dimensions.getJoinStyle(size)]} source={getGlyph(join).source} />
+export default {
+  view ({ attrs }) {
+    if (attrs.join !== JoinType.None && attrs.size) {
+      return m('img.score-join', {
+        src: getGlyph(attrs.join).source,
+        style: toCSS(dims.getJoinStyle(attrs.size))
+      })
+    }
+    return null
   }
 }

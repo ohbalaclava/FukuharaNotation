@@ -1,5 +1,45 @@
 import { createEnum } from '../tools/Enum'
 
+import dotNanaPng from '../assets/numerals/dot-nana.png'
+import ichiPng from '../assets/numerals/ichi.png'
+import niPng from '../assets/numerals/ni.png'
+import sanPng from '../assets/numerals/san.png'
+import shiPng from '../assets/numerals/shi.png'
+import goPng from '../assets/numerals/go.png'
+import rokuPng from '../assets/numerals/roku.png'
+import nanaPng from '../assets/numerals/nana.png'
+import nanaCircledPng from '../assets/numerals/nana-circled.png'
+import zeroPng from '../assets/numerals/zero.png'
+import onePng from '../assets/numerals/one.png'
+import twoPng from '../assets/numerals/two.png'
+import threePng from '../assets/numerals/three.png'
+import fourPng from '../assets/numerals/four.png'
+import fivePng from '../assets/numerals/five.png'
+import sixPng from '../assets/numerals/six.png'
+import sevenPng from '../assets/numerals/seven.png'
+import zeroDotPng from '../assets/numerals/zero-dot.png'
+import eightPng from '../assets/numerals/eight.png'
+import twoDotPng from '../assets/numerals/two-dot.png'
+import threeDotPng from '../assets/numerals/three-dot.png'
+import fourDotPng from '../assets/numerals/four-dot.png'
+import fiveDotPng from '../assets/numerals/five-dot.png'
+import sixDotPng from '../assets/numerals/six-dot.png'
+import mePng from '../assets/numerals/me.png'
+import kaPng from '../assets/numerals/ka.png'
+import leanToPng from '../assets/marks/lean-to.png'
+import dotPng from '../assets/marks/dot.png'
+import dashPng from '../assets/marks/dash.png'
+import doubleDashPng from '../assets/marks/double-dash.png'
+import tripleDashPng from '../assets/marks/triple-dash.png'
+import quadrupleDashPng from '../assets/marks/quadruple-dash.png'
+import tickPng from '../assets/marks/tick.png'
+import wigglePng from '../assets/marks/wiggle.png'
+import tailPng from '../assets/marks/tail.png'
+import joinArcPng from '../assets/marks/join_arc.png'
+import joinSinglePng from '../assets/marks/join_single.png'
+import joinDoublePng from '../assets/marks/join_double.png'
+import joinTriplePng from '../assets/marks/join_triple.png'
+
 export const MarkType = createEnum('Note', 'Accidental', 'Stroke', 'Decoration', 'Join')
 export const Join = createEnum('None', 'Arc', 'Line', 'DoubleLine', 'TripleLine')
 export const Accidental = createEnum('Meri', 'None', 'Kari')
@@ -16,7 +56,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: 'tsutsune',
         glyph: {
-          source: require('../assets/numerals/dot-nana.png')
+          source: dotNanaPng
         }
       },
       {
@@ -24,7 +64,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '一',
         glyph: {
-          source: require('../assets/numerals/ichi.png')
+          source: ichiPng
         }
       },
       {
@@ -32,7 +72,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '二',
         glyph: {
-          source: require('../assets/numerals/ni.png')
+          source: niPng
         }
       },
       {
@@ -40,7 +80,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '三',
         glyph: {
-          source: require('../assets/numerals/san.png')
+          source: sanPng
         }
       },
       {
@@ -48,7 +88,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '四',
         glyph: {
-          source: require('../assets/numerals/shi.png')
+          source: shiPng
         }
       },
       {
@@ -56,7 +96,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '五',
         glyph: {
-          source: require('../assets/numerals/go.png')
+          source: goPng
         }
       },
       {
@@ -64,7 +104,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '六',
         glyph: {
-          source: require('../assets/numerals/roku.png')
+          source: rokuPng
         }
       },
       {
@@ -72,7 +112,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '七',
         glyph: {
-          source: require('../assets/numerals/nana.png')
+          source: nanaPng
         }
       },
       {
@@ -80,7 +120,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '七-alt',
         glyph: {
-          source: require('../assets/numerals/nana-circled.png')
+          source: nanaCircledPng
         }
       },
       {
@@ -88,7 +128,7 @@ export const ScoreMarks = {
         octave: On.Ryo,
         name: '0',
         glyph: {
-          source: require('../assets/numerals/zero.png')
+          source: zeroPng
         }
       }
     ],
@@ -98,7 +138,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '1',
         glyph: {
-          source: require('../assets/numerals/one.png')
+          source: onePng
         }
       },
       {
@@ -106,7 +146,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '2',
         glyph: {
-          source: require('../assets/numerals/two.png')
+          source: twoPng
         }
       },
       {
@@ -114,7 +154,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '3',
         glyph: {
-          source: require('../assets/numerals/three.png')
+          source: threePng
         }
       },
       {
@@ -122,7 +162,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '4',
         glyph: {
-          source: require('../assets/numerals/four.png')
+          source: fourPng
         }
       },
       {
@@ -130,7 +170,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '5',
         glyph: {
-          source: require('../assets/numerals/five.png')
+          source: fivePng
         }
       },
       {
@@ -138,7 +178,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '6',
         glyph: {
-          source: require('../assets/numerals/six.png')
+          source: sixPng
         }
       },
       {
@@ -146,7 +186,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '7',
         glyph: {
-          source: require('../assets/numerals/seven.png')
+          source: sevenPng
         }
       },
       {
@@ -154,7 +194,7 @@ export const ScoreMarks = {
         octave: On.Kan,
         name: '0dot',
         glyph: {
-          source: require('../assets/numerals/zero-dot.png')
+          source: zeroDotPng
         }
       }
     ],
@@ -164,7 +204,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '8',
         glyph: {
-          source: require('../assets/numerals/eight.png')
+          source: eightPng
         }
       },
       {
@@ -172,7 +212,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '2dot',
         glyph: {
-          source: require('../assets/numerals/two-dot.png')
+          source: twoDotPng
         }
       },
       {
@@ -180,7 +220,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '3dot',
         glyph: {
-          source: require('../assets/numerals/three-dot.png')
+          source: threeDotPng
         }
       },
       {
@@ -188,7 +228,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '4dot',
         glyph: {
-          source: require('../assets/numerals/four-dot.png')
+          source: fourDotPng
         }
       },
       {
@@ -196,7 +236,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '5dot',
         glyph: {
-          source: require('../assets/numerals/five-dot.png')
+          source: fiveDotPng
         }
       },
       {
@@ -204,7 +244,7 @@ export const ScoreMarks = {
         octave: On.Daikan,
         name: '6dot',
         glyph: {
-          source: require('../assets/numerals/six-dot.png')
+          source: sixDotPng
         }
       }
     ]
@@ -214,14 +254,14 @@ export const ScoreMarks = {
       type: MarkType.Accidental,
       name: Accidental.Meri,
       glyph: {
-        source: require('../assets/numerals/me.png')
+        source: mePng
       }
     },
     {
       type: MarkType.Accidental,
       name: Accidental.Kari,
       glyph: {
-        source: require('../assets/numerals/ka.png')
+        source: kaPng
       }
     }
   ],
@@ -230,14 +270,14 @@ export const ScoreMarks = {
       type: MarkType.Decoration,
       name: Decoration.LeanTo,
       glyph: {
-        source: require('../assets/marks/lean-to.png')
+        source: leanToPng
       }
     },
     {
       type: MarkType.Decoration,
       name: Decoration.Dot,
       glyph: {
-        source: require('../assets/marks/dot.png')
+        source: dotPng
       }
     }
   ],
@@ -246,14 +286,14 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.Dash,
       glyph: {
-        source: require('../assets/marks/dash.png')
+        source: dashPng
       }
     },
     {
       type: MarkType.Stroke,
       name: Stroke.DoubleDash,
       glyph: {
-        source: require('../assets/marks/double-dash.png'),
+        source: doubleDashPng,
         relativeHeight: 2
       }
     },
@@ -261,7 +301,7 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.TripleDash,
       glyph: {
-        source: require('../assets/marks/triple-dash.png'),
+        source: tripleDashPng,
         relativeHeight: 2
       }
     },
@@ -269,7 +309,7 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.QuadrupleDash,
       glyph: {
-        source: require('../assets/marks/quadruple-dash.png'),
+        source: quadrupleDashPng,
         relativeHeight: 3
       }
     },
@@ -277,21 +317,21 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.Dot,
       glyph: {
-        source: require('../assets/marks/dot.png')
+        source: dotPng
       }
     },
     {
       type: MarkType.Stroke,
       name: Stroke.Tick,
       glyph: {
-        source: require('../assets/marks/tick.png')
+        source: tickPng
       }
     },
     {
       type: MarkType.Stroke,
       name: Stroke.Wiggle,
       glyph: {
-        source: require('../assets/marks/wiggle.png'),
+        source: wigglePng,
         relativeHeight: 3
       }
     },
@@ -299,7 +339,7 @@ export const ScoreMarks = {
       type: MarkType.Stroke,
       name: Stroke.Tail,
       glyph: {
-        source: require('../assets/marks/tail.png'),
+        source: tailPng,
         relativeHeight: 3
       }
     }
@@ -309,28 +349,28 @@ export const ScoreMarks = {
       type: MarkType.Join,
       name: Join.Arc,
       glyph: {
-        source: require('../assets/marks/join_arc.png')
+        source: joinArcPng
       }
     },
     {
       type: MarkType.Join,
       name: Join.Line,
       glyph: {
-        source: require('../assets/marks/join_single.png')
+        source: joinSinglePng
       }
     },
     {
       type: MarkType.Join,
       name: Join.DoubleLine,
       glyph: {
-        source: require('../assets/marks/join_double.png')
+        source: joinDoublePng
       }
     },
     {
       type: MarkType.Join,
       name: Join.TripleLine,
       glyph: {
-        source: require('../assets/marks/join_triple.png')
+        source: joinTriplePng
       }
     }
   ]

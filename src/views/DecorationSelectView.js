@@ -1,40 +1,23 @@
-import React, { useContext } from 'react'
-import { FlatList } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
 import ImageButton from '../components/ImageButton'
 import { ScoreMarks } from '../data/ScoreLiterals'
 import styles from '../styles/ScreenStyles'
-import { DimensionsContext } from '../data/Dimensions'
+import { dims } from '../data/dimensionsStore'
 import Config from '../data/Config'
 
-DecorationSelectView.propTypes = {
-  addDecoration: PropTypes.func.isRequired,
-  refresh: PropTypes.func.isRequired
-}
+export default {
+  view ({ attrs }) {
+    const { addDecoration, refresh } = attrs
 
-export default function DecorationSelectView ({ addDecoration, refresh }) {
-  const { dimensions } = useContext(DimensionsContext)
-  const style = styles.input.marks.sections.decorations
-
-  const renderDecorationButton = ({ item }) => {
-    return (
-      <ImageButton
-        highlightColour={Config.inputButtonHighlightColour}
-        image={item.glyph.source}
-        onPress={() => { addDecoration(item); refresh() }}
-        style={[style.button, dimensions.getDecorationButtonStyle()]}
-      />
+    return m('div.v.decorations-panel',
+      ScoreMarks.decorations.map((item) => m(ImageButton, {
+        key: item.name,
+        highlightColour: Config.inputButtonHighlightColour,
+        image: item.glyph.source,
+        onPress: () => { addDecoration(item); refresh() },
+        style: [styles.input.decorationButton, dims.getDecorationButtonStyle()]
+      }))
     )
   }
-
-  return (
-    <FlatList
-      data={ScoreMarks.decorations}
-      renderItem={renderDecorationButton}
-      keyExtractor={(item) => item.name}
-      style={{ flex: 'initial' }}
-      contentContainerStyle={style}
-    />
-  )
 }

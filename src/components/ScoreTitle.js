@@ -1,47 +1,19 @@
-import React, { useContext, useState } from 'react'
-import { Button, Modal, Text, TextInput, View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
-import styles from '../styles/ScreenStyles'
-import { DimensionsContext } from '../data/Dimensions'
+import Modal from './Modal'
+import { dims } from '../data/dimensionsStore'
+import { toCSS } from '../styles/StyleUtils'
 import Config from '../data/Config'
 
-ScoreTitle.propTypes = {
-  title: PropTypes.string,
-  author: PropTypes.string,
-  notes: PropTypes.string,
-  onOK: PropTypes.func,
-  onCancel: PropTypes.func
-}
+// The panel label renders from attrs (the score), not copied state, so a
+// replacement score (upload) shows its own title. Edit state is local to the
+// dialog and reseeded from attrs on open, which also makes Cancel a no-op.
 
-export default function ScoreTitle ({ title, author, notes, onOK, onCancel }) {
-  const [titleDialogVisible, setTitleDialogVisible] = useState(false)
-  const [_title, setTitle] = useState(() => title)
-  const [_author, setAuthor] = useState(() => author)
-  const [_notes, setNotes] = useState(() => notes)
-  const [updatedTitle, setUpdatedTitle] = useState(() => title)
-  const [updatedAuthor, setUpdatedAuthor] = useState(() => author)
-  const [updatedNotes, setUpdatedNotes] = useState(() => notes)
-  const { dimensions } = useContext(DimensionsContext)
-
-  function openDialog () {
-    setTitleDialogVisible(true)
-  }
-
-  function closeDialog (commit) {
-    setTitleDialogVisible(false)
-    if (commit) {
-      setTitle(updatedTitle)
-      setAuthor(updatedAuthor)
-      setNotes(updatedNotes)
-      onOK && onOK(updatedTitle, updatedAuthor, updatedNotes)
-    } else {
-      setUpdatedTitle(_title)
-      setUpdatedAuthor(_author)
-      setUpdatedNotes(_notes)
-      onCancel && onCancel()
-    }
-  }
+export default function ScoreTitle () {
+  let dialogVisible = false
+  let updatedTitle
+  let updatedAuthor
+  let updatedNotes
 
   function trim (text) {
     return (text.length > 24) ? `${text.substring(0, 21)}...` : text
@@ -51,50 +23,60 @@ export default function ScoreTitle ({ title, author, notes, onOK, onCancel }) {
     return text.replaceAll('\n', '  ')
   }
 
-  return (
-    <View>
-      <Text style={[styles.input.title, dimensions.getTitleStyle()]} onPress={() => openDialog()}>
-        {trim(_title)}
-      </Text>
+  return {
+    view ({ attrs }) {
+      const openDialog = () => {
+        updatedTitle = attrs.title
+        updatedAuthor = attrs.author
+        updatedNotes = attrs.notes
+        dialogVisible = true
+      }
 
-      <Modal onRequestClose={closeDialog} visible={titleDialogVisible} animationType="fade">
-        <View style={styles.titleDialog.view}>
-          <View style={styles.titleDialog.textComponents}>
-            <Text style={styles.titleDialog.label}>Title</Text>
-            <TextInput
-              defaultValue={_title}
-              onChange={(event) => setUpdatedTitle(event.target.value)}
-              selectTextOnFocus
-              selectionColor='cadetblue'
-              style={styles.titleDialog.titleInput}
-            />
-            <Text style={styles.titleDialog.label}>Author</Text>
-            <TextInput
-              defaultValue={_author}
-              onChange={(event) => setUpdatedAuthor(event.target.value)}
-              selectTextOnFocus
-              selectionColor='cadetblue'
-              style={styles.titleDialog.authorInput}
-            />
-            <Text style={styles.titleDialog.label}>Notes</Text>
-            <TextInput
-              defaultValue={_notes}
-              onChange={(event) => {
-                setUpdatedNotes(replaceLineBreaks(event.target.value))
-              }}
-              multiline
-              numberOfLines={5}
-              selectionColor='cadetblue'
-              style={styles.titleDialog.notesInput}
-              maxLength={Config.maxNotesLength}
-            />
-          </View>
-          <View style={styles.titleDialog.buttonComponents}>
-            <Button onPress={() => { closeDialog(true) }} title={'OK'} color='cadetblue'/>
-            <Button onPress={() => { closeDialog() }} title={'Cancel'} color='cadetblue'/>
-          </View>
-        </View>
-      </Modal>
-    </View>
-  )
+      const closeDialog = (commit) => {
+        dialogVisible = false
+        if (commit) {
+          attrs.onOK && attrs.onOK(updatedTitle, updatedAuthor, updatedNotes)
+        } else {
+          attrs.onCancel && attrs.onCancel()
+        }
+      }
+
+      return m('div.v', [
+        m('span.score-title-text.clickable', {
+          style: toCSS(dims.getTitleStyle()),
+          onclick: openDialog
+        }, trim(attrs.title || '')),
+
+        m(Modal, { visible: dialogVisible },
+          m('div.v.title-dialog', [
+            m('div.v.title-dialog-text', [
+              m('span.dialog-label', 'Title'),
+              m('input.title-input', {
+                value: updatedTitle,
+                oninput: (event) => { updatedTitle = event.target.value },
+                onfocus: (event) => event.target.select()
+              }),
+              m('span.dialog-label', 'Author'),
+              m('input.author-input', {
+                value: updatedAuthor,
+                oninput: (event) => { updatedAuthor = event.target.value },
+                onfocus: (event) => event.target.select()
+              }),
+              m('span.dialog-label', 'Notes'),
+              m('textarea.notes-input', {
+                value: updatedNotes,
+                rows: 5,
+                maxlength: Config.maxNotesLength,
+                oninput: (event) => { updatedNotes = replaceLineBreaks(event.target.value) }
+              })
+            ]),
+            m('div.v.dialog-buttons', [
+              m('button.dialog-btn', { onclick: () => closeDialog(true) }, 'OK'),
+              m('button.dialog-btn', { onclick: () => closeDialog(false) }, 'Cancel')
+            ])
+          ])
+        )
+      ])
+    }
+  }
 }

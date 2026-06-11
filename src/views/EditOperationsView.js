@@ -1,43 +1,30 @@
-import React, { useContext } from 'react'
-import { View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
 import ImageButton from '../components/ImageButton'
 import styles from '../styles/ScreenStyles'
 import { OperationButtons } from '../data/ButtonDefinitions'
-import { DimensionsContext } from '../data/Dimensions'
+import { dims } from '../data/dimensionsStore'
 import FileOperationsView from './FileOperationsView'
 
-EditOperationsView.propTypes = {
-  deleteMark: PropTypes.func.isRequired,
-  refresh: PropTypes.func.isRequired,
-  newline: PropTypes.func.isRequired,
-  download: PropTypes.func.isRequired,
-  upload: PropTypes.func.isRequired,
-  toPDF: PropTypes.func.isRequired,
-  clear: PropTypes.func.isRequired,
-  isScoreNonEmpty: PropTypes.func.isRequired
-}
+export default {
+  view ({ attrs }) {
+    const { deleteMark, newline, download, upload, toPDF, clear, isScoreNonEmpty, refresh } = attrs
+    const style = styles.input.operations
 
-export default function EditOperationsView ({ deleteMark, newline, download, upload, toPDF, clear, isScoreNonEmpty, refresh }) {
-  const { dimensions } = useContext(DimensionsContext)
-  const style = styles.input.operations
-
-  return (
-    <View style={ style }>
-      <View style={ style.editOps }>
-        <ImageButton
-          image={OperationButtons.delete.glyph}
-          onPress={() => { deleteMark(); refresh() }}
-          style={[style[OperationButtons.delete.style], dimensions.getSquareOperationButtonStyle()]}
-        />
-        <ImageButton
-          image={OperationButtons.newline.glyph}
-          onPress={() => { newline(); refresh() }}
-          style={[style[OperationButtons.newline.style], dimensions.getSquareOperationButtonStyle()]}
-        />
-        <FileOperationsView download={download} upload={upload} toPDF={toPDF} clear={clear} isScoreNonEmpty={isScoreNonEmpty}/>
-      </View>
-    </View>
-  )
+    return m('div.v.ops-panel',
+      m('div.v.edit-ops', [
+        m(ImageButton, {
+          image: OperationButtons.delete.glyph,
+          onPress: () => { deleteMark(); refresh() },
+          style: [style[OperationButtons.delete.style], dims.getSquareOperationButtonStyle()]
+        }),
+        m(ImageButton, {
+          image: OperationButtons.newline.glyph,
+          onPress: () => { newline(); refresh() },
+          style: [style[OperationButtons.newline.style], dims.getSquareOperationButtonStyle()]
+        }),
+        m(FileOperationsView, { download, upload, toPDF, clear, isScoreNonEmpty })
+      ])
+    )
+  }
 }

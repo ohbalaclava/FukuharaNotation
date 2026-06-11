@@ -1,23 +1,31 @@
-import React, { useContext, useState } from 'react'
-import { SafeAreaView, View } from 'react-native-web'
+import m from 'mithril'
 
 import { createEmptyScore } from '../model/Score'
-import styles from '../styles/ScreenStyles'
 import ScoreView from '../views/ScoreView'
 import InputView from '../views/InputView'
-import { DimensionsContext } from '../data/Dimensions'
+import { dims } from '../data/dimensionsStore'
+import { toCSS } from '../styles/StyleUtils'
 
 export default function HomeScreen () {
-  const [score, setScore] = useState(() => createEmptyScore())
-  const { dimensions } = useContext(DimensionsContext)
-  const refresh = (newScore) => setScore(newScore || score.clone())
+  let score = createEmptyScore()
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ ...styles.main.view, ...dimensions.getWindowStyle() }}>
-        <ScoreView score={score} refresh={refresh}/>
-        <InputView score={score} refresh={refresh}/>
-      </View>
-    </SafeAreaView>
-  )
+  // Unconditional redraw covers async callers (the upload FileReader.onload);
+  // synchronous event-handler callers just redraw a second time, harmlessly.
+  const refresh = (newScore) => {
+    if (newScore) {
+      score = newScore
+    }
+    m.redraw()
+  }
+
+  return {
+    view () {
+      return m('div.v.app-root',
+        m('div.v.main-view', { style: toCSS(dims.getWindowStyle()) }, [
+          m(ScoreView, { score, refresh }),
+          m(InputView, { score, refresh })
+        ])
+      )
+    }
+  }
 }

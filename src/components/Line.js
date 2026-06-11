@@ -1,61 +1,33 @@
-import React, { useContext } from 'react'
-import { FlatList, Pressable, StyleSheet, View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
 import Mark from './Mark'
-import styles from '../styles/ScreenStyles'
-import { DimensionsContext } from '../data/Dimensions'
+import { dims } from '../data/dimensionsStore'
+import { toCSS } from '../styles/StyleUtils'
 import Cursor from './Cursor'
 
-Line.propTypes = {
-  line: PropTypes.array.isRequired,
-  onPressMark: PropTypes.func.isRequired,
-  cursorIndex: PropTypes.number.isRequired,
-  markLengths: PropTypes.number.isRequired
-}
+// The marks list is keyed by mark.id; the pads and cursor stay outside the
+// keyed fragment (mithril requires keyed children to be exclusively keyed).
 
-const paddingButtonStyles = StyleSheet.create({
-  container: {
-    flex: 'auto'
-  },
-  top: {
-    flex: 'initial',
-    borderTopColor: 'white',
-    borderTopStyle: 'dashed',
-    borderTopWidth: '1px'
-  },
-  bottom: {
-    flex: 'auto',
-    borderBottomColor: 'white',
-    borderBottomStyle: 'dashed',
-    borderBottomWidth: '1px'
+export default {
+  view ({ attrs }) {
+    const { line, onPressMark, cursorIndex, markLengths } = attrs
+    const defaultButtonSize = toCSS({
+      width: dims.getLineWidth(),
+      height: dims.getLineEndButtonHeight(),
+      marginRight: dims.getLineSeparation()
+    })
+
+    return m('div.v.line-box', [
+      m('div.v.line-pad-top', { style: defaultButtonSize, onclick: () => onPressMark(0) }),
+      m('div.v.score-line', { style: { paddingRight: `${dims.getLinePaddingRight()}px` } },
+        line.map((item, index) => m(Mark, {
+          key: item.id,
+          mark: item,
+          onPress: () => onPressMark(index + 1)
+        }))
+      ),
+      m('div.v.line-pad-bottom', { style: defaultButtonSize, onclick: () => onPressMark() }),
+      (cursorIndex >= 0) ? m(Cursor, { markLengths }) : null
+    ])
   }
-})
-
-export default function Line ({ line, onPressMark, cursorIndex, markLengths }) {
-  const { dimensions } = useContext(DimensionsContext)
-  const defaultButtonSize = {
-    width: dimensions.getLineWidth(),
-    height: dimensions.getLineEndButtonHeight(),
-    marginRight: dimensions.getLineSeparation()
-  }
-
-  return (
-    <View style={paddingButtonStyles.container}>
-      <Pressable style={[paddingButtonStyles.top, defaultButtonSize]} onPress={() => onPressMark(0)}>
-        <View/>
-      </Pressable>
-      <FlatList
-        style={[styles.score.line, { paddingRight: dimensions.getLinePaddingRight() }]}
-        numColumns='1'
-        data={line}
-        renderItem={({ item, index }) => <Mark mark={item} onPress={() => onPressMark(index + 1)}/> }
-        keyExtractor={(item) => item.id}
-      />
-      <Pressable style={[paddingButtonStyles.bottom, defaultButtonSize]} onPress={() => onPressMark()}>
-        <View/>
-      </Pressable>
-      {(cursorIndex >= 0) ? <Cursor markLengths={markLengths}/> : <noscript/>}
-    </View>
-  )
 }

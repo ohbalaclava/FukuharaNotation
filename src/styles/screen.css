@@ -1,0 +1,440 @@
+/*
+ * Static layout styles ported from react-native-web.
+ *
+ * .v reproduces RNW's <View> defaults on a plain div. position:relative,
+ * flex-direction:column and flex-shrink:0 are load-bearing: absolutely
+ * positioned overlays (cursor, joins, file-ops menu, show/hide button)
+ * anchor against otherwise-unstyled parent Views.
+ */
+.v {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  position: relative;
+  flex-shrink: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0 solid black;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+/* TouchableOpacity (activeOpacity 0.5) */
+.touch-fade {
+  cursor: pointer;
+}
+.touch-fade:active {
+  opacity: 0.5;
+}
+
+/* TouchableHighlight with Config.inputButtonHighlightColour underlay */
+.touch-hl {
+  cursor: pointer;
+}
+.touch-hl:active {
+  background-color: rgba(92, 0, 0, 0.4) !important;
+}
+
+/* ImageButton / RadioButtons inner image layer */
+.bg-img {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* ---- App frame ---- */
+
+.app-root {
+  flex: 1;
+}
+
+.main-view {
+  flex-flow: row nowrap;
+  background-image: url(../assets/paper/watercolour_paper.jpg);
+  background-repeat: repeat;
+  min-width: min-content;
+}
+
+/* ---- Score pane ---- */
+
+.score {
+  flex: 1;
+  border: 0 dashed black;
+  border-right-width: 1px;
+}
+
+.score-lines {
+  flex: 1;
+  flex-flow: row nowrap;
+  overflow-x: auto;
+}
+
+/* row-reverse reproduces the inverted horizontal FlatList:
+   line 0 sits at the right edge and lines flow right-to-left */
+.score-lines-content {
+  flex-flow: row-reverse nowrap;
+  min-width: 100%;
+  padding: 20px;
+  background-image: url(../assets/paper/flipped_watercolour_paper.jpg);
+  background-repeat: repeat;
+}
+
+/* must not grow: with row-reverse the lines pack at the right edge,
+   and a growing line would swallow the row's free space */
+.line-box {
+  flex: none;
+}
+
+.line-pad-top {
+  flex: initial;
+  border-top: 1px dashed white;
+  cursor: pointer;
+}
+
+.line-pad-bottom {
+  flex: auto;
+  border-bottom: 1px dashed white;
+  cursor: pointer;
+}
+
+.score-line {
+  flex: none;
+  margin-right: 5px;
+}
+
+.score-accidental {
+  position: absolute;
+  top: 45%;
+  right: -18%;
+  transform: translateY(-50%);
+  opacity: 0.66;
+}
+
+.score-decorations {
+  position: absolute;
+  top: -1px;
+  left: 0;
+}
+
+.score-decoration {
+  position: absolute;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.66;
+}
+
+.score-join {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  opacity: 0.66;
+}
+
+.score-cursor {
+  flex: none;
+  z-index: 1;
+}
+
+.score-cursor img {
+  opacity: 0.5;
+  animation: cursor-blink 0.8s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+  50% {
+    visibility: hidden;
+  }
+}
+
+/* ---- Input panel ---- */
+
+.input-panel {
+  flex: initial;
+  flex-flow: column nowrap;
+  margin: 20px;
+  width: 700px;
+  opacity: 1;
+  visibility: visible;
+  transform: perspective(600px) rotateY(0deg);
+  transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.input-panel.hidden {
+  width: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transform: perspective(600px) rotateY(-90deg);
+}
+
+.showhide-btn {
+  transition: transform 0.3s ease;
+}
+
+.score-title-text {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-family: serif;
+  overflow: clip;
+}
+
+.marks-row {
+  flex: initial;
+  flex-flow: row nowrap;
+}
+
+.marks-sections {
+  flex: initial;
+  flex-flow: column nowrap;
+}
+
+.notes-panel {
+  flex: initial;
+  flex-flow: column nowrap;
+}
+
+.octave-view {
+  flex: initial;
+  flex-flow: row nowrap;
+}
+
+.octaves-row {
+  flex: initial;
+  flex-flow: row nowrap;
+}
+
+.octave-selector {
+  flex: initial;
+  flex-flow: row nowrap;
+  border-top: 1px solid grey;
+}
+
+.strokes-panel {
+  flex: initial;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+}
+
+.joins-panel {
+  flex: initial;
+  flex-flow: column nowrap;
+  border: 1px dashed rgb(50, 50, 50);
+  border-radius: 5px;
+  margin: 5px;
+  height: max-content;
+}
+
+.accidentals-panel,
+.decorations-panel {
+  flex: initial;
+  flex-flow: column nowrap;
+  background-color: rgba(255, 0, 0, 0.2);
+  border-radius: 5px;
+  margin: 5px;
+  height: min-content;
+}
+
+.grid-cols {
+  flex: 1;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.grid-col {
+  flex: 1;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  min-width: min-content;
+}
+
+/* ---- Operations ---- */
+
+.ops-panel {
+  flex: initial;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+}
+
+.edit-ops {
+  flex: 1;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.file-ops-menu {
+  flex-flow: row nowrap;
+  position: absolute;
+  top: -1px;
+  right: 100%;
+  background-color: rgb(0, 0, 0);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transform: perspective(600px) rotateX(-90deg);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.file-ops-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: perspective(600px) rotateX(0deg);
+}
+
+/* ---- Modals / dialogs ---- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: white;
+  z-index: 100;
+  animation: modal-fade-in 0.2s ease;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dialog-view {
+  flex: 1;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-message {
+  padding: 20px;
+  text-align: center;
+  font-family: serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.dialog-buttons {
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* react-native-web <Button color='cadetblue'> equivalent */
+.dialog-btn {
+  background-color: cadetblue;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.title-dialog {
+  flex: 1;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-dialog-text {
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-label {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+  font-family: serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.title-input,
+.author-input,
+.notes-input {
+  flex: 1;
+  font-family: serif;
+  border: 0 solid black;
+  background-color: transparent;
+}
+
+.title-input {
+  padding: 20px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.author-input {
+  padding: 20px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.notes-input {
+  padding: 10px;
+  font-size: 14px;
+  text-align: left;
+  border: 1px dotted grey;
+  resize: none;
+}
+
+/* ---- Busy spinner (react-spinners ScaleLoader replacement) ---- */
+
+.scale-loader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.scale-loader span {
+  display: inline-block;
+  width: 6px;
+  height: 60px;
+  border-radius: 5px;
+  background-color: crimson;
+  animation: scale-bar 1s cubic-bezier(0.2, 0.68, 0.18, 1.08) infinite;
+}
+
+.scale-loader span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.scale-loader span:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.scale-loader span:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.scale-loader span:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+@keyframes scale-bar {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.4);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}

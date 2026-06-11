@@ -1,50 +1,61 @@
+import showhidePng from '../assets/operations/showhide.png'
+import backspacePng from '../assets/operations/backspace.png'
+import turnUpPng from '../assets/operations/turn_up.png'
+import downloadPng from '../assets/operations/download.png'
+import uploadPng from '../assets/operations/upload.png'
+import pdfPng from '../assets/operations/pdf.png'
+import crossPng from '../assets/operations/cross.png'
+import menuPng from '../assets/operations/menu.png'
+import ryoPng from '../assets/operations/ryo.png'
+import kanPng from '../assets/operations/kan.png'
+import daikanPng from '../assets/operations/daikan.png'
 
 export const OperationButtons = {
   showhide: {
     style: 'showHideButton',
-    glyph: require('../assets/operations/showhide.png')
+    glyph: showhidePng
   },
   delete: {
     style: 'operationButton',
-    glyph: require('../assets/operations/backspace.png')
+    glyph: backspacePng
   },
   newline: {
     style: 'operationButton',
-    glyph: require('../assets/operations/turn_up.png')
+    glyph: turnUpPng
   },
   download: {
     style: 'operationButton',
-    glyph: require('../assets/operations/download.png')
+    glyph: downloadPng
   },
   upload: {
     style: 'operationButton',
-    glyph: require('../assets/operations/upload.png')
+    glyph: uploadPng
   },
   pdf: {
     style: 'operationButton',
-    glyph: require('../assets/operations/pdf.png')
+    glyph: pdfPng
   },
   clear: {
     style: 'operationButton',
-    glyph: require('../assets/operations/cross.png')
+    glyph: crossPng
   },
   menu: {
     style: 'menuButton',
-    glyph: require('../assets/operations/menu.png')
+    glyph: menuPng
   }
 }
 
 export const OctaveButtons = {
   ryo: {
     style: 'octaveButton',
-    glyph: require('../assets/operations/ryo.png')
+    glyph: ryoPng
   },
   kan: {
     style: 'octaveButton',
-    glyph: require('../assets/operations/kan.png')
+    glyph: kanPng
   },
   daikan: {
     style: 'octaveButton',
-    glyph: require('../assets/operations/daikan.png')
+    glyph: daikanPng
   }
 }

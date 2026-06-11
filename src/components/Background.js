@@ -1,45 +1,32 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { View, Image } from 'react-native-web'
+import m from 'mithril'
+import { toCSS } from '../styles/StyleUtils'
 
-Background.propTypes = {
-  resizeMode: PropTypes.string,
-  source: PropTypes.string,
-  border: PropTypes.shape({
-    colour: PropTypes.string,
-    radius: PropTypes.number,
-    width: PropTypes.number
-  }),
-  height: PropTypes.number,
-  width: PropTypes.number
-}
+export default {
+  view ({ attrs }) {
+    const imageStyle = {
+      width: '100%',
+      height: '100%',
+      resizeMode: attrs.resizeMode || 'cover'
+    }
+    if (attrs.border) {
+      imageStyle.borderRadius = attrs.border.radius
+      imageStyle.borderColor = attrs.border.colour
+      imageStyle.borderWidth = attrs.border.width
+      imageStyle.borderStyle = 'solid'
+    }
 
-export default function Background ({ resizeMode, height, width, source, border }) {
-  const imageStyle = {
-    flex: 1,
-    resizeMode
+    return m('div.v', {
+      style: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: attrs.width ? `${attrs.width}px` : '100%',
+        height: attrs.height ? `${attrs.height}px` : '100%'
+      }
+    },
+    m('img', {
+      src: attrs.source,
+      style: toCSS(imageStyle)
+    }))
   }
-  if (border) {
-    imageStyle.borderRadius = border.radius
-    imageStyle.borderColor = border.colour
-    imageStyle.borderWidth = border.width
-  }
-
-  height = height || '100%'
-  width = width || '100%'
-
-  return (
-    <View style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width,
-      height
-    }}>
-      <Image
-        style={imageStyle}
-        source={source}
-      />
-    </View>
-  )
 }

@@ -1,45 +1,24 @@
-import React, { useContext } from 'react'
-import { View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
-import styles from '../styles/ScreenStyles'
-import { DimensionsContext } from '../data/Dimensions'
+import { dims } from '../data/dimensionsStore'
 import { getGlyph } from '../data/ScoreLiterals'
+import { toCSS } from '../styles/StyleUtils'
 
-Decorations.propTypes = {
-  decorations: PropTypes.instanceOf(Map),
-  hasAccidental: PropTypes.bool
-}
-
-export default function Decorations ({ decorations, hasAccidental }) {
-  const { dimensions } = useContext(DimensionsContext)
-
-  const getDecorationsArray = () => {
-    const result = []
-    decorations && decorations.forEach((decoration) => {
-      result.push(
-        <View
-          key={decoration.name}
-          style={[
-            styles.score.decoration,
-            dimensions.getDecorationMarkStyle(decoration.name, hasAccidental),
-            {
-              backgroundImage: `url(${getGlyph(decoration.name).source})`,
-              backgroundPosition: 'center',
-              backgroundSize: 'contain',
-              backgroundRepeat: 'no-repeat'
-            }
-          ]}
-        />
+export default {
+  view ({ attrs }) {
+    const items = []
+    attrs.decorations && attrs.decorations.forEach((decoration) => {
+      items.push(
+        m('div.v.score-decoration', {
+          key: decoration.name,
+          style: {
+            ...toCSS(dims.getDecorationMarkStyle(decoration.name, attrs.hasAccidental)),
+            backgroundImage: `url(${getGlyph(decoration.name).source})`
+          }
+        })
       )
     })
 
-    return result
+    return m('div.v.score-decorations', items)
   }
-
-  return (
-    <View style={styles.score.decorations}>
-      {getDecorationsArray()}
-    </View>
-  )
 }

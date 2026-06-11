@@ -1,9 +1,7 @@
-import React, { useContext } from 'react'
-import { View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
 import { ScoreMarks } from '../data/ScoreLiterals'
-import { DimensionsContext } from '../data/Dimensions'
+import { dims } from '../data/dimensionsStore'
 import ImageButton from '../components/ImageButton'
 import Config from '../data/Config'
 import GridView from './GridView'
@@ -11,40 +9,28 @@ import styles from '../styles/ScreenStyles'
 import DecorationSelectView from './DecorationSelectView'
 import JoinSelectView from './JoinSelectView'
 
-StrokeSelectView.propTypes = {
-  addStroke: PropTypes.func.isRequired,
-  addDecoration: PropTypes.func.isRequired,
-  setJoin: PropTypes.func.isRequired,
-  refresh: PropTypes.func.isRequired
-}
+export default {
+  view ({ attrs }) {
+    const { addStroke, addDecoration, setJoin, refresh } = attrs
 
-export default function StrokeSelectView ({ addStroke, addDecoration, setJoin, refresh }) {
-  const { dimensions } = useContext(DimensionsContext)
-  const style = styles.input.marks.sections.strokes
+    const renderStrokeButton = (item) => m(ImageButton, {
+      key: item.name,
+      highlightColour: Config.inputButtonHighlightColour,
+      image: item.glyph.source,
+      onPress: () => { addStroke(item); refresh() },
+      style: [styles.input.strokeButton, dims.getStrokeButtonStyle(item.glyph.relativeHeight)]
+    })
 
-  const renderStrokeButton = ({ item }) => {
-    return (
-      <ImageButton
-        key={item.name}
-        highlightColour={Config.inputButtonHighlightColour}
-        image={item.glyph.source}
-        onPress={() => { addStroke(item); refresh() }}
-        style={[style.button, dimensions.getStrokeButtonStyle(item.glyph.relativeHeight)]}
-      />
-    )
+    return m('div.v.strokes-panel', [
+      m(GridView, {
+        items: ScoreMarks.strokes,
+        renderItem: renderStrokeButton,
+        noRows: 4
+      }),
+      m('div.v', [
+        m(JoinSelectView, { setJoin, refresh }),
+        m(DecorationSelectView, { addDecoration, refresh })
+      ])
+    ])
   }
-
-  return (
-    <View style={style}>
-      <GridView
-        items={ScoreMarks.strokes}
-        renderItem={renderStrokeButton}
-        noRows={4}
-      />
-      <View style={{ flexFlow: 'column nowrap' }}>
-        <JoinSelectView setJoin={setJoin} refresh={refresh}/>
-        <DecorationSelectView addDecoration={addDecoration} refresh={refresh}/>
-      </View>
-    </View>
-  )
 }

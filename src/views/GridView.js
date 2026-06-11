@@ -1,60 +1,25 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
-GridView.propTypes = {
-  items: PropTypes.array.isRequired,
-  renderItem: PropTypes.func.isRequired,
-  noRows: PropTypes.number,
-  style: PropTypes.object
-}
+import { toCSS } from '../styles/StyleUtils'
 
-const styles = StyleSheet.create({
-  columns: {
-    flex: 1,
-    flexFlow: 'row nowrap',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start'
-  },
-  column: {
-    flex: 1,
-    flexFlow: 'column nowrap',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    minWidth: 'min-content'
-  }
-})
+// renderItem must return a keyed vnode: every column's children form a keyed
+// fragment in mithril.
 
-export default function GridView ({ items, renderItem, noRows, style }) {
-  if (noRows === undefined) {
-    noRows = 1
-  }
+export default {
+  view ({ attrs }) {
+    const { items, renderItem, style } = attrs
+    const noRows = (attrs.noRows === undefined) ? 1 : attrs.noRows
+    const noCols = Math.ceil(items.length / noRows)
 
-  const noCols = Math.ceil(items.length / noRows)
-
-  function getColumn (columnIndex) {
-    const rows = []
-    for (let i = columnIndex * noRows, j = 0; j < noRows && i < items.length; ++i, ++j) {
-      rows[j] = renderItem({ item: items[i] })
-    }
-    return rows
-  }
-
-  function getColumns () {
     const columns = []
     for (let i = 0; i < noCols; ++i) {
-      columns[i] = (
-        <View style={styles.column} key={i}>
-          { getColumn(i) }
-        </View>
-      )
+      const rows = []
+      for (let k = i * noRows, j = 0; j < noRows && k < items.length; ++k, ++j) {
+        rows.push(renderItem(items[k]))
+      }
+      columns.push(m('div.v.grid-col', { key: i }, rows))
     }
-    return columns
-  }
 
-  return (
-    <View style={[style, styles.columns]}>
-      { getColumns() }
-    </View>
-  )
+    return m('div.v.grid-cols', { style: toCSS(style) }, columns)
+  }
 }

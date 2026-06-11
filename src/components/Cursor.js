@@ -1,39 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Image, View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
-import styles from '../styles/ScreenStyles'
-import { DimensionsContext } from '../data/Dimensions'
+import cursorPng from '../assets/cursor.png'
+import { dims } from '../data/dimensionsStore'
+import { toCSS } from '../styles/StyleUtils'
 
-const Glyph = require('../assets/cursor.png')
+// Blinking handled by the CSS cursor-blink animation (was a 400ms setInterval).
 
-Cursor.propTypes = {
-  markLengths: PropTypes.number.isRequired
-}
+export default {
+  view ({ attrs }) {
+    const cursorStyle = dims.getCursorStyle(attrs.markLengths)
 
-export default function Cursor ({ markLengths }) {
-  const [showCursor, setShowCursor] = useState(true)
-  const { dimensions } = useContext(DimensionsContext)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setShowCursor((showCursor) => !showCursor)
-    }, 400)
-    return () => clearInterval(interval)
-  }, [])
-
-  const cursorDimensionsStyle = dimensions.getCursorStyle(markLengths)
-
-  return (
-    <View style={[styles.score.cursor, cursorDimensionsStyle]}>
-      <Image
-        style={[
-          styles.score.cursor.image,
-          cursorDimensionsStyle.image,
-          { visibility: showCursor ? 'visible' : 'hidden' }
-        ]}
-        source={Glyph}
-      />
-    </View>
-  )
+    return m('div.v.score-cursor', { style: toCSS(cursorStyle) },
+      m('img', {
+        src: cursorPng,
+        style: toCSS(cursorStyle.image)
+      })
+    )
+  }
 }

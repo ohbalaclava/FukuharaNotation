@@ -1,5 +1,4 @@
 import Config from './Config'
-import { createContext } from 'react'
 import deepmerge from '../tools/DeepMerge'
 
 export const scoreContentPadding = 20
@@ -399,5 +398,3 @@ export default function Dimensions (window) {
     setWindowDimensions
   }
 }
-
-export const DimensionsContext = createContext()

@@ -1,39 +1,17 @@
-import React, { useContext, useState } from 'react'
-import { View } from 'react-native-web'
-import PropTypes from 'prop-types'
+import m from 'mithril'
 
 import ImageButton from '../components/ImageButton'
 import { ScoreMarks } from '../data/ScoreLiterals'
 import styles from '../styles/ScreenStyles'
-import { DimensionsContext } from '../data/Dimensions'
+import { dims } from '../data/dimensionsStore'
 import Config from '../data/Config'
 import GridView from './GridView'
 import RadioButtons from '../components/RadioButtons'
 import { OctaveButtons } from '../data/ButtonDefinitions'
 import AccidentalSelectView from './AccidentalSelectView'
 
-NoteSelectView.propTypes = {
-  addNote: PropTypes.func.isRequired,
-  addAccidental: PropTypes.func.isRequired,
-  refresh: PropTypes.func.isRequired
-}
-
-export default function NoteSelectView ({ addNote, addAccidental, refresh }) {
-  const [visibleOctave, setVisibleOctave] = useState(() => 'ryo')
-  const { dimensions } = useContext(DimensionsContext)
-  const style = styles.input.marks.sections.notes
-
-  const renderNoteButton = ({ item }) => {
-    return (
-      <ImageButton
-        key={item.name}
-        highlightColour={Config.inputButtonHighlightColour}
-        image={item.glyph.source}
-        onPress={() => { addNote(item); refresh() }}
-        style={[style.octaves.button, dimensions.getNoteButtonStyle()]}
-      />
-    )
-  }
+export default function NoteSelectView () {
+  let visibleOctave = 'ryo'
 
   function getButtonData () {
     const buttonData = []
@@ -50,37 +28,52 @@ export default function NoteSelectView ({ addNote, addAccidental, refresh }) {
     return (octave === visibleOctave) ? { display: 'flex' } : { display: 'none' }
   }
 
-  return (
-    <View style={[style, { height: dimensions.getNoteButtonViewHeight() }]}>
-      <RadioButtons
-        buttonData={getButtonData()}
-        onSelect={(octave) => setVisibleOctave(octave)}
-        buttonStyles={dimensions.getOctaveSelectorButtonStyle(style.octaveSelector.button)}
-        style={style.octaveSelector}
-      />
-      <View style={style.octaveView}>
-        <View style={style.octaves}>
-          <GridView
-            noRows={5}
-            items={ScoreMarks.notes.ryo}
-            renderItem={renderNoteButton}
-            style={getStyle('ryo')}
-          />
-          <GridView
-            noRows={4}
-            items={ScoreMarks.notes.kan}
-            renderItem={renderNoteButton}
-            style={getStyle('kan')}
-          />
-          <GridView
-            noRows={3}
-            items={ScoreMarks.notes.daikan}
-            renderItem={renderNoteButton}
-            style={getStyle('daikan')}
-          />
-        </View>
-        <AccidentalSelectView addAccidental={addAccidental} refresh={refresh}/>
-      </View>
-    </View>
-  )
+  return {
+    view ({ attrs }) {
+      const { addNote, addAccidental, refresh } = attrs
+
+      const renderNoteButton = (item) => m(ImageButton, {
+        key: item.name,
+        highlightColour: Config.inputButtonHighlightColour,
+        image: item.glyph.source,
+        onPress: () => { addNote(item); refresh() },
+        style: [styles.input.octaveButton, dims.getNoteButtonStyle()]
+      })
+
+      return m('div.v.notes-panel', { style: { height: `${dims.getNoteButtonViewHeight()}px` } }, [
+        m(RadioButtons, {
+          buttonData: getButtonData(),
+          onSelect: (octave) => { visibleOctave = octave },
+          buttonStyles: dims.getOctaveSelectorButtonStyle(styles.input.octaveSelectorButton),
+          class: 'octave-selector'
+        }),
+        m('div.v.octave-view', [
+          m('div.v.octaves-row', [
+            m(GridView, {
+              key: 'ryo',
+              noRows: 5,
+              items: ScoreMarks.notes.ryo,
+              renderItem: renderNoteButton,
+              style: getStyle('ryo')
+            }),
+            m(GridView, {
+              key: 'kan',
+              noRows: 4,
+              items: ScoreMarks.notes.kan,
+              renderItem: renderNoteButton,
+              style: getStyle('kan')
+            }),
+            m(GridView, {
+              key: 'daikan',
+              noRows: 3,
+              items: ScoreMarks.notes.daikan,
+              renderItem: renderNoteButton,
+              style: getStyle('daikan')
+            })
+          ]),
+          m(AccidentalSelectView, { addAccidental, refresh })
+        ])
+      ])
+    }
+  }
 }
