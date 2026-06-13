@@ -80,7 +80,10 @@
   flex-flow: row-reverse nowrap;
   min-width: 100%;
   padding: 20px;
-  background-image: url(../assets/paper/flipped_watercolour_paper.jpg);
+  /* the original used the flipped paper to counteract the inverted
+     FlatList's scaleX(-1); row-reverse doesn't mirror, so use the
+     normal texture */
+  background-image: url(../assets/paper/watercolour_paper.jpg);
   background-repeat: repeat;
 }
 
@@ -158,7 +161,10 @@
   flex: initial;
   flex-flow: column nowrap;
   margin: 20px;
+  /* 700px is the animation endpoint (as in the original react-spring
+     version); max-width clamps the visible width to the button grid */
   width: 700px;
+  max-width: min-content;
   opacity: 1;
   visibility: visible;
   transform: perspective(600px) rotateY(0deg);

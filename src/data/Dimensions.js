@@ -122,9 +122,10 @@ export default function Dimensions (window) {
     octaveSelectorHeight = noteButtonPanelHeight / 12
     strokeButtonPanelHeight = scoreMarksButtonPanelHeight - noteButtonPanelHeight
 
+    // Width is owned by the .input-panel CSS class (700px, 20px when
+    // hidden) so the collapse can animate; an inline width here would
+    // override the class and defeat the transition.
     inputPanel = {
-      width: 'max-content',
-      maxWidth: 'min-content',
       minHeight: minimumInputPanelHeight
     }
 

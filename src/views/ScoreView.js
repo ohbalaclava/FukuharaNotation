@@ -27,7 +27,11 @@ export default function ScoreView () {
 
       return m('div.v.score',
         m('div.v.score-lines',
-          m('div.v.score-lines-content', { style: { paddingRight: `${lineWidth * 1.5}px` } },
+          // The original inverted FlatList flipped the container with
+          // scaleX(-1), so its paddingRight rendered visually on the left;
+          // with row-reverse there is no flip, so the extra space at the
+          // scrolled-away end is paddingLeft here.
+          m('div.v.score-lines-content', { style: { paddingLeft: `${lineWidth * 1.5}px` } },
             score.getLines().map((item, index) => {
               const isCurrentLine = index === score.getCurrentLineIndex()
               return m(Line, {
