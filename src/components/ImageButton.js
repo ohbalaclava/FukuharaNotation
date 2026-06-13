@@ -1,6 +1,6 @@
-import m from 'mithril'
-import deepmerge from '../tools/DeepMerge'
-import { toCSS } from '../styles/StyleUtils'
+import m from 'mithril';
+import deepmerge from '../tools/DeepMerge';
+import { toCSS } from '../styles/StyleUtils';
 
 // Touchable button with an image rendered as a contained background.
 // `style` keeps the react-native-web era array API: fragments from
@@ -9,23 +9,24 @@ import { toCSS } from '../styles/StyleUtils'
 // otherwise TouchableOpacity (.touch-fade).
 
 export default {
-  view ({ attrs }) {
-    let style = attrs.style
+  view({ attrs }) {
+    let style = attrs.style;
     if (Array.isArray(style)) {
-      style = deepmerge.all(style)
+      style = deepmerge.all(style);
     }
 
-    return m('div.v' + (attrs.highlightColour ? '.touch-hl' : '.touch-fade'),
+    return m(
+      'div.v' + (attrs.highlightColour ? '.touch-hl' : '.touch-fade'),
       {
         style: toCSS(style),
-        onclick: attrs.onPress
+        onclick: attrs.onPress,
       },
       m('div.v.bg-img', {
         style: {
           ...toCSS(style.image),
-          backgroundImage: `url(${attrs.image})`
-        }
+          backgroundImage: `url(${attrs.image})`,
+        },
       })
-    )
-  }
-}
+    );
+  },
+};

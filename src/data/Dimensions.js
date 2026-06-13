@@ -1,204 +1,204 @@
-import Config from './Config'
-import deepmerge from '../tools/DeepMerge'
+import Config from './Config';
+import deepmerge from '../tools/DeepMerge';
 
-export const scoreContentPadding = 20
-export const scoreLineMarginRight = 5
-export const inputPanelMargin = 20
+export const scoreContentPadding = 20;
+export const scoreLineMarginRight = 5;
+export const inputPanelMargin = 20;
 
-const minimumInputPanelHeight = 400
-const inputPanelAspectRatio = 0.2637
-const wideButtonAspectRatio = 1.5
+const minimumInputPanelHeight = 400;
+const inputPanelAspectRatio = 0.2637;
+const wideButtonAspectRatio = 1.5;
 
-export default function Dimensions (window) {
-  let inputPanelHeight
-  let scoreMarksButtonPanelHeight
-  let noteButtonPanelHeight
-  let strokeButtonPanelHeight
-  let titlePanelHeight
-  let editOpsPanelHeight
-  let octaveSelectorHeight
+export default function Dimensions(window) {
+  let inputPanelHeight;
+  let scoreMarksButtonPanelHeight;
+  let noteButtonPanelHeight;
+  let strokeButtonPanelHeight;
+  let titlePanelHeight;
+  let editOpsPanelHeight;
+  let octaveSelectorHeight;
 
-  let scoreContentHeight
-  let noteMark
-  let accidentalMark
-  let decorationMark
-  let lineWidth
-  let lineFullWidth
-  let lineSeparation
-  let markHeight
-  let lineEndButtonHeight
-  let cursor
-  let linePaddingRight
+  let scoreContentHeight;
+  let noteMark;
+  let accidentalMark;
+  let decorationMark;
+  let lineWidth;
+  let lineFullWidth;
+  let lineSeparation;
+  let markHeight;
+  let lineEndButtonHeight;
+  let cursor;
+  let linePaddingRight;
 
-  let inputPanel
-  let showHideButton
-  let octaveSelectorButton
-  let noteButton
-  let strokeButton
-  let joinButton
-  let accidentalButton
-  let decorationButton
-  let squareOperationButton
-  let wideOperationButton
-  let title
+  let inputPanel;
+  let showHideButton;
+  let octaveSelectorButton;
+  let noteButton;
+  let strokeButton;
+  let joinButton;
+  let accidentalButton;
+  let decorationButton;
+  let squareOperationButton;
+  let wideOperationButton;
+  let title;
 
-  setWindowDimensions(window)
+  setWindowDimensions(window);
 
-  function setWindowDimensions (windowDimensions) {
-    window = windowDimensions
-    updateInputPanelDimensions()
-    updateScoreContentHeight()
-    updateNoteMarkDimensions()
-    updateAccidentalMarkDimensions()
-    updateDecorationMarkDimensions()
-    updateLineDimensions()
-    updateCursorDimensions()
+  function setWindowDimensions(windowDimensions) {
+    window = windowDimensions;
+    updateInputPanelDimensions();
+    updateScoreContentHeight();
+    updateNoteMarkDimensions();
+    updateAccidentalMarkDimensions();
+    updateDecorationMarkDimensions();
+    updateLineDimensions();
+    updateCursorDimensions();
   }
 
-  function updateScoreContentHeight () {
-    scoreContentHeight = window.height - scoreContentPadding * 2
+  function updateScoreContentHeight() {
+    scoreContentHeight = window.height - scoreContentPadding * 2;
   }
 
-  function updateNoteMarkDimensions () {
-    markHeight = scoreContentHeight / (Config.maxLineLength + 1)
+  function updateNoteMarkDimensions() {
+    markHeight = scoreContentHeight / (Config.maxLineLength + 1);
 
     noteMark = {
       image: {
         width: markHeight,
-        height: markHeight
-      }
-    }
+        height: markHeight,
+      },
+    };
   }
 
-  function updateAccidentalMarkDimensions () {
-    const accidentalHeight = markHeight / 2
+  function updateAccidentalMarkDimensions() {
+    const accidentalHeight = markHeight / 2;
 
     accidentalMark = {
       width: accidentalHeight,
-      height: accidentalHeight
-    }
+      height: accidentalHeight,
+    };
   }
 
-  function updateDecorationMarkDimensions () {
-    decorationMark = {}
+  function updateDecorationMarkDimensions() {
+    decorationMark = {};
     decorationMark.LeanTo = {
       top: 0,
       left: -noteMark.image.width * 0.25,
       width: markHeight * 1.75,
-      height: markHeight
-    }
+      height: markHeight,
+    };
     decorationMark.Dot = {
       top: 0,
       left: noteMark.image.width * 0.75,
       width: markHeight,
-      height: markHeight
-    }
+      height: markHeight,
+    };
   }
 
-  function updateLineDimensions () {
-    lineWidth = noteMark.image.width
-    linePaddingRight = lineWidth
-    lineSeparation = scoreLineMarginRight + linePaddingRight
-    lineFullWidth = lineWidth + lineSeparation
-    lineEndButtonHeight = noteMark.image.height / 2
+  function updateLineDimensions() {
+    lineWidth = noteMark.image.width;
+    linePaddingRight = lineWidth;
+    lineSeparation = scoreLineMarginRight + linePaddingRight;
+    lineFullWidth = lineWidth + lineSeparation;
+    lineEndButtonHeight = noteMark.image.height / 2;
   }
 
-  function updateCursorDimensions () {
+  function updateCursorDimensions() {
     cursor = {
       position: 'absolute',
       image: {
         width: noteMark.image.width,
-        height: noteMark.image.width / 8
-      }
-    }
+        height: noteMark.image.width / 8,
+      },
+    };
   }
 
-  function updateInputPanelDimensions () {
-    inputPanelHeight = Math.max(window.height - inputPanelMargin * 2, minimumInputPanelHeight)
-    titlePanelHeight = inputPanelHeight / 24
-    editOpsPanelHeight = inputPanelHeight / 13
-    scoreMarksButtonPanelHeight = inputPanelHeight - titlePanelHeight - editOpsPanelHeight
-    noteButtonPanelHeight = scoreMarksButtonPanelHeight / 2
-    octaveSelectorHeight = noteButtonPanelHeight / 12
-    strokeButtonPanelHeight = scoreMarksButtonPanelHeight - noteButtonPanelHeight
+  function updateInputPanelDimensions() {
+    inputPanelHeight = Math.max(window.height - inputPanelMargin * 2, minimumInputPanelHeight);
+    titlePanelHeight = inputPanelHeight / 24;
+    editOpsPanelHeight = inputPanelHeight / 13;
+    scoreMarksButtonPanelHeight = inputPanelHeight - titlePanelHeight - editOpsPanelHeight;
+    noteButtonPanelHeight = scoreMarksButtonPanelHeight / 2;
+    octaveSelectorHeight = noteButtonPanelHeight / 12;
+    strokeButtonPanelHeight = scoreMarksButtonPanelHeight - noteButtonPanelHeight;
 
     // Width is owned by the .input-panel CSS class (700px, 20px when
     // hidden) so the collapse can animate; an inline width here would
     // override the class and defeat the transition.
     inputPanel = {
-      minHeight: minimumInputPanelHeight
-    }
+      minHeight: minimumInputPanelHeight,
+    };
 
-    updateShowHideButtonDimensions()
-    updateTitleDimensions()
-    updateOctaveSelectorDimensions()
-    updateNoteButtonDimensions()
-    updateStrokeButtonDimensions()
-    updateJoinButtonDimensions()
-    updateAccidentalButtonDimensions()
-    updateDecorationButtonDimensions()
-    updateEditOpsButtonDimensions()
+    updateShowHideButtonDimensions();
+    updateTitleDimensions();
+    updateOctaveSelectorDimensions();
+    updateNoteButtonDimensions();
+    updateStrokeButtonDimensions();
+    updateJoinButtonDimensions();
+    updateAccidentalButtonDimensions();
+    updateDecorationButtonDimensions();
+    updateEditOpsButtonDimensions();
   }
 
-  function updateTitleDimensions () {
-    const paddingTop = titlePanelHeight / 4
-    const paddingBottom = titlePanelHeight / 3
+  function updateTitleDimensions() {
+    const paddingTop = titlePanelHeight / 4;
+    const paddingBottom = titlePanelHeight / 3;
 
     title = {
       minHeight: titlePanelHeight,
       maxHeight: titlePanelHeight,
-      maxWidth: 0.2637 * inputPanelHeight,
+      maxWidth: inputPanelAspectRatio * inputPanelHeight,
       fontSize: titlePanelHeight - paddingTop - paddingBottom,
       paddingTop,
-      paddingBottom
-    }
+      paddingBottom,
+    };
   }
 
-  function updateOctaveSelectorDimensions () {
-    const marginBottom = octaveSelectorHeight / 5
-    const padding = octaveSelectorHeight / 10
-    const buttonImageHeight = octaveSelectorHeight - marginBottom - padding * 2
+  function updateOctaveSelectorDimensions() {
+    const marginBottom = octaveSelectorHeight / 5;
+    const padding = octaveSelectorHeight / 10;
+    const buttonImageHeight = octaveSelectorHeight - marginBottom - padding * 2;
 
     octaveSelectorButton = {
       image: {
         width: buttonImageHeight * 2,
-        height: buttonImageHeight
+        height: buttonImageHeight,
       },
       marginBottom,
-      padding
-    }
+      padding,
+    };
   }
 
-  function updateShowHideButtonDimensions () {
-    const noteButtonSize = noteButtonPanelHeight / 20
-    const borderWidth = 1
-    const padding = noteButtonSize / 5
-    const buttonImageSize = noteButtonSize - 2 * (padding + borderWidth)
+  function updateShowHideButtonDimensions() {
+    const noteButtonSize = noteButtonPanelHeight / 20;
+    const borderWidth = 1;
+    const padding = noteButtonSize / 5;
+    const buttonImageSize = noteButtonSize - 2 * (padding + borderWidth);
 
     showHideButton = {
       image: {
         width: buttonImageSize,
-        height: buttonImageSize
+        height: buttonImageSize,
       },
       borderRadius: 5,
       borderWidth,
-      padding
-    }
+      padding,
+    };
   }
 
-  function updateNoteButtonDimensions () {
-    const totalNoteButtonHeight = (noteButtonPanelHeight - octaveSelectorHeight) / 5
-    const borderWidth = 3
-    const marginVertical = totalNoteButtonHeight / 10
-    const marginHorizontal = totalNoteButtonHeight * 0.15
-    const noteButtonDiameter = totalNoteButtonHeight - 2 * marginVertical
-    const padding = noteButtonDiameter / 5
-    const buttonImageLength = noteButtonDiameter - 2 * (padding + borderWidth)
+  function updateNoteButtonDimensions() {
+    const totalNoteButtonHeight = (noteButtonPanelHeight - octaveSelectorHeight) / 5;
+    const borderWidth = 3;
+    const marginVertical = totalNoteButtonHeight / 10;
+    const marginHorizontal = totalNoteButtonHeight * 0.15;
+    const noteButtonDiameter = totalNoteButtonHeight - 2 * marginVertical;
+    const padding = noteButtonDiameter / 5;
+    const buttonImageLength = noteButtonDiameter - 2 * (padding + borderWidth);
 
     noteButton = {
       image: {
         width: buttonImageLength,
-        height: buttonImageLength
+        height: buttonImageLength,
       },
       borderRadius: 100,
       borderWidth,
@@ -207,169 +207,169 @@ export default function Dimensions (window) {
       minWidth: noteButtonDiameter,
       padding,
       marginVertical,
-      marginHorizontal
-    }
+      marginHorizontal,
+    };
   }
 
-  function updateStrokeButtonDimensions () {
-    const buttonImageSize = strokeButtonPanelHeight / 12
-    const borderWidth = 3
-    const margin = buttonImageSize / 6
-    const padding = buttonImageSize / 3 - borderWidth
+  function updateStrokeButtonDimensions() {
+    const buttonImageSize = strokeButtonPanelHeight / 12;
+    const borderWidth = 3;
+    const margin = buttonImageSize / 6;
+    const padding = buttonImageSize / 3 - borderWidth;
 
     strokeButton = {
       image: {
         width: buttonImageSize,
-        height: buttonImageSize
+        height: buttonImageSize,
       },
       borderRadius: 5,
       borderWidth,
       padding,
-      margin
-    }
+      margin,
+    };
   }
 
-  function updateJoinButtonDimensions () {
-    const buttonImageSize = noteButtonPanelHeight / 13
-    const borderWidth = 3
-    const margin = buttonImageSize / 6
-    const padding = buttonImageSize / 3 - borderWidth
+  function updateJoinButtonDimensions() {
+    const buttonImageSize = noteButtonPanelHeight / 13;
+    const borderWidth = 3;
+    const margin = buttonImageSize / 6;
+    const padding = buttonImageSize / 3 - borderWidth;
 
     joinButton = {
       image: {
         width: buttonImageSize,
-        height: buttonImageSize
+        height: buttonImageSize,
       },
       borderRadius: 5,
       borderWidth,
       padding,
-      margin
-    }
+      margin,
+    };
   }
 
-  function updateAccidentalButtonDimensions () {
-    const buttonImageSize = noteButtonPanelHeight / 12
-    const borderWidth = 3
-    const margin = buttonImageSize / 6
-    const padding = buttonImageSize / 3 - borderWidth
+  function updateAccidentalButtonDimensions() {
+    const buttonImageSize = noteButtonPanelHeight / 12;
+    const borderWidth = 3;
+    const margin = buttonImageSize / 6;
+    const padding = buttonImageSize / 3 - borderWidth;
 
     accidentalButton = {
       image: {
         width: buttonImageSize,
-        height: buttonImageSize
+        height: buttonImageSize,
       },
       borderRadius: 5,
       borderWidth,
       padding,
-      margin
-    }
+      margin,
+    };
   }
 
-  function updateDecorationButtonDimensions () {
-    const buttonImageSize = noteButtonPanelHeight / 12
-    const borderWidth = 3
-    const margin = buttonImageSize / 6
-    const padding = buttonImageSize / 3 - borderWidth
+  function updateDecorationButtonDimensions() {
+    const buttonImageSize = noteButtonPanelHeight / 12;
+    const borderWidth = 3;
+    const margin = buttonImageSize / 6;
+    const padding = buttonImageSize / 3 - borderWidth;
 
     decorationButton = {
       image: {
         width: buttonImageSize,
-        height: buttonImageSize
+        height: buttonImageSize,
       },
       borderRadius: 5,
       borderWidth,
       padding,
-      margin
-    }
+      margin,
+    };
   }
 
-  function updateEditOpsButtonDimensions () {
-    const totalOperationButtonHeight = editOpsPanelHeight
-    const borderWidth = 1
-    const margin = totalOperationButtonHeight / 10
-    const operationButtonHeight = totalOperationButtonHeight - 2 * margin
-    const padding = operationButtonHeight / 5
-    const buttonImageHeight = operationButtonHeight - 2 * (padding + borderWidth)
+  function updateEditOpsButtonDimensions() {
+    const totalOperationButtonHeight = editOpsPanelHeight;
+    const borderWidth = 1;
+    const margin = totalOperationButtonHeight / 10;
+    const operationButtonHeight = totalOperationButtonHeight - 2 * margin;
+    const padding = operationButtonHeight / 5;
+    const buttonImageHeight = operationButtonHeight - 2 * (padding + borderWidth);
 
     squareOperationButton = {
       image: {
         width: buttonImageHeight,
-        height: buttonImageHeight
+        height: buttonImageHeight,
       },
       borderRadius: 5,
       borderWidth,
       padding,
       marginVertical: margin,
-      marginHorizontal: margin
-    }
+      marginHorizontal: margin,
+    };
 
     wideOperationButton = {
       ...squareOperationButton,
       image: {
         width: buttonImageHeight * wideButtonAspectRatio,
         height: buttonImageHeight,
-        resizeMode: 'contain'
-      }
-    }
+        resizeMode: 'contain',
+      },
+    };
   }
 
-  function getCursorStyle (markLengths) {
+  function getCursorStyle(markLengths) {
     return {
       ...cursor,
-      top: markLengths * noteMark.image.height + lineEndButtonHeight
-    }
+      top: markLengths * noteMark.image.height + lineEndButtonHeight,
+    };
   }
 
-  function getOctaveSelectorButtonStyle (baseStyle) {
+  function getOctaveSelectorButtonStyle(baseStyle) {
     return {
       selected: deepmerge(baseStyle.selected, octaveSelectorButton),
-      unselected: deepmerge(baseStyle.unselected, octaveSelectorButton)
-    }
+      unselected: deepmerge(baseStyle.unselected, octaveSelectorButton),
+    };
   }
 
-  function getJoinButtonStyle (baseStyle) {
+  function getJoinButtonStyle(baseStyle) {
     return {
       selected: deepmerge(baseStyle.selected, joinButton),
-      unselected: deepmerge(baseStyle.unselected, joinButton)
-    }
+      unselected: deepmerge(baseStyle.unselected, joinButton),
+    };
   }
 
-  function getStrokeButtonStyle (relativeHeight) {
-    const style = { ...strokeButton }
-    const imageStyle = { ...strokeButton.image }
+  function getStrokeButtonStyle(relativeHeight) {
+    const style = { ...strokeButton };
+    const imageStyle = { ...strokeButton.image };
     if (relativeHeight) {
-      imageStyle.height *= relativeHeight
-      style.image = imageStyle
+      imageStyle.height *= relativeHeight;
+      style.image = imageStyle;
     }
-    return style
+    return style;
   }
 
-  function getNoteMarkStyle (relativeHeight) {
-    const style = { ...noteMark }
-    const imageStyle = { ...noteMark.image }
+  function getNoteMarkStyle(relativeHeight) {
+    const style = { ...noteMark };
+    const imageStyle = { ...noteMark.image };
     if (relativeHeight) {
-      imageStyle.height *= relativeHeight
-      style.image = imageStyle
+      imageStyle.height *= relativeHeight;
+      style.image = imageStyle;
     }
-    return style
+    return style;
   }
 
-  function getDecorationMarkStyle (decorationName, hasAccidental) {
-    const decoration = { ...decorationMark[decorationName] }
+  function getDecorationMarkStyle(decorationName, hasAccidental) {
+    const decoration = { ...decorationMark[decorationName] };
     if (decorationName === 'LeanTo') {
-      decoration.left = hasAccidental ? -noteMark.image.width * 0.25 : -noteMark.image.width * 0.4
+      decoration.left = hasAccidental ? -noteMark.image.width * 0.25 : -noteMark.image.width * 0.4;
     } else {
-      decoration.left = hasAccidental ? noteMark.image.width * 0.75 : noteMark.image.width * 0.6
+      decoration.left = hasAccidental ? noteMark.image.width * 0.75 : noteMark.image.width * 0.6;
     }
-    return decoration
+    return decoration;
   }
 
-  function getJoinStyle (size) {
+  function getJoinStyle(size) {
     return {
       width: noteMark.image.width,
       height: size * noteMark.image.height,
-      resizeMode: 'stretch'
-    }
+      resizeMode: 'stretch',
+    };
   }
 
   return {
@@ -396,6 +396,6 @@ export default function Dimensions (window) {
     getSquareOperationButtonStyle: () => squareOperationButton,
     getWideOperationButtonStyle: () => wideOperationButton,
     getWindowStyle: () => window,
-    setWindowDimensions
-  }
+    setWindowDimensions,
+  };
 }

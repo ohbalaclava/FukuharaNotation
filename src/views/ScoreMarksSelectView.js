@@ -1,17 +1,18 @@
-import m from 'mithril'
+import m from 'mithril';
 
-import NoteSelectView from './NoteSelectView'
-import StrokeSelectView from './StrokeSelectView'
+import NoteSelectView from './NoteSelectView';
+import StrokeSelectView from './StrokeSelectView';
 
 export default {
-  view ({ attrs }) {
-    const { addNote, addAccidental, addStroke, addDecoration, setJoin, refresh } = attrs
+  view({ attrs }) {
+    const { addNote, addAccidental, addStroke, addDecoration, setJoin, refresh } = attrs;
 
-    return m('div.v.marks-row',
+    return m(
+      'div.v.marks-row',
       m('div.v.marks-sections', [
         m(NoteSelectView, { addNote, addAccidental, refresh }),
-        m(StrokeSelectView, { addStroke, addDecoration, setJoin, refresh })
+        m(StrokeSelectView, { addStroke, addDecoration, setJoin, refresh }),
       ])
-    )
-  }
-}
+    );
+  },
+};

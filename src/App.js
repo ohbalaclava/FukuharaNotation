@@ -1,7 +1,7 @@
-import m from 'mithril'
+import m from 'mithril';
 
-import HomeScreen from './screens/HomeScreen'
+import HomeScreen from './screens/HomeScreen';
 
 export default {
-  view: () => m(HomeScreen)
-}
+  view: () => m(HomeScreen),
+};

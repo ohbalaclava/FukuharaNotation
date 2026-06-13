@@ -1,10 +1,9 @@
-
-function createEnum (...values) {
-  const enumObject = {}
+function createEnum(...values) {
+  const enumObject = {};
   for (const val of values) {
-    enumObject[val] = val
+    enumObject[val] = val;
   }
-  return Object.freeze(enumObject)
+  return Object.freeze(enumObject);
 }
 
-export { createEnum }
+export { createEnum };

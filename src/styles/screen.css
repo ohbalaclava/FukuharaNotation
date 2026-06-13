@@ -168,7 +168,11 @@
   opacity: 1;
   visibility: visible;
   transform: perspective(600px) rotateY(0deg);
-  transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  transition:
+    width 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s;
 }
 
 .input-panel.hidden {
@@ -289,7 +293,10 @@
   opacity: 0;
   visibility: hidden;
   transform: perspective(600px) rotateX(-90deg);
-  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s;
 }
 
 .file-ops-menu.open {
