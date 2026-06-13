@@ -1,7 +1,4 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
-  build: {
-    outDir: 'build',
-  },
-});
+// Default outDir (dist) is required: the Pages workflow uploads dist/.
+export default defineConfig({});
